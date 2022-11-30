@@ -1,3 +1,108 @@
+-   title: Project X
+    company: Tencent Timi L2 Studio
+    period: 2021.4 - Current
+    description:
+    - <br>
+
+    - <li>项目CI管线开发与维护</li>
+    - <ul>
+    - <hr/>
+    - <lis>全平台高速并行出档</lis>
+    - <lis>多线分支出档的自动化脚本处理</lis>
+    - <lis>出档流程的性能信息与错误信息的及时上报机制</lis>
+    - <lis>日常开发线的CI,基于提交的代码编译与蓝图编译检查</lis>
+    - </ul>
+    - <br>
+
+    - <li>关卡箱庭blockout开发流程搭建</li>
+    - <ul>
+    - <hr/>
+    - <lis>基于GeometryScript的过程化建筑生成系统</lis>
+    - <lis>自定义关卡编辑器，方便统筹/跳转/切换各个子关卡</lis>
+    - <lis>基于UE基础设施的运行时优化策略</lis>
+    - </ul>
+    - <br>
+
+    - <li>局内外UI系统的架构和优化</li>
+    - <ul>
+    - <hr/>
+    - <lis>Puerts虚拟机引入</lis>
+    - <lis>局外系统的MVC结构引入</lis>
+    - <lis>基于Typescript内的GameServer通信层架设</lis>
+    - <lis>局内高性能HUD系统设计</lis>
+    - <lis>Shader Animation高效动效优化</lis>
+    - </ul>
+    - <br>
+
+    - <li>BR射击游戏操作与交互逻辑开发</li>
+    - <ul>
+    - <hr/>
+    - <lis>跨平台的统一输入映射</lis>
+    - <lis>跨平台的自动layout切换</lis>
+    - <lis>键位自定义与云端同步</lis>
+    - <lis>BR射击游戏基础交互逻辑实现</lis>
+    - </ul>
+    - <br>
+
+    - <li>基于DS的状态数据备份和分析平台</li>
+    - <ul>
+    - <hr/>
+    - <lis>基于cocos creator开发的数据回放器</lis>
+    - <lis>基于koa server render的数据分析平台</lis>
+    - <lis>基于protobuf定义的单局状态录像数据</lis>
+    - </ul>
+    - <br>
+
+-   title: Project M
+    company: Tencent Timi L2 Studio
+    period: 2019.6 - 2021.4
+    description:
+    - <br>
+
+    - <li>美术相关技术支持工作</li>
+    - <ul>
+    - <hr/>
+    - <lis>CG实时渲染结合的开场动画方案</lis>
+    - <lis>展示角色的高精度IBL渲染支持</lis>
+    - <lis>超采样的展示角色渲染</lis>
+    - </ul>
+    - <br>
+
+    - <li>基于帧同步的动态寻路</li>
+    - <ul>
+    - <hr/>
+    - <lis>启发式A*算法</lis>
+    - <lis>高效的实时局部导航数据更新</lis>
+    - <lis>基于行为树的智能导航req分配</lis>
+    - </ul>
+    - <br>
+
+    - <li>UE4 CSM针对moba视点的特殊优化</li>
+    - <ul>
+    - <hr/>
+    - <lis>改进frustum的更新机制，使得moba镜头下的阴影更加高效和清晰</lis>
+    - </ul>
+    - <br>
+
+    - <li>UE4的低端机型针对性优化</li>
+    - <ul>
+    - <hr/>
+    - <lis>Fragment Shader性能优化</lis>
+    - <lis>运行时内存优化</lis>
+    - <lis>Scalability详细参数调配</lis>
+    - <lis>部分硬件不支持效果的fallback支持</lis>
+    - </ul>
+    - <br>
+
+    - <li>UE4海外发布全流程</li>
+    - <ul>
+    - <hr/>
+    - <lis>发行SDK接入UE调试与部署</lis>
+    - <lis>负责GooglePlay海外发行流程</lis>
+    - <lis>发行相关数据接口的抽象和快速接入</lis>
+    - </ul>
+    - <br>
+
 -   title: PUBG-Procedural
     company: Personal
     period: 2019.4 - 2019.7
