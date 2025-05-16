@@ -4,8 +4,6 @@ title: gkNextRenderer - YearOne
 category: tech
 ---
 
-# gkNextRenderer - YearOne
-
 去年五一节结束后，在RayTracingInOneWeekend项目的基础上，开始了gkNextRenderer的学习。一开始的目的很简单
 
 * 学习现代渲染
@@ -20,11 +18,11 @@ category: tech
 
 > my working level of rendering stopped around “late PS3-early PS4” level, notably excluding ray tracing, bindless, the exciting world of temporal jitter and “boiling soup of pixels” and other revolutionary advances since.
 
-这简直是我的嘴替，我的渲染知识也是停留在了dx11时代，硬件光追，bindless，各种基于样本的渲染技术，通通的都错过了。这么多年主要是在搞移动平台的渲染和优化，已经各种系统的来回嫁接。在那之前，我还可以说我是一个图形程序员，现在我都不太听得懂其他人在说什么了...
+这简直是我的嘴替，我的渲染知识也是停留在了dx11时代，硬件光追，bindless，各种基于样本的渲染技术，通通的都错过了。这么多年主要是在搞移动平台的渲染和优化，以及各种系统的来回嫁接。在那之前，我还可以说我是一个图形程序员，现在我都不太听得懂其他人在说什么了...
 
-内心的动力有了，就差一个契机，这个契机就是我买了一台支持硬件光追的M3Max笔记本，这台电脑算是我的现代渲染启蒙，我从苹果的官方例子开始，了解硬件光追的一些事情。后面，我回到了桌面平台，我了解到了这个基于vulkan的硬件光追项目，RayTracingInOneWeekend。并同时也又仔细的读了一遍原文。
+内心的动力有了，就差一个契机，这个契机就是我买了一台支持硬件光追的M3Max笔记本，这台电脑算是我的现代渲染启蒙，我从苹果的官方例子开始，了解硬件光追的一些事情。后面，我回到了桌面平台，我了解到了这个基于vulkan的硬件光追项目，RayTracingInOneWeekend。并同时又仔细的读了一遍原文。
 
-作者的实现比较鲁邦，我又顺着NextWeekend, RestOfYourLife把后面的重要性采样，NEE等科目作了一遍。然后便开始思索，如何做实时的路径追踪。硬件来做，目标就是实时嘛。
+作者的实现比较鲁棒，我又顺着NextWeekend, RestOfYourLife把后面的重要性采样，NEE等科目作了一遍。然后便开始思索，如何做实时的路径追踪。硬件来做，目标就是实时嘛。
 
 当然，这方面其实也有很多人做得非常深入了，最新的UE5，也有一个完全基于硬件PathTracing的渲染器，并且有不俗的渲染质量，Nvidia的工程师很强。（不过这是后话了，当时刚涉足这个领域的我，并没有看到如此多的论文和信息，当然不知道那时如果看到了这些，会不会干脆就放弃了）
 
