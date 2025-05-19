@@ -6,7 +6,6 @@ layout: default
   <h1 class="post-title">{{ page.title }}</h1>
   <span class="post-date">{{ page.date | date_to_string }}</span>
   {{ content }}
-  <hr>
 </div>
 
 <div class="related">
@@ -15,7 +14,6 @@ layout: default
   <br>
     {% for post in site.related_posts limit:4 %}
     {% if post.category != site.cate.hidden %}
-
       <li>
         <p>
           <a href="{{ post.url }}">
@@ -24,8 +22,6 @@ layout: default
           </a>
         </p>
       </li>
-
-
     {% endif %} 
     {% endfor %}
   </ul>
