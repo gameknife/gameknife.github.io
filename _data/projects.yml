@@ -1,13 +1,40 @@
--   title: gkNextRenderer
+-   title: gkNextEngine
     company: Personal
     period: 2024.5 - Current
     description:
     - <br>
 
-    - <li>基于硬件光追的实时PathTracer</li>
+    - <li>现代渲染设施研究</li>
     - <ul>
     - <hr/>
-    - <lis>Reference Renderer</lis>
+    - <lis>Full GPU Driven的光栅化渲染调度</lis>
+    - <lis>Full Bindless的GPU资源管理</lis>
+    - <lis>基于路径追踪的硬件光追</lis>
+    - <lis>基于路径追踪的硬件/软件追踪的实时探针</lis>
+    - <lis>多种性能配置的全局照明系统</lis>
+    - <lis>基于Vulkan的全平台现代渲染框架</lis>
+    - </ul>
+    - <br>
+
+    - <li>现代引擎基础设施研究</li>
+    - <ul>
+    - <hr/>
+    - <lis>基于ImGUI的lowcode编辑器框架</lis>
+    - <lis>Jolt物理引擎的整合</lis>
+    - <lis>基于vcpkg和cmake的构建系统</lis>
+    - <lis>基于gltf的资产编辑</lis>
+    - <lis>全面的输入设备支持</lis>
+    - <lis>基于miniaudio的音频支持</lis>
+    - </ul>
+    - <br>
+
+    - <li>游戏事例和工具项目</li>
+    - <ul>
+    - <hr/>
+    - <lis>MagicaLego乐高搭建游戏项目</lis>
+    - <lis>可交互渲染器</lis>
+    - <lis>渐进式静帧Benchmark</lis>
+    - <lis>动态Benchmark</lis>
     - </ul>
     - <br>
     
