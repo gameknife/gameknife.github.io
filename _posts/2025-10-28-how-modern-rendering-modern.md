@@ -1,4 +1,8 @@
-# 现代渲染能有多现代？
+---
+layout: post
+title: 现代渲染能有多现代？
+category: tech
+---
 
 ![](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/assets/ZRHAP_51UZF0rgpoRO_wH7204uMLiKGvJmpp8Qbz0Kw=.webp "gkNextEngine PathTracing渲染器")
 
