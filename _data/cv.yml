@@ -23,7 +23,7 @@ basics:
 
 # 个人简介：3-4 行。招聘方只读这一段的概率最高，放最有辨识度的信息。
 # 注意保持单行：YAML 折叠成多行会在换行处插入空格，中文里会显示成难看的空隙。
-summary: 15 年以上游戏与实时图形研发经验，覆盖端游、手游与自研引擎全链路。现任 PerfectWorld TZY 工作室技术专家，负责新项目基础设施建设、技术选型与关键技术攻关。精通 Modern C++20 与 Vulkan 跨平台底层架构，独立自研 gkNextEngine（实时路径追踪 + GPU-Driven 光栅混合管线，五平台覆盖）；在 Unreal Engine 4/5 与 Unity 上有多个大规模商业项目的图形效果落地与性能优化经验。
+summary: 15 年以上游戏与实时图形研发经验，覆盖端游、手游与自研引擎全链路。精通 Modern C++20 与 Vulkan 跨平台底层架构，独立自研 gkNextEngine（实时路径追踪 + GPU-Driven 光栅混合管线，五平台覆盖）；在 Unreal Engine 4/5 与 Unity 上有多个大规模商业项目的图形效果落地与性能优化经验。
 
 skills:
   - group: 图形与引擎
@@ -31,29 +31,33 @@ skills:
     items:
       - Modern C++20 / Vulkan 全平台底层架构（Windows / Linux / macOS / iOS / Android）；线性代数与光栅管线推导、SIMD 加速、多线程 Task 调度，独立手写 CPU 端 SoftRenderer
       - Slang / HLSL / GLSL；实时路径追踪与时域降噪、Visibility Buffer、Full Bindless、SHARC 辐射缓存、3D Gaussian Splatting、DLSS / FSR / SGSR2
-      - 引擎基础设施：EnTT ECS 与 entt::meta 类型反射、Jolt Physics、ImGui 节点化编辑器、QuickJS / TypeScript 热重载
-      - 商业引擎：Unreal Engine 4/5（C++ / 蓝图 / GeometryScript / CSM / Scalability）、Unity（C# / Shader / GC 优化 / ARKit）、CryEngine
+      - 引擎基础设施：EnTT ECS 与 entt::meta 类型反射、Jolt Physics、QuickJS / TypeScript 热重载
+      - 商业引擎：Unreal Engine 4/5（C++ / 蓝图 / 渲染 / 运行时调试 / 客户端，DS，编辑器性能优化）、Unity（C# / Shader / GC 优化 / ARKit）、CryEngine
 
   - group: AI Native 与工具链
     group_en: AI Native & Toolchain
     items:
-      - AI Agent 闭环：无头渲染截图判决（gnb shot）、脚本驱动断言验证、CI 视觉回归与 Parity 校验
-      - 本地推理与远程渲染：llama.cpp / Gemma 本地 OpenAI 兼容服务、WebRTC Remote Play 与 Vulkan Video 硬件编码
+      = 基于Codex / ClaudeCode等agent工具，持续性，工程化的推进中型引擎项目的开发与实践
+      - AI Agent 闭环：无头运行截图判决、脚本驱动断言验证、CI 视觉回归与 Parity 校验
+      - 本地推理与远程渲染：llama.cpp / Gemma 本地 OpenAI 兼容服务、基于本地LLM的本地开发辅助和游戏运行时推理
       - 结构化 3D 内容与工程效能：OpenSCAD DSL 原生解析与 CSG 求值器、LDraw 乐高资产导入、glTF 2.0；跨平台 CLI（gnb）、VulkanGpuTimer / Superluminal 性能分析、Node.js / Electron、GitHub Actions / GitLab CI
 
   - group: 技术美术
     group_en: Technical Art
     items:
-      - 接受专业美术训练，具备写生基础与审美判断力；3ds Max / C4D / Blender / Photoshop / Substance Designer & Painter，理解并实践 TA 工作流与美术管线对接
+      - 从小接受专业美术训练，具备写生基础与审美判断力；3ds Max / C4D / Blender / Photoshop / Substance Designer & Painter，理解并实践 TA 工作流与美术管线对接
 
 experience:
   - title: Technical Expert
     company: PerfectWorld TZY
     period: 2023.5 – Present
     summary: 负责工作室新项目的基础设施建设、技术选型与关键技术攻关。
-    highlights: []
+    highlights:
+      - 大规模多人协作地形编辑方案与落地 https://www.bilibili.com/video/BV1sx421U75D
+      - 大型团队网络下的Perforce服务优化，多分支协同开发，编辑器性能保障
+      - 基于UE5的并行化打包方案与落地
 
-  - title: Senior Engineer (T3)
+  - title: Senior Engineer (T11)
     company: Tencent（IEG R&D / TiMi Studio Group）
     period: 2015.7 – 2023.5
     summary: 供职于研发部与天美工作室群，负责重要前端系统开发、图形效果实现与项目整体性能优化。
@@ -69,7 +73,7 @@ experience:
     period: 2013.4 – 2015.7
     summary: 供职于内核研发部，负责自研虚拟现实引擎 OpenVRP 的设计与开发。
     highlights:
-      - 主导渲染器、场景管理与动画系统设计；抽象 Device 层（DX11 结构）并实现 OpenGL ES2 / OpenGL 后端
+      - 主导渲染器、场景管理与动画系统设计；抽象 RHI 层（DX11 结构）并实现 OpenGL ES2 / OpenGL 后端
       - 跨平台线程 / IO / Job 库开发；主导开发 OpenVRP 编辑器（xtp UI 框架）
 
   - title: Game Engine Engineer
@@ -96,7 +100,7 @@ projects:
     highlights:
       - "C++20 + Vulkan 全平台引擎；实时路径追踪（1/2spp + 时域复用 + 重投影 + à-trous/JBF 降噪）与 Hybrid 渲染管线"
       - "现代 GPU 管线：Visibility Buffer、Full Bindless、GPU-Driven 单 Draw 提交；硬件 Ray Query、SHARC 辐射缓存与 ReSTIR DI；3DGS 与三角网格同帧共渲染，集成 DLSS-RR / FSR 3.1 / SGSR2"
-      - "运行时：entt::meta 反射自动对接编辑器面板与撤销重做、QuickJS + TypeScript 热重载、Jolt Physics、WebRTC 远程渲染"
+      - "运行时：entt::meta 反射自动对接编辑器属性、QuickJS + TypeScript 热重载、Jolt Physics、WebRTC 远程渲染，原生云游戏框架"
       - AI Native 闭环：gnb 统一 CLI、无头截图判决与 CI 视觉回归；集成 llama.cpp / Gemma 本地推理
 
   - title: SoftRenderer
@@ -112,7 +116,7 @@ projects:
     period: 2019.4 – 2019.7
     highlights:
       - 随机海岛与地貌地标过程生成、道路环路自动生成、宜居点分布与动态关卡加载、植被竞争生长
-      - 类 PUBG 角色状态机与枪械系统；UE4 DS 多人 PVP 同步；GitLab Runner 多平台（Windows / Linux / iOS）CI
+      - 类 PUBG 角色状态机与枪械系统；UE4 DS 多人 PVP 同步
 
   - title: gkENGINE
     role: 个人开源引擎
