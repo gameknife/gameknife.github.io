@@ -1,0 +1,148 @@
+# ============================================================================
+# 标准 CV 数据源 (Standard CV data)
+#
+# 这个文件只服务于 /cv/ 页面（A4 打印 / 另存为 PDF）。
+# 与 jobs.yml / skills.yml / projects.yml 的区别：
+#   * 那几个文件是网页版长篇简历的数据，含图片与 <li>/<lis> 排版标签，篇幅不受限；
+#   * 这个文件是「投递用」的精简版，纯文本条目，控制在 2 页 A4 之内。
+# 想调整 PDF 的内容或长度，只改这个文件即可，模板会自动适配（空字段不渲染）。
+#
+# 当前排版预算：正文约 2 页 A4。每加 3~4 行正文就会多出小半页，
+# 建议加内容时同步删掉一条旧的。
+# ============================================================================
+
+basics:
+  name_zh: 易恺铭
+  name_en: Kaiming Yi
+  headline: 资深图形与游戏引擎工程师 · AI Native 工具链
+  location: Chengdu, China
+  email: kaimingyi@163.com
+  github: gameknife
+  linkedin: kaimingyi
+  site: gameknife.github.io
+
+# 个人简介：3-4 行。招聘方只读这一段的概率最高，放最有辨识度的信息。
+# 注意保持单行：YAML 折叠成多行会在换行处插入空格，中文里会显示成难看的空隙。
+summary: 15 年以上游戏与实时图形研发经验，覆盖端游、手游与自研引擎全链路。现任 PerfectWorld TZY 工作室技术专家，负责新项目基础设施建设、技术选型与关键技术攻关。精通 Modern C++20 与 Vulkan 跨平台底层架构，独立自研 gkNextEngine（实时路径追踪 + GPU-Driven 光栅混合管线，五平台覆盖）；在 Unreal Engine 4/5 与 Unity 上有多个大规模商业项目的图形效果落地与性能优化经验。
+
+skills:
+  - group: 图形与引擎
+    group_en: Graphics & Engine
+    items:
+      - Modern C++20 / Vulkan 全平台底层架构（Windows / Linux / macOS / iOS / Android）；线性代数与光栅管线推导、SIMD 加速、多线程 Task 调度，独立手写 CPU 端 SoftRenderer
+      - Slang / HLSL / GLSL；实时路径追踪与时域降噪、Visibility Buffer、Full Bindless、SHARC 辐射缓存、3D Gaussian Splatting、DLSS / FSR / SGSR2
+      - 引擎基础设施：EnTT ECS 与 entt::meta 类型反射、Jolt Physics、ImGui 节点化编辑器、QuickJS / TypeScript 热重载
+      - 商业引擎：Unreal Engine 4/5（C++ / 蓝图 / GeometryScript / CSM / Scalability）、Unity（C# / Shader / GC 优化 / ARKit）、CryEngine
+
+  - group: AI Native 与工具链
+    group_en: AI Native & Toolchain
+    items:
+      - AI Agent 闭环：无头渲染截图判决（gnb shot）、脚本驱动断言验证、CI 视觉回归与 Parity 校验
+      - 本地推理与远程渲染：llama.cpp / Gemma 本地 OpenAI 兼容服务、WebRTC Remote Play 与 Vulkan Video 硬件编码
+      - 结构化 3D 内容与工程效能：OpenSCAD DSL 原生解析与 CSG 求值器、LDraw 乐高资产导入、glTF 2.0；跨平台 CLI（gnb）、VulkanGpuTimer / Superluminal 性能分析、Node.js / Electron、GitHub Actions / GitLab CI
+
+  - group: 技术美术
+    group_en: Technical Art
+    items:
+      - 接受专业美术训练，具备写生基础与审美判断力；3ds Max / C4D / Blender / Photoshop / Substance Designer & Painter，理解并实践 TA 工作流与美术管线对接
+
+experience:
+  - title: Technical Expert
+    company: PerfectWorld TZY
+    period: 2023.5 – Present
+    summary: 负责工作室新项目的基础设施建设、技术选型与关键技术攻关。
+    highlights: []
+
+  - title: Senior Engineer (T3)
+    company: Tencent（IEG R&D / TiMi Studio Group）
+    period: 2015.7 – 2023.5
+    summary: 供职于研发部与天美工作室群，负责重要前端系统开发、图形效果实现与项目整体性能优化。
+    highlights:
+      - "Project X（BR 手游，TiMi L2，2021–2023）：全平台并行 CI 出档与蓝图编译检查；GeometryScript 过程化关卡 blockout 流程；Puerts + MVC 局外 UI 架构与局内高性能 HUD；跨平台输入映射与键位云端同步"
+      - "Project M（MOBA 手游，TiMi L2，2019–2021）：帧同步启发式 A* 动态寻路与实时局部导航更新；针对 MOBA 视点的 UE4 CSM 阴影优化；低端机型 Fragment / 内存 / Scalability 专项优化；UE4 海外发行全流程"
+      - "SSKGame《圣斗士星矢》（TiMi L1，2017–2018）：GPU 加速伤害数字系统；shell 特效系统（描边 / 假实时阴影与反射）；局部抗锯齿与展示角色渲染；iOS ARKit 与华为 hiAR 集成"
+      - "Project G《一起来捉妖》（TiMi J5，2016–2017）：MatCap 角色渲染与低成本场景材质方案；相机 + 陀螺仪 AR 与实景光照模拟；美术资源规格设计与每日自动扫描报告"
+      - "早期：过程化地貌生成预研（噪声、水力/热力侵蚀、无限地形 LOD）；Cube 乐高沙盒的 Unity Native 渲染与体素光能传递"
+
+  - title: Senior Kernel System Engineer
+    company: Vistandard
+    period: 2013.4 – 2015.7
+    summary: 供职于内核研发部，负责自研虚拟现实引擎 OpenVRP 的设计与开发。
+    highlights:
+      - 主导渲染器、场景管理与动画系统设计；抽象 Device 层（DX11 结构）并实现 OpenGL ES2 / OpenGL 后端
+      - 跨平台线程 / IO / Job 库开发；主导开发 OpenVRP 编辑器（xtp UI 框架）
+
+  - title: Game Engine Engineer
+    company: Horizon3D
+    period: 2012.9 – 2013.4
+    summary: 供职于底层研发部，负责尖端技术预研、引擎维护与性能优化。
+    highlights:
+      - "X52《QQ 炫舞 2》：8 万根发丝同屏的运动模拟（弹性 / 碰撞 / 飘曳）与各向异性光照渲染，DX9 全 GPU 实现"
+      - 引入 D3D9Ex 解决设备丢失与显存问题；开发外挂 profiler 支持逐版本自动性能跟踪与报告
+
+  - title: Game Engine Engineer
+    company: Changyou
+    period: 2011.2 – 2012.9
+    summary: 使用 CryEngine 开发 MMO ARPG《蛮荒搜神记》，负责美术工具链、游戏逻辑与性能优化。
+    highlights:
+      - 图形与战斗：皮肤模拟 / 变色区域 / 壳材质；帧率无关的实时攻击判定与大型生物部位破坏；双足 IK 调优并扩展四足 IK
+      - 3ds Max 插件开发完善 CryEngine 工具链，为美术提供技术培训；基于内外置 profiler 的性能优化
+
+projects:
+  - title: gkNextEngine
+    role: 个人自研引擎
+    period: 2024.5 – Present
+    link: https://github.com/gameknife/gkNextEngine
+    highlights:
+      - "C++20 + Vulkan 全平台引擎；实时路径追踪（1/2spp + 时域复用 + 重投影 + à-trous/JBF 降噪）与 Hybrid 渲染管线"
+      - "现代 GPU 管线：Visibility Buffer、Full Bindless、GPU-Driven 单 Draw 提交；硬件 Ray Query、SHARC 辐射缓存与 ReSTIR DI；3DGS 与三角网格同帧共渲染，集成 DLSS-RR / FSR 3.1 / SGSR2"
+      - "运行时：entt::meta 反射自动对接编辑器面板与撤销重做、QuickJS + TypeScript 热重载、Jolt Physics、WebRTC 远程渲染"
+      - AI Native 闭环：gnb 统一 CLI、无头截图判决与 CI 视觉回归；集成 llama.cpp / Gemma 本地推理
+
+  - title: SoftRenderer
+    role: 个人开源软件渲染器
+    period: 2013.10 – Present
+    link: https://github.com/gameknife/SoftRenderer
+    highlights:
+      - 纯 CPU 实现完整 GPU 图形管线，自研 SIMD 数学库与线程 / Job 抽象，支持可编程着色器管线
+      - Sponza 场景达到可交互的 30+ fps @ i7-7700K；Electron / node-gyp 构建跨平台交互外壳
+
+  - title: PUBG-Procedural
+    role: 个人独立游戏项目（UE4）
+    period: 2019.4 – 2019.7
+    highlights:
+      - 随机海岛与地貌地标过程生成、道路环路自动生成、宜居点分布与动态关卡加载、植被竞争生长
+      - 类 PUBG 角色状态机与枪械系统；UE4 DS 多人 PVP 同步；GitLab Runner 多平台（Windows / Linux / iOS）CI
+
+  - title: gkENGINE
+    role: 个人开源引擎
+    period: 2010.10 – 2017.1
+    link: https://github.com/gameknife/gkEngine
+    highlights:
+      - 跨平台引擎（Windows / macOS / iOS / Android），统一抽象图形接口、线程与 IO，支持多线程渲染与 Deferred Shading / Lighting 管线
+
+  # 排版预算已满：再加一条项目就会溢出到第 3 页。想换上它，先删掉上面一条。
+  # - title: electron-shadermonki
+  #   role: 个人开源 WebGL 着色器编辑器
+  #   period: 2016.10 – Present
+  #   link: https://github.com/gameknife/electron-shadermonki
+  #   highlights:
+  #     - WebGL Deferred Shading 管线，GLSL 实时编译与预览；自研 glwrap 封装整套 WebGL
+
+education:
+  # education.yml 里没有年份；这里留空则不渲染，补上即可显示，例如 period: 2008 – 2011
+  - degree: MSc Computer Technology
+    school: Communication University of China
+    period: 2012 – 2014
+  - degree: BA Game Development
+    school: Communication University of China
+    period: 2007 – 2011
+-   degree: High School
+    school: Chengdu No.7 Middle School
+    period: 2004 – 2007
+    
+additional:
+  - label: 美术
+    text: CG 静帧、油画、写生与过程材质作品见个人站点。
+  - label: 游戏
+    text: 1994 年起的硬核主机与 PC 玩家（Steam 23 级 / 200+ 收藏）；参与 Minecraft Forge 等 MOD 开发与玩法预研。

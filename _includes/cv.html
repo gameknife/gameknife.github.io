@@ -1,0 +1,121 @@
+{% assign cv = site.data.cv %}
+{% assign me = cv.basics %}
+
+<article class="cv">
+
+    <header class="cv-header">
+        <h1 class="cv-name">
+            {{ me.name_zh }}<span class="cv-name__en">{{ me.name_en }}</span>
+        </h1>
+        <p class="cv-headline">{{ me.headline }}</p>
+        <ul class="cv-contact">
+            {% if me.email %}<li><a href="mailto:{{ me.email }}">{{ me.email }}</a></li>{% endif %}
+            {% if me.github %}<li><a href="https://github.com/{{ me.github }}">github.com/{{ me.github }}</a></li>{% endif %}
+            {% if me.linkedin %}<li><a href="https://www.linkedin.com/in/{{ me.linkedin }}">linkedin.com/in/{{ me.linkedin }}</a></li>{% endif %}
+            {% if me.site %}<li><a href="https://{{ me.site }}">{{ me.site }}</a></li>{% endif %}
+            {% if me.location %}<li>{{ me.location }}</li>{% endif %}
+        </ul>
+    </header>
+
+    {% if cv.summary %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">个人简介<span>Summary</span></h2>
+        <p class="cv-summary">{{ cv.summary | strip_newlines }}</p>
+    </section>
+    {% endif %}
+
+    {% if cv.skills.size > 0 %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">专业技能<span>Skills</span></h2>
+        {% for group in cv.skills %}
+        <div class="cv-entry cv-entry--skill">
+            <h3 class="cv-entry__label">{{ group.group }}{% if group.group_en %} <em>{{ group.group_en }}</em>{% endif %}</h3>
+            <ul class="cv-bullets">
+                {% for item in group.items %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if cv.experience.size > 0 %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">工作经历<span>Experience</span></h2>
+        {% for job in cv.experience %}
+        <div class="cv-entry">
+            <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                    <span class="cv-entry__title">{{ job.title }}</span>
+                    <span class="cv-entry__org">{{ job.company }}</span>
+                </p>
+                <p class="cv-entry__period">{{ job.period }}</p>
+            </div>
+            {% if job.summary %}<p class="cv-entry__summary">{{ job.summary }}</p>{% endif %}
+            {% if job.highlights.size > 0 %}
+            <ul class="cv-bullets">
+                {% for point in job.highlights %}<li>{{ point }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if cv.projects.size > 0 %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">精选项目<span>Selected Projects</span></h2>
+        {% for project in cv.projects %}
+        <div class="cv-entry">
+            <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                    <span class="cv-entry__title">{{ project.title }}</span>
+                    {% if project.role %}<span class="cv-entry__org">{{ project.role }}</span>{% endif %}
+                </p>
+                <p class="cv-entry__period">{{ project.period }}</p>
+            </div>
+            {% if project.highlights.size > 0 %}
+            <ul class="cv-bullets">
+                {% for point in project.highlights %}<li>{{ point }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if project.link %}
+            <p class="cv-entry__link"><a href="{{ project.link }}">{{ project.link | remove: 'https://' }}</a></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if cv.education.size > 0 %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">教育背景<span>Education</span></h2>
+        {% for edu in cv.education %}
+        <div class="cv-entry cv-entry--compact">
+            <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                    <span class="cv-entry__title">{{ edu.degree }}</span>
+                    <span class="cv-entry__org">{{ edu.school }}</span>
+                </p>
+                {% if edu.period %}<p class="cv-entry__period">{{ edu.period }}</p>{% endif %}
+            </div>
+            {% if edu.note %}<p class="cv-entry__summary">{{ edu.note }}</p>{% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if cv.additional.size > 0 %}
+    <section class="cv-section">
+        <h2 class="cv-section__title">其他<span>Additional</span></h2>
+        <dl class="cv-additional">
+            {% for row in cv.additional %}
+            <div class="cv-additional__row">
+                <dt>{{ row.label }}</dt>
+                <dd>{{ row.text }}</dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </section>
+    {% endif %}
+
+</article>

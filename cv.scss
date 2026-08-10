@@ -1,0 +1,12 @@
+---
+---
+
+// Standalone stylesheet for the printable CV page (/cv/) -> /cv.css
+//
+// Intentionally does NOT import the site reset / typography partials: the CV
+// needs its own type scale, its own list styles and a print-first layout, and
+// must not inherit the blog's `a { background: yellow }` / `li { bold }` rules.
+//
+// The partial is named `cv-page` rather than `cv` on purpose — `@import 'cv'`
+// could resolve back to this very file instead of _sass/_cv-page.scss.
+@import 'cv-page';

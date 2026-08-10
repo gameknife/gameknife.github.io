@@ -1,120 +1,73 @@
-{% include resume_pdf_template.html %}
+<h3 class="section-title">Skill</h3>
+<dl class="education">
+    {% for qualification in site.data.skills %}
+        <dt>
+            <p class="title">{{ qualification.qualification }}</p>
+        </dt><!--
+        --><dd>
+            <p>{{ qualification.description }}</p>
+        </dd>
+    {% endfor %}
+</dl>
 
-<div class="web-resume-view no-print">
-    <h3 class="section-title">Skill</h3>
-    <dl class="education">
-        {% for qualification in site.data.skills %}
-            <dt>
-                <p class="title">{{ qualification.qualification }}</p>
-            </dt><!--
-            --><dd>
-                <p>{{ qualification.description }}</p>
-            </dd>
-        {% endfor %}
-    </dl>
+<h3 class="section-title">Experience</h3>
+<dl class="experience">
+    {% for job in site.data.jobs %}
+        <dt>
+            <p class="title">{{ job.title }}</p>
+            <p class="company">{{ job.company }}</p>
+            <p class="period">{{ job.period }}</p>
+        </dt><!--
+        --><dd>
+            <p>{{ job.description }}</p>
+        </dd>
+    {% endfor %}
+</dl>
 
-    <h3 class="section-title">Experience</h3>
-    <dl class="experience">
-        {% for job in site.data.jobs %}
-            <dt>
-                <p class="title">{{ job.title }}</p>
-                <p class="company">{{ job.company }}</p>
-                <p class="period">{{ job.period }}</p>
-            </dt><!--
-            --><dd>
-                <p>{{ job.description }}</p>
-            </dd>
-        {% endfor %}
-    </dl>
+<h3 class="section-title">Education</h3>
+<dl class="education">
+    {% for qualification in site.data.education %}
+        <dt>
+            <p class="title">{{ qualification.qualification }}</p>
+            <p class="company">{{ qualification.school }}</p>
+            <p class="period">{{ qualification.period }}</p>
+        </dt><!--
+        --><dd>
+            <p>{{ qualification.description }}</p>
+        </dd>
+    {% endfor %}
+</dl>
 
-    <h3 class="section-title">Education</h3>
-    <dl class="education">
-        {% for qualification in site.data.education %}
-            <dt>
-                <p class="title">{{ qualification.qualification }}</p>
-                <p class="company">{{ qualification.school }}</p>
-                <p class="period">{{ qualification.period }}</p>
-            </dt><!--
-            --><dd>
-                <p>{{ qualification.description }}</p>
-            </dd>
-        {% endfor %}
-    </dl>
 
-    <h3 class="section-title">Project</h3>
-    <dl class="experience">
-        {% for project in site.data.projects %}
-            <dt>
-                <p class="title">{{ project.title }}</p>
-                <p class="company">{{ project.company }}</p>
-                <p class="period">{{ project.period }}</p>
-            </dt><!--
-            --><dd>
-                {{ project.description }}
-            </dd>
-        {% endfor %}
-    </dl>
+<h3 class="section-title">Project</h3>
+<dl class="experience">
+    {% for project in site.data.projects %}
+        <dt>
+            <p class="title">{{ project.title }}</p>
+            <p class="company">{{ project.company }}</p>
+            <p class="period">{{ project.period }}</p>
+        </dt><!--
+        --><dd>
+            {{ project.description }}
+        </dd>
+    {% endfor %}
+</dl>
 
-    <h3 class="section-title">Gallery</h3>
-    <dl class="experience">
-        <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/substancedesigner.jpg" alt="placeholder" style="width:100%;padding:1em;">
-        <p style="text-align: center">Substance Designer过程材质，2018年</p>
-        <br>
-        <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/stills1.jpg" alt="placeholder" style="width:100%;padding:1em;">
-        <p style="text-align: center">CG静帧，2008年</p>
-        <br>
-        <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/oilpaint1.jpg" alt="placeholder" style="width:100%;padding:1em;">
-        <p style="text-align: center">油效，2007年</p>
-        <br>
-        <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/oilpaint2.jpg" alt="placeholder" style="width:100%;padding:1em;">
-        <p style="text-align: center">油画，2007年</p>
-        <br>
-        <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/pencilpaint2.jpg" alt="placeholder" style="width:100%;padding:1em;">
-        <p style="text-align: center">铅笔写生，2006年</p>
-        <br>
-    </dl>
-</div>
-
-<!-- html2pdf Library and Download Script -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-function downloadResumePDF() {
-    var btn = document.getElementById('download-pdf-btn');
-    var origHTML = btn.innerHTML;
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> <span>正在生成 PDF 简历...</span>';
-    btn.disabled = true;
-
-    var element = document.getElementById('pdf-resume-wrapper');
-    
-    // Temporarily make the pdf element visible for html2canvas
-    element.classList.add('exporting-pdf');
-
-    var opt = {
-        margin:       [8, 10, 8, 10],
-        filename:     'KaimingYi_Resume.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-
-    if (typeof html2pdf !== 'undefined') {
-        html2pdf().set(opt).from(element).save().then(function() {
-            element.classList.remove('exporting-pdf');
-            btn.innerHTML = origHTML;
-            btn.disabled = false;
-        }).catch(function(err) {
-            console.error('html2pdf error:', err);
-            element.classList.remove('exporting-pdf');
-            btn.innerHTML = origHTML;
-            btn.disabled = false;
-            window.print();
-        });
-    } else {
-        element.classList.remove('exporting-pdf');
-        btn.innerHTML = origHTML;
-        btn.disabled = false;
-        window.print();
-    }
-}
-</script>
+<h3 class="section-title">Gallery</h3>
+<dl class="experience">
+    <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/substancedesigner.jpg" alt="placeholder" style="width:100%;padding:1em;">
+    <p style="text-align: center">Substance Designer过程材质，2018年</p>
+    <br>
+    <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/stills1.jpg" alt="placeholder" style="width:100%;padding:1em;">
+    <p style="text-align: center">CG静帧，2008年</p>
+    <br>
+    <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/oilpaint1.jpg" alt="placeholder" style="width:100%;padding:1em;">
+    <p style="text-align: center">油画，2007年</p>
+    <br>
+    <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/oilpaint2.jpg" alt="placeholder" style="width:100%;padding:1em;">
+    <p style="text-align: center">油画，2007年</p>
+    <br>
+    <img src="https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/pencilpaint2.jpg" alt="placeholder" style="width:100%;padding:1em;">
+    <p style="text-align: center">铅笔写生，2006年</p>
+    <br>
+</dl>

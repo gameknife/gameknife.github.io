@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 浏览器「另存为 PDF」会用 document.title 作为默认文件名 -->
+    <title>{{ site.data.cv.basics.name_en }} CV</title>
+    <meta name="description" content="{{ site.data.cv.basics.name_en }} — {{ site.data.cv.basics.headline }}">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" type="text/css" href="{{ "/cv.css" | relative_url }}">
+    <link rel="canonical" href="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+</head>
+<body class="cv-body">
+
+    <div class="cv-toolbar no-print">
+        <div class="cv-toolbar__inner">
+            <a class="cv-toolbar__back" href="{{ "/resume/" | relative_url }}">&larr; 完整简历</a>
+            <div class="cv-toolbar__actions">
+                <span class="cv-toolbar__hint">A4 · 关闭「页眉和页脚」效果最佳</span>
+                <button type="button" class="cv-toolbar__btn" onclick="window.print()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>下载 PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="cv-sheet">
+        {{ content }}
+    </main>
+
+    <p class="cv-footnote no-print">
+        点击「下载 PDF」后，在打印对话框中把目标打印机选为 <strong>「另存为 PDF」</strong>
+        （Save as PDF / Microsoft Print to PDF），纸张 A4、缩放默认、取消勾选页眉和页脚即可。
+        导出的 PDF 是矢量文字，可搜索、可复制、体积很小。
+    </p>
+
+    <script>
+        // 从简历页带 ?print=1 进来时直接弹出打印对话框
+        if (window.location.search.indexOf('print=1') !== -1) {
+            window.addEventListener('load', function () {
+                window.setTimeout(function () { window.print(); }, 300);
+            });
+        }
+    </script>
+
+</body>
+</html>
