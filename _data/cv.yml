@@ -37,7 +37,7 @@ skills:
   - group: AI Native 与工具链
     group_en: AI Native & Toolchain
     items:
-      = 基于Codex / ClaudeCode等agent工具，持续性，工程化的推进中型引擎项目的开发与实践
+      - 基于 Codex / Claude Code 等 agent 工具，持续、工程化地推进中型引擎项目的开发与实践
       - AI Agent 闭环：无头运行截图判决、脚本驱动断言验证、CI 视觉回归与 Parity 校验
       - 本地推理与远程渲染：llama.cpp / Gemma 本地 OpenAI 兼容服务、基于本地LLM的本地开发辅助和游戏运行时推理
       - 结构化 3D 内容与工程效能：OpenSCAD DSL 原生解析与 CSG 求值器、LDraw 乐高资产导入、glTF 2.0；跨平台 CLI（gnb）、VulkanGpuTimer / Superluminal 性能分析、Node.js / Electron、GitHub Actions / GitLab CI

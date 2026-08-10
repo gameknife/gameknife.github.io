@@ -19,8 +19,8 @@ $d-fg-muted:    #8b929c;   // dates, captions,小字
 $d-border:      #2f333a;
 $d-link:        #6cb6f2;   // lighter than poole's #268bd2 for contrast on dark
 $d-code:        #e79aa6;
-$d-sidebar:     #131417;   // slightly darker than content, reads as chrome
 $d-comment:     #6f7a86;
+// no $d-sidebar: the sidebar keeps hyde.css's #202020 in both themes
 
 /* ==========================================================================
 SIDEBAR TOGGLE BUTTON (styled for both themes)
@@ -188,10 +188,17 @@ DARK MODE
             background-color: $d-bg-soft;
         }
 
-        /* ---- hyde.css: sidebar ---- */
+        /* ---- hyde.css: sidebar ----
+           The sidebar is dark with light text in BOTH themes, so dark mode
+           leaves it exactly as hyde.css draws it. These rules only undo the
+           generic `a` / heading recolouring above, which would otherwise turn
+           the white sidebar links into the blue accent. */
 
         .sidebar {
-            background-color: $d-sidebar;
+            a,
+            h1, h2, h3, h4, h5, h6 {
+                color: #fff;
+            }
         }
 
         /* ---- syntax.css: code highlighting ---- */
