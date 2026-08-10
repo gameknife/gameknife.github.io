@@ -5,12 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {% include theme.html %}
+
     <!-- 浏览器「另存为 PDF」会用 document.title 作为默认文件名 -->
     <title>{{ site.data.cv.basics.name_en }} CV</title>
     <meta name="description" content="{{ site.data.cv.basics.name_en }} — {{ site.data.cv.basics.headline }}">
     <meta name="robots" content="index, follow">
 
     <link rel="stylesheet" type="text/css" href="{{ "/cv.css" | relative_url }}">
+    <link rel="stylesheet" type="text/css" href="{{ "/theme.css" | relative_url }}">
     <link rel="canonical" href="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
 </head>
 <body class="cv-body">

@@ -1,0 +1,276 @@
+// @name Theme
+// @description Dark mode for the whole site + the sidebar toggle button.
+//
+// Strategy: the site's light colours live in vendored files we don't want to
+// rewrite (public/css/poole.css, hyde.css, syntax.css) plus _resume.scss and
+// _cv-page.scss. So light stays exactly as it is, and this file — loaded LAST on
+// every page — supplies dark overrides under `:root[data-theme="dark"]`.
+// The attribute is set before first paint by _includes/theme.html.
+//
+// Everything colour-related sits inside `@media screen`, so printing any page
+// (and exporting the CV to PDF) always uses the light/paper version.
+
+$d-bg:          #1b1d21;   // page background
+$d-bg-soft:     #23262b;   // code, table stripes, message blocks
+$d-bg-inset:    #15171a;   // pre blocks, recessed surfaces
+$d-fg:          #c7ccd3;   // body text
+$d-fg-strong:   #e9ecf0;   // headings, strong, titles
+$d-fg-muted:    #8b929c;   // dates, captions,小字
+$d-border:      #2f333a;
+$d-link:        #6cb6f2;   // lighter than poole's #268bd2 for contrast on dark
+$d-code:        #e79aa6;
+$d-sidebar:     #131417;   // slightly darker than content, reads as chrome
+$d-comment:     #6f7a86;
+
+/* ==========================================================================
+SIDEBAR TOGGLE BUTTON (styled for both themes)
+========================================================================== */
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .45em;
+    margin-top: .6rem;
+    padding: 0;
+    font: inherit;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, .75);
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    svg {
+        width: 1em;
+        height: 1em;
+        flex: 0 0 auto;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: #fff;
+        text-decoration: underline;
+    }
+}
+
+/* Show the icon + label for the theme the button switches TO. */
+.theme-toggle__sun,
+.theme-toggle__light {
+    display: none;
+}
+
+:root[data-theme="dark"] {
+    .theme-toggle__moon,
+    .theme-toggle__dark {
+        display: none;
+    }
+
+    .theme-toggle__sun,
+    .theme-toggle__light {
+        display: inline-flex;
+    }
+}
+
+/* ==========================================================================
+DARK MODE
+========================================================================== */
+
+@media screen {
+    :root[data-theme="dark"] {
+        color-scheme: dark;   // native scrollbars, form controls, spellcheck
+    }
+
+    /* Everything below is scoped to `body:not(.cv-body)`.
+       The /cv/ page is deliberately excluded: its sheet is a sheet of white
+       paper that must match the exported PDF, so generic dark rules for body /
+       headings / links / code must never reach inside it. Only the CV's chrome
+       (backdrop, footnote) is darkened, at the end of this file. */
+    :root[data-theme="dark"] body:not(.cv-body) {
+
+        /* ---- poole.css: base ---- */
+
+        color: $d-fg;
+        background-color: $d-bg;
+
+        a {
+            color: $d-link;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        strong {
+            color: $d-fg-strong;
+        }
+
+        hr {
+            border-top-color: $d-border;
+            border-bottom-color: transparent;
+        }
+
+        abbr {
+            color: $d-fg-muted;
+        }
+
+        abbr[title] {
+            border-bottom-color: $d-border;
+        }
+
+        code {
+            color: $d-code;
+            background-color: $d-bg-soft;
+        }
+
+        pre {
+            background-color: $d-bg-inset;
+        }
+
+        pre code {
+            color: inherit;
+            background-color: transparent;
+        }
+
+        blockquote {
+            color: $d-fg-muted;
+            border-left-color: $d-border;
+        }
+
+        table,
+        td,
+        th {
+            border-color: $d-border;
+        }
+
+        tbody tr:nth-child(odd) td,
+        tbody tr:nth-child(odd) th {
+            background-color: $d-bg-soft;
+        }
+
+        .message {
+            color: $d-fg;
+            background-color: $d-bg-soft;
+        }
+
+        /* ---- poole.css: posts, pages, pagination ---- */
+
+        .masthead-title,
+        .masthead-title a,
+        .page-title,
+        .post-title,
+        .post-title a {
+            color: $d-fg-strong;
+        }
+
+        .masthead-title small,
+        .post-date,
+        .post-date-horizon {
+            color: $d-fg-muted;
+        }
+
+        .related {
+            border-top-color: $d-border;
+        }
+
+        .related-posts li small {
+            color: $d-fg-muted;
+        }
+
+        .related-posts li a:hover {
+            color: $d-link;
+        }
+
+        .pagination {
+            color: $d-fg-muted;
+        }
+
+        .pagination-item {
+            border-color: $d-border;
+        }
+
+        a.pagination-item:hover {
+            background-color: $d-bg-soft;
+        }
+
+        /* ---- hyde.css: sidebar ---- */
+
+        .sidebar {
+            background-color: $d-sidebar;
+        }
+
+        /* ---- syntax.css: code highlighting ---- */
+
+        .highlight {
+            .c, .c1, .cm, .cs, .cp, .ni, .w  { color: $d-comment; }
+            .k, .kc, .kd, .kn, .kp, .kr      { color: #86b8ff; }
+            .kt, .nc, .nn, .nb, .bp          { color: #7fd1b9; }
+            .o, .ow                          { color: $d-fg; }
+            .m, .mf, .mh, .mi, .mo, .il      { color: #f0a860; }
+            .s, .s1, .s2, .sb, .sc, .sd,
+            .se, .sh, .si, .sx, .sr, .ss     { color: #e2908f; }
+            .na, .nt                         { color: #82c7f5; }
+            .nf                              { color: #d6a2ec; }
+            .no, .nv, .vc, .vg, .vi,
+            .nl, .nd                         { color: #d7ba7d; }
+            .gh, .gu, .gp                    { color: #a8b3c0; }
+            .go                              { color: $d-fg-muted; }
+            .gt                              { color: #b5d68a; }
+
+            .err, .gr, .ne {
+                color: #f08a8a;
+                background-color: transparent;
+            }
+
+            .gd {
+                background-color: rgba(240, 120, 120, .12);
+                border-color: rgba(240, 120, 120, .35);
+            }
+
+            .gi {
+                background-color: rgba(120, 200, 140, .12);
+                border-color: rgba(120, 200, 140, .35);
+            }
+
+            .hll {
+                background-color: rgba(255, 230, 120, .14);
+            }
+        }
+
+        .css .o,
+        .css .o + .nt,
+        .css .nt + .nt {
+            color: $d-comment;
+        }
+
+        /* ---- main.css: the /resume/ page ----
+           `&` is the body element itself, hence &.resume-body, not a descendant. */
+
+        &.resume-body {
+            header {
+                border-bottom-color: $d-border;
+            }
+
+            .footer {
+                border-top-color: $d-border;
+            }
+
+            .section-title:after {
+                background: $d-fg-muted;
+            }
+
+            /* keep the yellow highlight, but opaque enough for black text */
+            a {
+                background: rgba(245, 215, 110, .88);
+            }
+        }
+    }
+
+    /* ---- cv.css: the /cv/ page ----
+       Only the chrome goes dark. The sheet itself stays white: it is paper, and
+       it must look the same as the PDF it exports to — which is exactly why the
+       rules above exclude .cv-body instead of overriding leaks one by one. */
+
+    :root[data-theme="dark"] .cv-body {
+        background: #101215;
+    }
+
+    :root[data-theme="dark"] .cv-footnote {
+        color: $d-fg-muted;
+    }
+}

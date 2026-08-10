@@ -1,0 +1,34 @@
+<script>
+// Resolve the colour theme before first paint, so there is no light flash.
+// Must stay inline and early in <head>; do not move below the stylesheets.
+(function () {
+    var KEY = 'theme';
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function stored() {
+        try { return localStorage.getItem(KEY); } catch (e) { return null; }  // private mode
+    }
+
+    function apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    apply(stored() || (mq.matches ? 'dark' : 'light'));
+
+    // Keep following the system as long as the visitor has not chosen explicitly.
+    function onSystemChange(e) {
+        if (!stored()) apply(e.matches ? 'dark' : 'light');
+    }
+    if (mq.addEventListener) {
+        mq.addEventListener('change', onSystemChange);
+    } else if (mq.addListener) {
+        mq.addListener(onSystemChange);  // Safari < 14
+    }
+
+    window.toggleTheme = function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+    };
+})();
+</script>

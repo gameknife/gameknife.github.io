@@ -1,0 +1,11 @@
+---
+---
+
+// -> /theme.css — dark mode overrides + the sidebar toggle button.
+//
+// Loaded LAST on every page (blog, /resume/, /cv/) so it can override the
+// vendored public/css/* files as well as main.css and cv.css.
+//
+// The partial is named `dark-mode` rather than `theme` on purpose: `@import
+// 'theme'` could resolve back to this very file instead of _sass/_theme.scss.
+@import 'dark-mode';
