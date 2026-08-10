@@ -1,33 +1,40 @@
--   qualification: Programming
+-   qualification: Graphics & Engine Programming
     description: 
     - <ul>
-    - <lis>十余年c/c++/c#编程经验，超过5年js/ts等动态语言经验</lis>
-    - <lis>精通slang/hlsl/glsl等着色器语言和各种tricks，持续实践并跟进各类渲染架构下的特殊渲染效果实现</lis>
-    - <lis>瞄准未来的图形渲染趋势，积极跟进实践硬件光追，现代渲染设施，于2024年启动新的开源研究项目</lis>
-    - <lis>常年更新维护多个个人开源项目(涉及游戏引擎/软件渲染器/web渲染器/profile工具等)，作为业余提升</lis>
-    - <lis>坚实的高等数学/线性代数基础，图形学原理知识，从底层实现硬件渲染流程的能力与实践</lis>
-    - <lis>熟悉多种现代游戏引擎结构(CryEngine/UnrealEngine/Unity)，熟悉多种常用设计模式</lis>
-    - <lis>熟悉现代桌面/移动平台显卡硬件加速原理和优化实践</lis>
-    - <lis>具备macOS/linux下的开发能力</lis>
-    - <lis>熟悉nodejs/electron/koa等框架，利用其开发完成多种资源处理/管理的cmd/桌面工具，以及部署相关的web服务入口</lis>
+    - <lis>十余年 C++/C# 编程经验与 5+ 年 JS/TS 动态语言经验；精通 Modern C++20 与 Vulkan 跨平台底层架构 (Windows / Linux / macOS / iOS / Android)，具备独立自研从底层光栅化到 Ray Query 光线追踪引擎的全栈能力</lis>
+    - <lis>精通 Slang / HLSL / GLSL 着色器语言，深入实践实时路径追踪 (1/2spp + 时域降噪)、Visibility Buffer、Full Bindless GPU 资源管理、SHARC 辐射缓存、3D Gaussian Splatting (高斯溅射) 混合共渲染以及 DLSS/FSR/SGSR2 等主流超分方案</lis>
+    - <lis>坚实的高等数学与线性代数推导功底，曾独立手写 CPU 端 SoftRenderer，对光栅化管线、透视投影、SIMD 指令集加速与多线程 Task 调度有极强的底层掌控</lis>
+    - <lis>精通游戏引擎基础设施设计，熟练运用 ECS (EnTT) 模式、entt::meta 类型反射系统、Jolt 物理引擎整合、ImGui 节点化材质/低代码编辑器，以及 QuickJS / TypeScript 运行时热重载</lis>
+    - <lis>深入理解现代商业游戏引擎架构，具备 Unreal Engine 4/5 (蓝图/C++/GeometryScript/CSM/Scalability)、Unity (C#/Shader/MatCap/GC 优化/ARKit) 及 CryEngine 的核心开发与性能优化经验</lis>
     - </ul>
     - <br>
 
--   qualification: Art
+-   qualification: AI Native & Toolchain
     description:
 
     - <ul>
-    - <lis>从小爱好绘画，接受专业美术训练，较好的美术基础和审美</lis>
-    - <lis>熟练使用生产力工具(3dsmax/cinema4d/blender/photoshop/substance designer/painter),理解并实践美术工作流</lis>
-    - <lis>与美术专业同事有良好的共识和交流基础以及游戏偏好</lis>
+    - <lis>前瞻性的 AI Native 与 3D 内容工具链视野，设计 OpenSCAD DSL 原生解析求值器与 LDraw 乐高/LGEO 资产导入管线，实现结构化 3D 内容在引擎运行时的可解析与可编辑</lis>
+    - <lis>构建 AI Agent 无头渲染截图 (gnb shot)、脚本驱动断言验证与 CI 视觉回归/Parity 校验回路，形成“生成 → 运行 → 验证 → 迭代”的闭环</lis>
+    - <lis>整合 llama.cpp / Gemma 本地 OpenAI 兼容推理服务与 WebRTC 远程渲染 (Remote Play)，赋能 AI 3D 资产生成、自动化测试及游戏内决策</lis>
+    - <lis>熟练设计跨平台 CLI 工具链 (gnb)，精通 VulkanGpuTimer 与 Superluminal Profiler 性能分析集成，具备 Node.js / Electron / Koa 桌面与 Web 工具链开发及 GitHub Actions / GitLab CI 部署经验</lis>
     - </ul>
     - <br>
 
--   qualification: Gaming
+-   qualification: Art & Aesthetics
     description:
 
     - <ul>
-    - <lis>94年接触游戏，硬核主机游戏玩家，steam深度用户(23级,200+游戏收藏,2000+总游戏时长)</lis>
-    - <lis>参与部分游戏mod(minecraft forge等)制作</lis>
+    - <lis>从小爱好绘画，接受专业美术训练，具备扎实的美术写生基础与良好的审美素养</lis>
+    - <lis>熟练使用生产力工具 (3ds Max / Cinema 4D / Blender / Photoshop / Substance Designer & Painter)，理解并实践技术美术 (TA) 工作流</lis>
+    - <lis>与美术专业团队保持良好共识与沟通协作基础，熟知各类游戏风格的美术实现细节与管线对接</lis>
+    - </ul>
+    - <br>
+
+-   qualification: Gaming & Experience
+    description:
+
+    - <ul>
+    - <lis>94年接触游戏，硬核主机与 PC 游戏玩家，Steam 深度用户 (23级, 200+ 游戏收藏, 2000+ 总游戏时长)</lis>
+    - <lis>深度参与游戏 MOD 制作 (如 Minecraft Forge 拓展、行为包等) 与玩法机制预研</lis>
     - </ul>
     - <br>

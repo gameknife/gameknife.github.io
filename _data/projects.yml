@@ -2,39 +2,48 @@
     company: Personal
     period: 2024.5 - Current
     description:
+    - <img src="https://github.com/gameknife/gkNextEngine/releases/download/readme-assets-v1/gknexteditor.webp" alt="gkNextEditor" style="width:100%;padding:0 0 1em 0;">
+    - <img src="https://github.com/gameknife/gkNextEngine/releases/download/readme-assets-v1/confroom.webp" alt="Real-Time Path Tracing" style="width:100%;padding:0 0 1em 0;">
     - <br>
 
-    - <li>现代渲染设施研究</li>
+    - <li>现代 GPU 渲染设施与光线追踪</li>
     - <ul>
     - <hr/>
-    - <lis>Full GPU Driven的光栅化渲染调度</lis>
-    - <lis>Full Bindless的GPU资源管理</lis>
-    - <lis>基于路径追踪的硬件光追</lis>
-    - <lis>基于路径追踪的硬件/软件追踪的实时探针</lis>
-    - <lis>多种性能配置的全局照明系统</lis>
-    - <lis>基于Vulkan的全平台现代渲染框架</lis>
+    - <lis>基于 C++20 与 Vulkan 的全平台 3D 渲染引擎 (Windows / Linux / macOS / iOS / Android)</lis>
+    - <lis>实时路径追踪 (1/2spp 采样 + 时域复用 + 重投影 + à-trous/JBF 降噪) 与 Hybrid 渲染管线</lis>
+    - <lis>现代 GPU 光栅管线：Visibility Buffer、Full Bindless 资源管理、GPU-Driven 单 Draw 提交、Soft Mesh Shader</lis>
+    - <lis>硬件 Ray Query 光照计算、SHARC 世界辐射缓存复用 (Radiance Cache) 与 ReSTIR DI 全局照明</lis>
+    - <lis>3D Gaussian Splatting (PlayCanvas SOG v2) 硬件 Billboard 与 Triangle Mesh 同帧共渲染</lis>
+    - <lis>完整集成主流超分与抗锯齿管线 (DLSS / DLSS-RR / FidelityFSR 3.1 / SGSR2 / Native TAAU)</lis>
     - </ul>
     - <br>
 
-    - <li>现代引擎基础设施研究</li>
+    - <li>引擎基础设施与运行时</li>
     - <ul>
     - <hr/>
-    - <lis>基于ImGUI的lowcode编辑器框架</lis>
-    - <lis>Jolt物理引擎的整合</lis>
-    - <lis>基于vcpkg和cmake的构建系统</lis>
-    - <lis>基于gltf的资产编辑</lis>
-    - <lis>全面的输入设备支持</lis>
-    - <lis>基于miniaudio的音频支持</lis>
+    - <lis>ECS (EnTT) 模式 + entt::meta 类型反射系统，全自动对接编辑器属性面板、撤销/重做与脚本绑定</lis>
+    - <lis>基于 ImGui 的可视化低代码编辑器 (节点化材质图、cvar 实时调优、场景可视化编辑)</lis>
+    - <lis>QuickJS 嵌入式运行时 + TypeScript 脚本热重载 (无外部 Node 依赖，改动即时生效)</lis>
+    - <lis>Jolt Physics 物理引擎集成 (碰撞、抓取拖拽、角色与载具移动控制)</lis>
+    - <lis>WebRTC 远程渲染与 Vulkan Video 硬件编码 (Remote Play 浏览器零安装控制)</lis>
     - </ul>
     - <br>
 
-    - <li>游戏事例和工具项目</li>
+    - <li>3D 内容管线与 AI Native 工作流</li>
     - <ul>
     - <hr/>
-    - <lis>MagicaLego乐高搭建游戏项目</lis>
-    - <lis>可交互渲染器</lis>
-    - <lis>渐进式静帧Benchmark</lis>
-    - <lis>动态Benchmark</lis>
+    - <lis>多格式结构化资产导入：glTF 2.0、LDraw 乐高 (.ldr/.mpd) 材质映射、OpenSCAD DSL 原生解析与 CSG 求值器、ScadRig 骨骼动画</lis>
+    - <lis>AI Native 闭环：无头渲染截图判决 (gnb shot)、脚本驱动断言验证与 CI 视觉回归/Parity 校验</lis>
+    - <lis>本地 AI 推理支持：集成 llama.cpp / Gemma 本地 OpenAI 兼容服务，支持 AI 3D 内容生成与游戏内决策</lis>
+    - </ul>
+    - <br>
+
+    - <li>工程工具链与玩法原型</li>
+    - <ul>
+    - <hr/>
+    - <lis>统一 CLI 工具链 gnb (支持 doctor / setup / build / run / shot / validate / benchmark 等一键工作流)</lis>
+    - <lis>内置逐 pass CPU/GPU Profiler (VulkanGpuTimer) 与 Superluminal API 深度集成</lis>
+    - <lis>多游戏玩法原型与 Demo：MagicaLego 乐高搭建、Brotato3D、BrickPlayer、NextDayZ、动态/静帧 Benchmark</lis>
     - </ul>
     - <br>
     - Hosted on <a href="https://github.com/gameknife/gkNextEngine" target="_blank">https://github.com/gameknife/gkNextEngine</a>
