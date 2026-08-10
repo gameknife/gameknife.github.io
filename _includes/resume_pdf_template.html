@@ -1,0 +1,78 @@
+<div id="pdf-resume-wrapper" class="pdf-resume-wrapper">
+    <div class="pdf-resume-header">
+        <h1 class="pdf-candidate-name">易开明 (Kaiming Yi)</h1>
+        <p class="pdf-candidate-title">资深 3D 图形与游戏引擎架构师 / AI Native 工具链工程师</p>
+        <div class="pdf-candidate-contact">
+            <span><strong>Email:</strong> {{ site.email_address }}</span> &bull; 
+            <span><strong>GitHub:</strong> github.com/{{ site.github_username }}</span> &bull; 
+            <span><strong>Portfolio:</strong> gameknife.github.io</span> &bull; 
+            <span><strong>Location:</strong> {{ site.location }}</span>
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">专业技能 &bull; Core Competencies</h2>
+        <div class="pdf-skills-grid">
+            {% for qual in site.data.skills %}
+            <div class="pdf-skill-item">
+                <h3 class="pdf-item-title">{{ qual.qualification }}</h3>
+                <div class="pdf-item-body">{{ qual.description }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">工作经历 &bull; Work Experience</h2>
+        <div class="pdf-jobs-list">
+            {% for job in site.data.jobs %}
+            <div class="pdf-job-item">
+                <div class="pdf-item-header">
+                    <span class="pdf-job-title">{{ job.title }}</span>
+                    <span class="pdf-job-company">{{ job.company }}</span>
+                    <span class="pdf-job-period">{{ job.period }}</span>
+                </div>
+                {% if job.description %}
+                <p class="pdf-job-desc">{{ job.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">重点项目经历 &bull; Key Projects</h2>
+        <div class="pdf-projects-list">
+            {% for project in site.data.projects %}
+            <div class="pdf-project-item">
+                <div class="pdf-item-header">
+                    <span class="pdf-project-title">{{ project.title }}</span>
+                    <span class="pdf-project-company">{{ project.company }}</span>
+                    <span class="pdf-project-period">{{ project.period }}</span>
+                </div>
+                <div class="pdf-project-body">
+                    {{ project.description }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">教育背景 &bull; Education</h2>
+        <div class="pdf-education-list">
+            {% for edu in site.data.education %}
+            <div class="pdf-edu-item">
+                <div class="pdf-item-header">
+                    <span class="pdf-edu-qual">{{ edu.qualification }}</span>
+                    <span class="pdf-edu-school">{{ edu.school }}</span>
+                    <span class="pdf-edu-period">{{ edu.period }}</span>
+                </div>
+                {% if edu.description %}
+                <p class="pdf-edu-desc">{{ edu.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -51,10 +51,194 @@ a {
 }
 
 /* ==========================================================================
-PRINT
+DOWNLOAD PDF BUTTON & STANDARD PDF RESUME STYLES
 ========================================================================== */
 
-/* Basic print styles from https://html5boilerplate.com/ */
+.resume-actions {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.download-pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border: 1px solid #475569;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+
+    svg {
+        stroke: #38bdf8;
+        transition: transform 0.25s ease;
+    }
+
+    &:hover {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        transform: translateY(-2px);
+
+        svg {
+            transform: translateY(2px);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+/* Printable PDF Standard Resume Wrapper */
+.pdf-resume-wrapper {
+    display: none;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    padding: 24px 32px;
+
+    &.exporting-pdf {
+        display: block !important;
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        width: 800px;
+    }
+}
+
+.pdf-resume-header {
+    text-align: center;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+
+    .pdf-candidate-name {
+        font-size: 22pt;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 4px 0;
+        letter-spacing: 1px;
+    }
+
+    .pdf-candidate-title {
+        font-size: 11pt;
+        font-weight: 600;
+        color: #0284c7;
+        margin: 0 0 8px 0;
+    }
+
+    .pdf-candidate-contact {
+        font-size: 9.5pt;
+        color: #475569;
+
+        strong {
+            color: #0f172a;
+        }
+
+        span {
+            margin: 0 4px;
+        }
+    }
+}
+
+.pdf-section {
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+}
+
+.pdf-section-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1.5px solid #94a3b8;
+    padding-bottom: 4px;
+    margin: 0 0 10px 0;
+}
+
+.pdf-skills-grid, .pdf-jobs-list, .pdf-projects-list, .pdf-education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pdf-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+
+.pdf-job-title, .pdf-project-title, .pdf-edu-qual, .pdf-item-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.pdf-job-company, .pdf-project-company, .pdf-edu-school {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #0369a1;
+}
+
+.pdf-job-period, .pdf-project-period, .pdf-edu-period {
+    font-size: 9.5pt;
+    color: #64748b;
+    font-style: italic;
+}
+
+.pdf-item-body, .pdf-project-body, .pdf-job-desc, .pdf-edu-desc {
+    font-size: 9.5pt;
+    color: #334155;
+
+    ul {
+        margin: 4px 0;
+        padding-left: 18px;
+    }
+
+    lis, li {
+        margin-bottom: 3px;
+        display: list-item;
+    }
+
+    hr {
+        display: none;
+    }
+
+    img {
+        max-height: 160px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin: 6px 0;
+    }
+
+    a {
+        color: #0284c7 !important;
+        background: transparent !important;
+        text-decoration: underline !important;
+    }
+}
+
+/* ==========================================================================
+PRINT STYLES
+========================================================================== */
 
 @media print {
     *,
@@ -72,6 +256,27 @@ PRINT
 
     body {
         border: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .pdf-resume-wrapper {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     a,
@@ -80,47 +285,39 @@ PRINT
     }
 
     a[href]:after {
-        content: " (" attr(href) ")";
+        content: "";
     }
 
     abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-
-    /*
-    * Don't show links that are fragment identifiers,
-    * or use the `javascript:` pseudo protocol
-    */
-
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
         content: "";
     }
+
     pre,
     blockquote {
         border: 1px solid #999;
         page-break-inside: avoid;
     }
-    /*
-    * Printing Tables:
-    * http://css-discuss.incutio.com/wiki/Printing_Tables
-    */
+
     thead {
         display: table-header-group;
     }
+
     tr,
     img {
         page-break-inside: avoid;
     }
+
     img {
         max-width: 100% !important;
     }
+
     p,
     h2,
     h3 {
         orphans: 3;
         widows: 3;
     }
+
     h2,
     h3,
     header {
