@@ -137,10 +137,10 @@ education:
   - degree: BA Game Development
     school: Communication University of China
     period: 2007 – 2011
--   degree: High School
+  - degree: High School
     school: Chengdu No.7 Middle School
     period: 2004 – 2007
-    
+
 additional:
   - label: 美术
     text: CG 静帧、油画、写生与过程材质作品见个人站点。
