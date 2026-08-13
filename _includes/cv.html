@@ -75,13 +75,13 @@
                 </p>
                 <p class="cv-entry__period">{{ project.period }}</p>
             </div>
+            {% if project.link %}
+            <p class="cv-entry__link"><span class="cv-link-icon">🔗</span><a href="{{ project.link }}">{{ project.link | remove: 'https://' }}</a></p>
+            {% endif %}
             {% if project.highlights.size > 0 %}
             <ul class="cv-bullets">
                 {% for point in project.highlights %}<li>{{ point }}</li>{% endfor %}
             </ul>
-            {% endif %}
-            {% if project.link %}
-            <p class="cv-entry__link"><a href="{{ project.link }}">{{ project.link | remove: 'https://' }}</a></p>
             {% endif %}
         </div>
         {% endfor %}

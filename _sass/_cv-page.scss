@@ -297,8 +297,19 @@ body.cv-body {
 }
 
 .cv-entry__link {
-    margin: 3pt 0 0;
+    margin: 2pt 0 0;
+    padding-left: 10pt;
     font-size: 8.8pt;
+}
+
+.cv-link-icon {
+    display: inline-block;
+    margin-right: 3.5pt;
+    font-size: 7.5pt;
+    color: var(--cv-muted);
+    vertical-align: middle;
+    position: relative;
+    top: -0.5px;
 }
 
 .cv-bullets {

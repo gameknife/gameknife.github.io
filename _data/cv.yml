@@ -18,7 +18,6 @@ basics:
   location: Chengdu, China
   email: kaimingyi@163.com
   github: gameknife
-  linkedin: kaimingyi
   site: gameknife.github.io
 
 # 个人简介：3-4 行。招聘方只读这一段的概率最高，放最有辨识度的信息。
@@ -98,10 +97,10 @@ projects:
     period: 2024.5 – Present
     link: https://github.com/gameknife/gkNextEngine
     highlights:
-      - "基于 C++20 + Vulkan 的全平台渲染引擎；实现实时路径追踪（1/2spp + 时域复用 + 重投影 + à-trous 降噪）与光栅混合渲染管线"
-      - "现代 GPU 驱动架构：支持 Visibility Buffer、Full Bindless、GPU-Driven 单 Draw 提交；集成 SHARC 辐射缓存、ReSTIR DI、3DGS 共渲染与 DLSS 3 / FSR 3.1"
-      - "高度模块化运行时：集成 entt::meta 反射系统对接编辑器、支持 QuickJS + TypeScript 脚本热重载与 Jolt 物理引擎"
-      - "AI Native 效能环：自研 gnb 统一命令行工具，集成 llama.cpp 本地推理及 GitHub Actions CI 视觉回归断言"
+      - "C++20 + Vulkan 跨平台混合渲染引擎，自研实时路径追踪与时域降噪管线"
+      - "现代 GPU-Driven 架构，集成 Visibility Buffer、Full Bindless、SHARC / ReSTIR DI、3DGS 共渲染及 DLSS 3 / FSR 3.1"
+      - "模块化运行时：支持 EnTT ECS 与元反射、QuickJS + TypeScript 热重载及 Jolt 物理引擎"
+      - "AI Native 工具链：自研 gnb CLI、集成 llama.cpp 本地推理及 CI 视觉回归测试"
 
   - title: SoftRenderer
     role: 个人开源软件渲染器
