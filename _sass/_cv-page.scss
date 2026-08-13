@@ -452,7 +452,18 @@ body.cv-body {
         page-break-after: avoid;
     }
 
-    .cv-entry,
+    .cv-entry {
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    .cv-entry__head {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .cv-entry--skill,
+    .cv-entry--compact,
     .cv-additional__row,
     .cv-bullets > li {
         break-inside: avoid;
