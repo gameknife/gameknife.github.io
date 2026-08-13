@@ -9,6 +9,8 @@
         </h1>
         <p class="cv-headline">{{ me.headline }}</p>
         <ul class="cv-contact">
+            {% if me.phone %}<li id="cv-phone">{{ me.phone }}</li>{% endif %}
+            {% if me.wechat %}<li id="cv-wechat">微信: {{ me.wechat }}</li>{% endif %}
             {% if me.email %}<li><a href="mailto:{{ me.email }}">{{ me.email }}</a></li>{% endif %}
             {% if me.github %}<li><a href="https://github.com/{{ me.github }}">github.com/{{ me.github }}</a></li>{% endif %}
             {% if me.linkedin %}<li><a href="https://www.linkedin.com/in/{{ me.linkedin }}">linkedin.com/in/{{ me.linkedin }}</a></li>{% endif %}

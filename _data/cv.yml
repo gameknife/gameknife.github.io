@@ -23,74 +23,74 @@ basics:
 
 # 个人简介：3-4 行。招聘方只读这一段的概率最高，放最有辨识度的信息。
 # 注意保持单行：YAML 折叠成多行会在换行处插入空格，中文里会显示成难看的空隙。
-summary: 15 年以上游戏与实时图形研发经验，覆盖端游、手游与自研引擎全链路。精通 Modern C++20 与 Vulkan 跨平台底层架构，独立自研 gkNextEngine（实时路径追踪 + GPU-Driven 光栅混合管线，五平台覆盖）；在 Unreal Engine 4/5 与 Unity 上有多个大规模商业项目的图形效果落地与性能优化经验。
+summary: 15 年实时图形与引擎研发经验，横跨大型商业项目（腾讯天美 T11、完美世界）与前沿自研引擎，具备多款游戏产品上线与长线运营调优经验。精通 Modern C++20 与 Vulkan 跨平台底层架构；主导过多个大规模商业项目的图形效果落地与中低端机型专项性能优化，擅长定位与攻坚在线项目各类疑难 Crash 及性能瓶颈；深耕 AI Native 智能工具链与工程效能闭环，具备全栈开发与团队技术引领能力。
 
 skills:
   - group: 图形与引擎
     group_en: Graphics & Engine
     items:
-      - Modern C++20 / Vulkan 全平台底层架构（Windows / Linux / macOS / iOS / Android）；线性代数与光栅管线推导、SIMD 加速、多线程 Task 调度，独立手写 CPU 端 SoftRenderer
-      - Slang / HLSL / GLSL；实时路径追踪与时域降噪、Visibility Buffer、Full Bindless、SHARC 辐射缓存、3D Gaussian Splatting、DLSS / FSR / SGSR2
-      - 引擎基础设施：EnTT ECS 与 entt::meta 类型反射、Jolt Physics、QuickJS / TypeScript 热重载
-      - 商业引擎：Unreal Engine 4/5（C++ / 蓝图 / 渲染 / 运行时调试 / 客户端，DS，编辑器性能优化）、Unity（C# / Shader / GC 优化 / ARKit）、CryEngine
+      - 精通 Modern C++20 与 Vulkan 跨平台底层架构（Windows / Linux / macOS / iOS / Android）；具备坚实的数学功底，精通光栅管线推导、SIMD 加速与多线程 Task 调度，独立手写 CPU 软渲染器
+      - 熟练运用 Slang / HLSL / GLSL 着色器语言；深入实践实时路径追踪（1/2 spp + 时域降噪）、Visibility Buffer、Full Bindless 资源管理、SHARC 辐射缓存、3D Gaussian Splatting 共渲染以及 DLSS / FSR / SGSR2 等主流超分方案
+      - 熟练设计现代引擎基础设施：集成 EnTT ECS 模式、entt::meta 反射系统、Jolt 物理引擎以及 QuickJS / TypeScript 运行时热重载
+      - 深入理解商业引擎架构：具备 Unreal Engine 4/5（C++ / 蓝图 / 渲染 / 运行时调试 / DS / 编辑器性能优化）、Unity（C# / Shader / 内存与 GC 优化 / ARKit）及 CryEngine 核心开发经验
 
   - group: AI Native 与工具链
     group_en: AI Native & Toolchain
     items:
-      - 基于 Codex / Claude Code 等 agent 工具，持续、工程化地推进中型引擎项目的开发与实践
-      - AI Agent 闭环：无头运行截图判决、脚本驱动断言验证、CI 视觉回归与 Parity 校验
-      - 本地推理与远程渲染：llama.cpp / Gemma 本地 OpenAI 兼容服务、基于本地LLM的本地开发辅助和游戏运行时推理
-      - 结构化 3D 内容与工程效能：OpenSCAD DSL 原生解析与 CSG 求值器、LDraw 乐高资产导入、glTF 2.0；跨平台 CLI（gnb）、VulkanGpuTimer / Superluminal 性能分析、Node.js / Electron、GitHub Actions / GitLab CI
+      - 熟练将 AI Agent（如 Claude Code / Codex）引入实际工程，实现“开发 - Headless 截图/脚本断言 - CI 视觉回归 - 差异校验”的 AI Agent 自动化闭环流程
+      - 具备前沿的 AI 运行时整合能力：打通 llama.cpp / Gemma 本地 OpenAI 兼容推理服务与远程 WebRTC 渲染，探索 LLM 在游戏运行时的辅助决策与智能交互
+      - 精通几何建模与资产管线：开发 OpenSCAD DSL 原生解析与 CSG 几何求值引擎，支持 LDraw 乐高资产导入及 glTF 2.0 格式规范
+      - 完善的工程效能栈：自研跨平台 CLI 工具链（gnb），熟练使用 VulkanGpuTimer 与 Superluminal 进行性能 Profiling，具备 Node.js / Electron 开发及 GitHub Actions / GitLab CI 部署经验
 
   - group: 技术美术
     group_en: Technical Art
     items:
-      - 从小接受专业美术训练，具备写生基础与审美判断力；3ds Max / C4D / Blender / Photoshop / Substance Designer & Painter，理解并实践 TA 工作流与美术管线对接
+      - 具备专业美术绘画训练与写生基础，拥有良好的审美判断力；熟练使用 3ds Max / C4D / Blender 及 Substance 套件，无缝对接 TA 工作流与美术生产管线
 
 experience:
-  - title: Technical Expert
-    company: PerfectWorld TZY
+  - title: 技术专家
+    company: 完美世界·天智游工作室
     period: 2023.5 – Present
     summary: 负责工作室新项目的基础设施建设、技术选型与关键技术攻关。
     highlights:
-      - 大规模多人协作地形编辑方案与落地 https://www.bilibili.com/video/BV1sx421U75D
-      - 大型团队网络下的Perforce服务优化，多分支协同开发，编辑器性能保障
-      - 基于UE5的并行化打包方案与落地
+      - 主导大规模多人协作地形编辑方案与性能优化落地（<a href="https://www.bilibili.com/video/BV1sx421U75D" target="_blank">B 站演示视频</a>）
+      - 针对大型团队优化 Perforce 分支协同与版本流控制，解决网络同步瓶颈，保障编辑器高帧率与稳定性
+      - 设计基于 UE5 的并行化打包与分布式 Cook 方案，显著缩短 CI 自动出档时间
 
-  - title: Senior Engineer (T11)
-    company: Tencent（IEG R&D / TiMi Studio Group）
+  - title: 高级工程师 (T11)
+    company: 腾讯·天美工作室群
     period: 2015.7 – 2023.5
     summary: 供职于研发部与天美工作室群，负责重要前端系统开发、图形效果实现与项目整体性能优化。
     highlights:
-      - "Project X（BR 手游，TiMi L2，2021–2023）：全平台并行 CI 出档与蓝图编译检查；GeometryScript 过程化关卡 blockout 流程；Puerts + MVC 局外 UI 架构与局内高性能 HUD；跨平台输入映射与键位云端同步"
-      - "Project M（MOBA 手游，TiMi L2，2019–2021）：帧同步启发式 A* 动态寻路与实时局部导航更新；针对 MOBA 视点的 UE4 CSM 阴影优化；低端机型 Fragment / 内存 / Scalability 专项优化；UE4 海外发行全流程"
-      - "SSKGame《圣斗士星矢》（TiMi L1，2017–2018）：GPU 加速伤害数字系统；shell 特效系统（描边 / 假实时阴影与反射）；局部抗锯齿与展示角色渲染；iOS ARKit 与华为 hiAR 集成"
-      - "Project G《一起来捉妖》（TiMi J5，2016–2017）：MatCap 角色渲染与低成本场景材质方案；相机 + 陀螺仪 AR 与实景光照模拟；美术资源规格设计与每日自动扫描报告"
-      - "早期：过程化地貌生成预研（噪声、水力/热力侵蚀、无限地形 LOD）；Cube 乐高沙盒的 Unity Native 渲染与体素光能传递"
+      - "Project X（BR 手游，TiMi L2）：构建全平台并行 CI 出档与蓝图静态编译检查；基于 GeometryScript 实现过程化关卡 Blockout 流程；落地基于 Puerts 的局外 MVC UI 架构与局内高性能 HUD 渲染"
+      - "Project M（MOBA 手游，TiMi L2）：实现帧同步启发式 A* 动态寻路与局部导航规避；针对 MOBA 视点深度定制 CSM 阴影渲染以降低 DrawCall；负责中低端机型内存、Fragment 及 Scalability 专项调优，保障海外顺利发行"
+      - "SSKGame《圣斗士星矢》（TiMi L1）：开发 GPU 加速伤害数字系统及描边/假实时阴影等 Shell 特效系统；实现局部抗锯齿与展示角色高精度渲染；负责 iOS ARKit 与华为 hiAR 技术的深度集成"
+      - "Project G《一起来捉妖》（TiMi J5）：设计 MatCap 角色渲染与低成本场景材质；实现相机陀螺仪 AR 实景光照模拟；制定美术资源规格并搭建每日自动扫描报告工具"
+      - "早期技术预研：主导过程化无限地形 LOD 建模（集成噪声与水力/热力侵蚀算法）；实现体素沙盒在 Unity 中的 Native 渲染与体素光能传递"
 
-  - title: Senior Kernel System Engineer
-    company: Vistandard
+  - title: 高级内核系统工程师
+    company: 中视典
     period: 2013.4 – 2015.7
     summary: 供职于内核研发部，负责自研虚拟现实引擎 OpenVRP 的设计与开发。
     highlights:
-      - 主导渲染器、场景管理与动画系统设计；抽象 RHI 层（DX11 结构）并实现 OpenGL ES2 / OpenGL 后端
-      - 跨平台线程 / IO / Job 库开发；主导开发 OpenVRP 编辑器（xtp UI 框架）
+      - 主导渲染器、场景管理与骨骼动画系统设计；抽象跨平台 RHI 层，成功实现 OpenGL ES 2.0 / OpenGL 渲染后端
+      - 开发跨平台多线程任务调度（Job System）与高效异步 IO 库；基于 xtp 框架主导开发 OpenVRP 引擎编辑器
 
-  - title: Game Engine Engineer
-    company: Horizon3D
+  - title: 游戏引擎工程师
+    company: 北京永航科技
     period: 2012.9 – 2013.4
     summary: 供职于底层研发部，负责尖端技术预研、引擎维护与性能优化。
     highlights:
-      - "X52《QQ 炫舞 2》：8 万根发丝同屏的运动模拟（弹性 / 碰撞 / 飘曳）与各向异性光照渲染，DX9 全 GPU 实现"
-      - 引入 D3D9Ex 解决设备丢失与显存问题；开发外挂 profiler 支持逐版本自动性能跟踪与报告
+      - "X52《QQ 炫舞 2》：在 DX9 架构下利用 GPU 粒子与 Vertex Shader 实现 8 万根发丝的运动模拟及各向异性头发光照渲染"
+      - 引入 D3D9Ex 架构彻底解决 Direct3D 设备丢失与显存溢出问题；开发外挂式 Profiler 实现逐版本自动性能跟踪
 
-  - title: Game Engine Engineer
-    company: Changyou
+  - title: 游戏引擎工程师
+    company: 搜狐畅游
     period: 2011.2 – 2012.9
     summary: 使用 CryEngine 开发 MMO ARPG《蛮荒搜神记》，负责美术工具链、游戏逻辑与性能优化。
     highlights:
-      - 图形与战斗：皮肤模拟 / 变色区域 / 壳材质；帧率无关的实时攻击判定与大型生物部位破坏；双足 IK 调优并扩展四足 IK
-      - 3ds Max 插件开发完善 CryEngine 工具链，为美术提供技术培训；基于内外置 profiler 的性能优化
+      - 实现皮肤渲染、多区域变色与 Shell 壳材质；编写帧率无关的实时攻击判定与大型生物部位受击破坏；优化双足并扩展四足 IK
+      - 开发 3ds Max 插件打通并完善 CryEngine 工具链；使用内置 Profiler 针对大场景进行 DrawCall 与物理碰撞优化
 
 projects:
   - title: gkNextEngine
@@ -98,43 +98,27 @@ projects:
     period: 2024.5 – Present
     link: https://github.com/gameknife/gkNextEngine
     highlights:
-      - "C++20 + Vulkan 全平台引擎；实时路径追踪（1/2spp + 时域复用 + 重投影 + à-trous/JBF 降噪）与 Hybrid 渲染管线"
-      - "现代 GPU 管线：Visibility Buffer、Full Bindless、GPU-Driven 单 Draw 提交；硬件 Ray Query、SHARC 辐射缓存与 ReSTIR DI；3DGS 与三角网格同帧共渲染，集成 DLSS-RR / FSR 3.1 / SGSR2"
-      - "运行时：entt::meta 反射自动对接编辑器属性、QuickJS + TypeScript 热重载、Jolt Physics、WebRTC 远程渲染，原生云游戏框架"
-      - AI Native 闭环：gnb 统一 CLI、无头截图判决与 CI 视觉回归；集成 llama.cpp / Gemma 本地推理
+      - "基于 C++20 + Vulkan 的全平台渲染引擎；实现实时路径追踪（1/2spp + 时域复用 + 重投影 + à-trous 降噪）与光栅混合渲染管线"
+      - "现代 GPU 驱动架构：支持 Visibility Buffer、Full Bindless、GPU-Driven 单 Draw 提交；集成 SHARC 辐射缓存、ReSTIR DI、3DGS 共渲染与 DLSS 3 / FSR 3.1"
+      - "高度模块化运行时：集成 entt::meta 反射系统对接编辑器、支持 QuickJS + TypeScript 脚本热重载与 Jolt 物理引擎"
+      - "AI Native 效能环：自研 gnb 统一命令行工具，集成 llama.cpp 本地推理及 GitHub Actions CI 视觉回归断言"
 
   - title: SoftRenderer
     role: 个人开源软件渲染器
     period: 2013.10 – Present
     link: https://github.com/gameknife/SoftRenderer
     highlights:
-      - 纯 CPU 实现完整 GPU 图形管线，自研 SIMD 数学库与线程 / Job 抽象，支持可编程着色器管线
-      - Sponza 场景达到可交互的 30+ fps @ i7-7700K；Electron / node-gyp 构建跨平台交互外壳
+      - 纯 CPU 实现完整可编程图形管线，自研高加速 SIMD 数学库与 Job System 抽象，支持自定义顶点/像素着色器
+      - 优化后在 Sponza 场景下达到可交互的 30+ FPS（基于 i7-7700K）；使用 Electron + Node-API 构建跨平台交互外壳
 
   - title: PUBG-Procedural
     role: 个人独立游戏项目（UE4）
     period: 2019.4 – 2019.7
     highlights:
-      - 随机海岛与地貌地标过程生成、道路环路自动生成、宜居点分布与动态关卡加载、植被竞争生长
-      - 类 PUBG 角色状态机与枪械系统；UE4 DS 多人 PVP 同步
-
-  - title: gkENGINE
-    role: 个人开源引擎
-    period: 2010.10 – 2017.1
-    link: https://github.com/gameknife/gkEngine
-    highlights:
-      - 跨平台引擎（Windows / macOS / iOS / Android），统一抽象图形接口、线程与 IO，支持多线程渲染与 Deferred Shading / Lighting 管线
-
-  # 排版预算已满：再加一条项目就会溢出到第 3 页。想换上它，先删掉上面一条。
-  # - title: electron-shadermonki
-  #   role: 个人开源 WebGL 着色器编辑器
-  #   period: 2016.10 – Present
-  #   link: https://github.com/gameknife/electron-shadermonki
-  #   highlights:
-  #     - WebGL Deferred Shading 管线，GLSL 实时编译与预览；自研 glwrap 封装整套 WebGL
+      - 实现了随机海岛、地貌、公路环网的过程化生成，支持动态关卡加载、植被竞争生长模型与类 PUBG 基础枪械系统
+      - 基于 UE4 Dedicated Server 实现多人局域网 PVP 物理运动与网络状态同步
 
 education:
-  # education.yml 里没有年份；这里留空则不渲染，补上即可显示，例如 period: 2008 – 2011
   - degree: MSc Computer Technology
     school: Communication University of China
     period: 2012 – 2014
@@ -147,6 +131,6 @@ education:
 
 additional:
   - label: 美术
-    text: CG 静帧、油画、写生与过程材质作品见个人站点。
+    text: 长期进行 CG 静帧、油画与素描写生创作，过程材质与美术作品见个人站点。
   - label: 游戏
-    text: 1994 年起的硬核主机与 PC 玩家（Steam 23 级 / 200+ 收藏）；参与 Minecraft Forge 等 MOD 开发与玩法预研。
+    text: 1994 年起的主机与 PC 硬核玩家（Steam 23 级 / 200+ 游戏收藏）；曾参与 Minecraft Forge 模组开发与玩法研究。

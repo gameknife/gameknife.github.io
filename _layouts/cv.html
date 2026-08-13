@@ -23,7 +23,7 @@
             <a class="cv-toolbar__back" href="{{ "/resume/" | relative_url }}">&larr; 完整简历</a>
             <div class="cv-toolbar__actions">
                 <span class="cv-toolbar__hint">A4 · 关闭「页眉和页脚」效果最佳</span>
-                <button type="button" class="cv-toolbar__btn" onclick="window.print()">
+                <button type="button" class="cv-toolbar__btn" onclick="downloadPdf()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
@@ -46,10 +46,72 @@
     </p>
 
     <script>
-        // 从简历页带 ?print=1 进来时直接弹出打印对话框
+        // DOM 加载完成后，如果检测到是默认占位符，则将其从 DOM 中移除（避免公开显示）
+        document.addEventListener('DOMContentLoaded', function () {
+            var phoneEl = document.getElementById('cv-phone');
+            if (phoneEl && (phoneEl.textContent.indexOf('1XX-XXXX-XXXX') !== -1 || phoneEl.textContent.trim() === '')) {
+                phoneEl.remove();
+            }
+            var wechatEl = document.getElementById('cv-wechat');
+            if (wechatEl && (wechatEl.textContent.indexOf('微信账号') !== -1 || wechatEl.textContent.trim() === '')) {
+                wechatEl.remove();
+            }
+        });
+
+        // 点击下载按钮时的逻辑
+        function downloadPdf() {
+            var contactList = document.querySelector('.cv-contact');
+            if (!contactList) {
+                window.print();
+                return;
+            }
+
+            var phone = prompt("请输入您的联系电话（留空将不显示）：");
+            if (phone !== null) {
+                var phoneEl = document.getElementById('cv-phone');
+                if (phone.trim() !== '') {
+                    if (!phoneEl) {
+                        phoneEl = document.createElement('li');
+                        phoneEl.id = 'cv-phone';
+                        contactList.insertBefore(phoneEl, contactList.firstChild);
+                    }
+                    phoneEl.textContent = phone;
+                    phoneEl.style.display = '';
+                } else if (phoneEl) {
+                    phoneEl.remove();
+                }
+            }
+
+            var wechat = prompt("请输入您的微信账号（留空将不显示）：");
+            if (wechat !== null) {
+                var wechatEl = document.getElementById('cv-wechat');
+                if (wechat.trim() !== '') {
+                    if (!wechatEl) {
+                        wechatEl = document.createElement('li');
+                        wechatEl.id = 'cv-wechat';
+                        // 插入在电话后面，或者最前面
+                        var phoneEl = document.getElementById('cv-phone');
+                        if (phoneEl && phoneEl.nextSibling) {
+                            contactList.insertBefore(wechatEl, phoneEl.nextSibling);
+                        } else {
+                            contactList.insertBefore(wechatEl, contactList.firstChild);
+                        }
+                    }
+                    wechatEl.textContent = "微信: " + wechat;
+                    wechatEl.style.display = '';
+                } else if (wechatEl) {
+                    wechatEl.remove();
+                }
+            }
+
+            // 触发打印对话框
+            window.print();
+        }
+
+        // 从简历页带 ?print=1 进来时直接触发
         if (window.location.search.indexOf('print=1') !== -1) {
             window.addEventListener('load', function () {
-                window.setTimeout(function () { window.print(); }, 300);
+                window.setTimeout(downloadPdf, 300);
             });
         }
     </script>
