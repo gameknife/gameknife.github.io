@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../data/site';
+import { formatDate, isoDate, postUrl, type Post } from '../../lib/posts';
+
+interface Props { post: Post; feature?: boolean }
+const { post, feature = false } = Astro.props;
+const { title, date, category, description, cover, coverAlt } = post.data;
+const cat = site.categories[category];
+---
+
+<article class:list={['pc', { feature }]}>
+  <a href={postUrl(post)} class="hit" aria-label={title}></a>
+
+  {feature && cover && (
+    <div class="shot">
+      <Image src={cover} alt={coverAlt ?? ''} widths={[400, 800]} sizes="(max-width: 760px) 100vw, 420px" loading="lazy" />
+    </div>
+  )}
+
+  <div class="body">
+    <div class="top tabular">
+      <time datetime={isoDate(date)}>{formatDate(date)}</time>
+      <span class="cat">{cat.label}</span>
+    </div>
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+</article>
+
+<style>
+  .pc {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 1.15rem 1.3rem 1.3rem;
+    transition: border-color .18s, transform .18s;
+    display: flex; flex-direction: column; gap: .9rem;
+  }
+  .pc:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+  .pc:focus-within { border-color: var(--accent); }
+
+  .hit { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+  .hit:focus-visible { outline-offset: -2px; }
+
+  .shot { margin: -1.15rem -1.3rem 0; border-radius: 11px 11px 0 0; overflow: hidden; aspect-ratio: 16 / 9; }
+  .shot :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .body { display: flex; flex-direction: column; gap: .5rem; }
+  .top {
+    display: flex; align-items: center; gap: .6rem;
+    font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
+  }
+  .cat {
+    color: var(--accent);
+    border: 1px solid var(--accent-soft);
+    background: var(--accent-soft);
+    padding: .1rem .4rem; border-radius: 4px;
+  }
+  h3 {
+    font-size: 1.02rem; font-weight: 600; letter-spacing: -.012em; line-height: 1.4;
+  }
+  .pc:hover h3 { color: var(--accent); }
+  .feature h3 { font-size: 1.18rem; }
+  p {
+    margin: 0; font-size: .87rem; color: var(--muted); line-height: 1.65;
+    display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+</style>

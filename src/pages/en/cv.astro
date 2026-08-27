@@ -1,0 +1,148 @@
+---
+// English CV —— 与 /cv/ 共用同一套旧站样式，只换标题语言。
+import Standalone from '../../layouts/Standalone.astro';
+import '../../styles/cv.css';
+import { basics, skills, experience, projects, education, additional } from '../../data/cv';
+
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '');
+
+const profile =
+  'Fifteen years in real-time graphics and engine development, spanning large commercial titles ' +
+  '(Tencent TiMi T11, Perfect World) and independent engine work. Deep expertise in Modern C++20 and ' +
+  'cross-platform Vulkan architecture; led graphics feature delivery and low-end device optimization on ' +
+  'multiple shipped titles, with a track record of diagnosing hard crashes and performance bottlenecks in ' +
+  'live projects. Currently building AI-native tooling and engineering feedback loops around a ' +
+  'self-authored real-time path tracing engine.';
+---
+
+<Standalone
+  title={`${basics.name_en} CV (EN)`}
+  description={`${basics.name_en} — Senior Graphics & Game Engine Engineer`}
+  bodyClass="cv-body"
+  rawTitle
+>
+  <div class="cv-toolbar no-print">
+    <div class="cv-toolbar__inner">
+      <a class="cv-toolbar__back" href="/en/">&larr; Back</a>
+      <div class="cv-toolbar__actions">
+        <span class="cv-toolbar__hint">A4 · turn off headers and footers for best results</span>
+        <button type="button" class="cv-toolbar__btn" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Save as PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="cv-sheet">
+    <article class="cv">
+      <header class="cv-header">
+        <h1 class="cv-name">
+          {basics.name_en}<span class="cv-name__en">{basics.name_zh}</span>
+        </h1>
+        <p class="cv-headline">Senior Graphics &amp; Game Engine Engineer · AI-Native Toolchain</p>
+        <ul class="cv-contact">
+          <li><a href={`mailto:${basics.email}`}>{basics.email}</a></li>
+          <li><a href={`https://github.com/${basics.github}`}>github.com/{basics.github}</a></li>
+          <li><a href={`https://${basics.site}`}>{basics.site}</a></li>
+          <li>{basics.location}</li>
+        </ul>
+      </header>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Profile</h2>
+        <p class="cv-summary">{profile}</p>
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Skills</h2>
+        {skills.map((group) => (
+          <div class="cv-entry cv-entry--skill">
+            <h3 class="cv-entry__label">{group.group_en}</h3>
+            <ul class="cv-bullets">
+              {group.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Experience</h2>
+        {experience.map((job) => (
+          <div class="cv-entry">
+            <div class="cv-entry__head">
+              <p class="cv-entry__heading">
+                <span class="cv-entry__title">{job.title}</span>
+                <span class="cv-entry__org">{job.company}</span>
+              </p>
+              <p class="cv-entry__period">{job.period}</p>
+            </div>
+            {job.summary && <p class="cv-entry__summary">{job.summary}</p>}
+            <ul class="cv-bullets">
+              {job.highlights.map((point) => <li set:html={point} />)}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Selected Projects</h2>
+        {projects.map((project) => (
+          <div class="cv-entry">
+            <div class="cv-entry__head">
+              <p class="cv-entry__heading">
+                <span class="cv-entry__title">{project.title}</span>
+                {project.role && <span class="cv-entry__org">{project.role}</span>}
+              </p>
+              <p class="cv-entry__period">{project.period}</p>
+            </div>
+            {project.link && (
+              <p class="cv-entry__link">
+                <span class="cv-link-icon">🔗</span><a href={project.link}>{stripProtocol(project.link)}</a>
+              </p>
+            )}
+            <ul class="cv-bullets">
+              {project.highlights.map((point) => <li>{point}</li>)}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Education</h2>
+        {education.map((edu) => (
+          <div class="cv-entry cv-entry--compact">
+            <div class="cv-entry__head">
+              <p class="cv-entry__heading">
+                <span class="cv-entry__title">{edu.degree}</span>
+                <span class="cv-entry__org">{edu.school}</span>
+              </p>
+              <p class="cv-entry__period">{edu.period}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__title">Additional</h2>
+        <dl class="cv-additional">
+          {additional.map((row) => (
+            <div class="cv-additional__row">
+              <dt>{row.label}</dt>
+              <dd>{row.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    </article>
+  </main>
+
+  <p class="cv-footnote no-print">
+    Use your browser&rsquo;s print dialog and select <strong>Save as PDF</strong> — A4, default scale,
+    headers and footers off. The exported PDF is vector text: searchable, selectable and small.
+  </p>
+</Standalone>

@@ -1,0 +1,265 @@
+@import 'tailwindcss';
+@import './fonts/fraunces.css';
+@import './fonts/noto-serif-sc.css';
+@import './fonts/jetbrains-mono.css';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* ── 设计 token ───────────────────────────────────────────────────────────
+   暗房。暖调近黑打底（生赭偏色，不是冷灰蓝），米白作墨。
+   界面本身几乎单色 —— 颜色全部交给图：路径追踪截图和油画自己会发声。
+   点缀色是一味灰绿，取油画里冷色的暗部，和暖底形成温度对比。用得极省。 */
+:root {
+  --ground:    #141210;
+  --surface:   #1c1917;
+  --surface-2: #241f1c;
+  --line:      #2e2825;
+  --line-soft: #221d1a;
+  --ink:       #eae6e0;
+  --ink-2:     #bdb5ac;
+  --muted:     #8b8279;
+  --faint:     #635c55;
+  --accent:    #8fa89e;
+  --accent-hi: #a9c0b6;
+  --accent-dim:#5d7169;
+
+  /* 西文走 Fraunces，中文接 Noto Serif SC（思源宋体）—— 不再落到系统的 SimSun */
+  --font-display: 'Fraunces', 'Noto Serif SC', Georgia, 'Songti SC', serif;
+  /* UI 标签用的等宽：导航、展签、日期、跳转链接。
+     JetBrains Mono 没有中文字形，末尾若留通用的 monospace，
+     Windows 会把中文解析成新宋体 (NSimSun) —— 又细又旧。
+     所以这里在通用族之前先接中文黑体，让中文落到雅黑 / 苹方上。 */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+  /* 真代码用的等宽：代码块、内联 code。这里中文该是等宽的，
+     保留通用 monospace 不动 —— 对齐比好看重要。 */
+  --font-code: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  /* 正文不加载西文 Web Font —— 中文本来就走系统栈，混排时统一由系统解决 */
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+  --measure: 66ch;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --shell: 1180px;
+  --column: 720px;
+
+  color-scheme: dark;
+}
+
+/* 亮色是「白天的画廊」：暖纸，不是把暗色反过来 */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --ground:    #f2eee7;
+    --surface:   #fbf9f5;
+    --surface-2: #ece7dd;
+    --line:      #ddd6c9;
+    --line-soft: #e7e1d6;
+    --ink:       #1a1714;
+    --ink-2:     #453e37;
+    --muted:     #6b6259;
+    --faint:     #948b80;
+    --accent:    #4a675c;
+    --accent-hi: #355046;
+    --accent-dim:#8ba297;
+    color-scheme: light;
+  }
+}
+:root[data-theme='light'] {
+  --ground:    #f2eee7;
+  --surface:   #fbf9f5;
+  --surface-2: #ece7dd;
+  --line:      #ddd6c9;
+  --line-soft: #e7e1d6;
+  --ink:       #1a1714;
+  --ink-2:     #453e37;
+  --muted:     #6b6259;
+  --faint:     #948b80;
+  --accent:    #4a675c;
+  --accent-hi: #355046;
+  --accent-dim:#8ba297;
+  color-scheme: light;
+}
+
+/* ── base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent-dim); color: var(--ground); }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  letter-spacing: -.018em;
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+a { color: inherit; text-decoration-color: var(--accent-dim); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: var(--accent); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+img, video, svg { max-width: 100%; height: auto; display: block; }
+code, kbd, samp, pre { font-family: var(--font-code); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
+
+/* ── 复用件 ─────────────────────────────────────────────────────────────── */
+.shell { max-width: var(--shell); margin-inline: auto; padding-inline: var(--gutter); }
+/* 阅读栏：文章、叙事页、长文都用它。行长控制在 66ch 上下。 */
+.shell-narrow { max-width: 820px; margin-inline: auto; padding-inline: var(--gutter); }
+.column { max-width: var(--column); }
+
+/* 按钮在这套语言里是安静的：一条底线，不是填色块。 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--line);
+  transition: color .2s, border-color .2s;
+}
+.btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.btn-primary { color: var(--accent); border-bottom-color: var(--accent-dim); }
+.btn-primary:hover { color: var(--accent-hi); border-bottom-color: var(--accent-hi); }
+
+/* 展签：美术馆墙上那张小卡片。一张 Vulkan 截图和一幅油画，
+   用同一种方式标注 —— 这是全站唯一的结构性装置。 */
+.plate figcaption,
+.wall-label {
+  font-family: var(--font-mono);
+  font-size: .715rem;
+  line-height: 1.65;
+  letter-spacing: .02em;
+  color: var(--muted);
+  margin-top: .85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .2rem .7rem;
+}
+.wall-label b { font-weight: 500; color: var(--ink-2); }
+.wall-label i { font-style: normal; color: var(--faint); }
+
+.marker {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.quiet-link {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--accent);
+  /* 只用 text-decoration 画线，不再叠 border-bottom：
+     两套机制并存迟早叠成两条，而且 offset 跟着字体度量走，
+     中文没有下伸部也不会贴住字底。 */
+  text-decoration: underline;
+  text-decoration-color: var(--accent-dim);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: color .2s, text-decoration-color .2s;
+}
+.quiet-link:hover { color: var(--accent-hi); text-decoration-color: var(--accent-hi); }
+
+.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+/* ── 正文排版 ───────────────────────────────────────────────────────────── */
+.prose { max-width: var(--measure); }
+.prose > * + * { margin-top: 1.2em; }
+.prose h2 { font-size: 1.55rem; margin-top: 2.8em; }
+.prose h3 { font-size: 1.18rem; margin-top: 2.2em; }
+.prose h4 { font-size: 1rem; margin-top: 1.9em; }
+.prose p, .prose li { color: var(--ink-2); }
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose a { color: var(--accent); }
+.prose a:hover { color: var(--accent-hi); }
+/* 正文里的普通链接才加下划线。.btn / .quiet-link 自带下划线机制，
+   一并加上就会叠成两条 —— `.prose a` 的优先级 (0,1,1)
+   压过了 `.btn { text-decoration: none }` (0,1,0)。
+   排除用 :where() 而不是裸 :not()：:not() 会把参数的优先级算进来，
+   写成 `a:not(.btn):not(.quiet-link)` 会涨到 (0,3,1)，
+   反过来压过页面自己的 `.cards .c` 之类，把别处的样式带坏。
+   :where() 恒为 0，优先级仍是 (0,1,1)。 */
+.prose a:not(:where(.btn, .quiet-link)) { text-decoration: underline; }
+.prose ul, .prose ol { padding-left: 1.35em; }
+.prose li + li { margin-top: .45em; }
+.prose img { border-radius: 2px; margin-block: 2.2em; }
+.prose blockquote {
+  border-left: 1px solid var(--accent-dim);
+  padding: .15em 0 .15em 1.3em;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1.02em;
+  font-style: italic;
+}
+.prose blockquote p { color: inherit; }
+.prose :not(pre) > code {
+  font-family: var(--font-code);
+  background: var(--surface-2);
+  padding: .12em .4em;
+  border-radius: 3px;
+  font-size: .85em;
+  color: var(--ink);
+}
+.prose pre {
+  font-family: var(--font-code);
+  background: var(--surface) !important;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 1.15rem 1.3rem;
+  overflow-x: auto;
+  font-size: .82rem;
+  line-height: 1.72;
+}
+.prose table { width: 100%; border-collapse: collapse; font-size: .92em; }
+.prose th, .prose td { border-bottom: 1px solid var(--line); padding: .6em .8em; text-align: left; }
+.prose th { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.prose br + br { display: none; }
+
+/* Shiki 双主题 */
+.astro-code, .astro-code span { color: var(--shiki-light); background: var(--shiki-light-bg); }
+:root:not([data-theme='light']) .astro-code,
+:root:not([data-theme='light']) .astro-code span { color: var(--shiki-dark); background: var(--shiki-dark-bg); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .astro-code,
+  :root:not([data-theme='dark']) .astro-code span { color: var(--shiki-light); background: var(--shiki-light-bg); }
+}
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span { color: var(--shiki-dark); background: var(--shiki-dark-bg); }
+
+.tabular { font-variant-numeric: tabular-nums; }
+.scroll-x { overflow-x: auto; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--accent); color: var(--ground);
+  padding: .6rem 1rem; z-index: 100; font-weight: 600;
+}
+.skip-link:focus { left: 0; }

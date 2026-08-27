@@ -1,0 +1,81 @@
+---
+// Pagefind 搜索。索引由 `pagefind --site dist` 在构建后生成，
+// 所以 dev 模式下没有索引 —— 输入框会提示，不会报错。
+---
+<div class="sw">
+  <input type="search" id="q" placeholder="搜索文章…" autocomplete="off" aria-label="搜索文章" />
+  <div id="qr" class="qr" hidden></div>
+</div>
+
+<script>
+  const input = document.getElementById('q') as HTMLInputElement | null;
+  const out = document.getElementById('qr') as HTMLElement | null;
+  if (input && out) {
+    let pf: any = null;
+    let timer: number | undefined;
+
+    async function load() {
+      if (pf) return pf;
+      try {
+        // 路径用变量拼，避免 Vite 在构建期静态解析 —— 索引要到 pagefind 跑完才存在
+        const mod = ['', 'pagefind', 'pagefind.js'].join('/');
+        pf = await import(/* @vite-ignore */ mod);
+        await pf.init();
+      } catch {
+        pf = 'unavailable';
+      }
+      return pf;
+    }
+
+    async function run(term: string) {
+      if (!term.trim()) { out!.hidden = true; out!.innerHTML = ''; return; }
+      const lib = await load();
+      out!.hidden = false;
+      if (lib === 'unavailable') {
+        out!.innerHTML = '<p class="hint">搜索索引在正式构建后生成（npm run build），开发模式下不可用。</p>';
+        return;
+      }
+      const search = await lib.search(term);
+      const hits = await Promise.all(search.results.slice(0, 8).map((r: any) => r.data()));
+      out!.innerHTML = hits.length
+        ? hits.map((h: any) =>
+            `<a href="${h.url}"><span class="ht">${h.meta?.title ?? h.url}</span><span class="hx">${h.excerpt}</span></a>`,
+          ).join('')
+        : '<p class="hint">没有找到匹配的文章。</p>';
+    }
+
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => run(input.value), 180);
+    });
+    input.addEventListener('blur', () => setTimeout(() => { out!.hidden = true; }, 180));
+    input.addEventListener('focus', () => { if (input.value.trim()) run(input.value); });
+  }
+</script>
+
+<style>
+  .sw { position: relative; width: 100%; }
+  #q {
+    width: 100%; font: inherit; font-size: .85rem;
+    padding: .42rem .8rem; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  #q::placeholder { color: var(--muted); }
+  #q:focus { border-color: var(--accent); outline: none; }
+  .qr {
+    position: absolute; top: calc(100% + .45rem); left: 0; right: 0; z-index: 30;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    box-shadow: var(--shadow-lg); overflow: hidden; max-height: 60vh; overflow-y: auto;
+  }
+  .qr :global(a) {
+    display: flex; flex-direction: column; gap: .18rem;
+    padding: .65rem .85rem; text-decoration: none; color: inherit;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .qr :global(a:last-child) { border-bottom: 0; }
+  .qr :global(a:hover) { background: var(--surface-2); }
+  .qr :global(.ht) { font-size: .87rem; font-weight: 600; color: var(--text); }
+  .qr :global(.hx) { font-size: .76rem; color: var(--muted); line-height: 1.5; }
+  .qr :global(mark) { background: var(--accent-soft); color: var(--accent); }
+  .qr :global(.hint) { margin: 0; padding: .7rem .85rem; font-size: .78rem; color: var(--muted); }
+</style>

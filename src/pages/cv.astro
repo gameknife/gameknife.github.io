@@ -1,0 +1,215 @@
+---
+// A4 打印版 CV —— 完整沿用旧站样式（src/styles/cv.css 是原 _cv-page.scss 的移植）。
+// 数据源是 src/data/cv.ts；CI 用 scripts/print-cv.mjs 打印这一页生成 PDF。
+import Standalone from '../layouts/Standalone.astro';
+import '../styles/cv.css';
+import { basics, summary, skills, experience, projects, education, additional } from '../data/cv';
+
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '');
+---
+
+<Standalone
+  title={`${basics.name_en} CV`}
+  description={`${basics.name_en} — ${basics.headline}`}
+  bodyClass="cv-body"
+  rawTitle
+>
+  <div class="cv-toolbar no-print">
+    <div class="cv-toolbar__inner">
+      <a class="cv-toolbar__back" href="/resume/">&larr; 完整简历</a>
+      <div class="cv-toolbar__actions">
+        <span class="cv-toolbar__hint">A4 · 关闭「页眉和页脚」效果最佳</span>
+        <button type="button" class="cv-toolbar__btn" onclick="downloadPdf()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>下载 PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="cv-sheet">
+    <article class="cv">
+      <header class="cv-header">
+        <h1 class="cv-name">
+          {basics.name_zh}<span class="cv-name__en">{basics.name_en}</span>
+        </h1>
+        <p class="cv-headline">{basics.headline}</p>
+        <ul class="cv-contact">
+          {basics.email && <li><a href={`mailto:${basics.email}`}>{basics.email}</a></li>}
+          {basics.github && <li><a href={`https://github.com/${basics.github}`}>github.com/{basics.github}</a></li>}
+          {basics.site && <li><a href={`https://${basics.site}`}>{basics.site}</a></li>}
+          {basics.location && <li>{basics.location}</li>}
+        </ul>
+      </header>
+
+      {summary && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">个人简介<span>Summary</span></h2>
+          <p class="cv-summary">{summary}</p>
+        </section>
+      )}
+
+      {skills.length > 0 && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">专业技能<span>Skills</span></h2>
+          {skills.map((group) => (
+            <div class="cv-entry cv-entry--skill">
+              <h3 class="cv-entry__label">
+                {group.group}{group.group_en && <em>{group.group_en}</em>}
+              </h3>
+              <ul class="cv-bullets">
+                {group.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {experience.length > 0 && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">工作经历<span>Experience</span></h2>
+          {experience.map((job) => (
+            <div class="cv-entry">
+              <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                  <span class="cv-entry__title">{job.title}</span>
+                  <span class="cv-entry__org">{job.company}</span>
+                </p>
+                <p class="cv-entry__period">{job.period}</p>
+              </div>
+              {job.summary && <p class="cv-entry__summary">{job.summary}</p>}
+              {job.highlights.length > 0 && (
+                <ul class="cv-bullets">
+                  {job.highlights.map((point) => <li set:html={point} />)}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {projects.length > 0 && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">精选项目<span>Selected Projects</span></h2>
+          {projects.map((project) => (
+            <div class="cv-entry">
+              <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                  <span class="cv-entry__title">{project.title}</span>
+                  {project.role && <span class="cv-entry__org">{project.role}</span>}
+                </p>
+                <p class="cv-entry__period">{project.period}</p>
+              </div>
+              {project.link && (
+                <p class="cv-entry__link">
+                  <span class="cv-link-icon">🔗</span><a href={project.link}>{stripProtocol(project.link)}</a>
+                </p>
+              )}
+              {project.highlights.length > 0 && (
+                <ul class="cv-bullets">
+                  {project.highlights.map((point) => <li>{point}</li>)}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {education.length > 0 && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">教育背景<span>Education</span></h2>
+          {education.map((edu) => (
+            <div class="cv-entry cv-entry--compact">
+              <div class="cv-entry__head">
+                <p class="cv-entry__heading">
+                  <span class="cv-entry__title">{edu.degree}</span>
+                  <span class="cv-entry__org">{edu.school}</span>
+                </p>
+                {edu.period && <p class="cv-entry__period">{edu.period}</p>}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {additional.length > 0 && (
+        <section class="cv-section">
+          <h2 class="cv-section__title">其他<span>Additional</span></h2>
+          <dl class="cv-additional">
+            {additional.map((row) => (
+              <div class="cv-additional__row">
+                <dt>{row.label}</dt>
+                <dd>{row.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+    </article>
+  </main>
+
+  <p class="cv-footnote no-print">
+    点击「下载 PDF」后，在打印对话框中把目标打印机选为 <strong>「另存为 PDF」</strong>
+    （Save as PDF / Microsoft Print to PDF），纸张 A4、缩放默认、取消勾选页眉和页脚即可。
+    导出的 PDF 是矢量文字，可搜索、可复制、体积很小。
+    也可以直接拿 CI 生成好的 <a href="/KaimingYi-CV.pdf" download>KaimingYi-CV.pdf</a>。
+  </p>
+</Standalone>
+
+<script is:inline>
+  // 电话与微信不写进仓库，导出 PDF 前按需填。
+  function downloadPdf() {
+    var contactList = document.querySelector('.cv-contact');
+    if (!contactList) { window.print(); return; }
+
+    var phone = prompt('请输入您的联系电话（留空将不显示）：');
+    if (phone !== null) {
+      var phoneEl = document.getElementById('cv-phone');
+      if (phone.trim() !== '') {
+        if (!phoneEl) {
+          phoneEl = document.createElement('li');
+          phoneEl.id = 'cv-phone';
+          contactList.insertBefore(phoneEl, contactList.firstChild);
+        }
+        phoneEl.textContent = phone;
+        phoneEl.style.display = '';
+      } else if (phoneEl) {
+        phoneEl.remove();
+      }
+    }
+
+    var wechat = prompt('请输入您的微信账号（留空将不显示）：');
+    if (wechat !== null) {
+      var wechatEl = document.getElementById('cv-wechat');
+      if (wechat.trim() !== '') {
+        if (!wechatEl) {
+          wechatEl = document.createElement('li');
+          wechatEl.id = 'cv-wechat';
+          var pe = document.getElementById('cv-phone');
+          if (pe && pe.nextSibling) {
+            contactList.insertBefore(wechatEl, pe.nextSibling);
+          } else {
+            contactList.insertBefore(wechatEl, contactList.firstChild);
+          }
+        }
+        wechatEl.textContent = '微信: ' + wechat;
+        wechatEl.style.display = '';
+      } else if (wechatEl) {
+        wechatEl.remove();
+      }
+    }
+
+    window.print();
+  }
+
+  // 从简历页带 ?print=1 进来时直接触发
+  if (window.location.search.indexOf('print=1') !== -1) {
+    window.addEventListener('load', function () {
+      window.setTimeout(downloadPdf, 300);
+    });
+  }
+</script>

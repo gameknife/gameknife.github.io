@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+
+<Base
+  title="About — Kaiming Yi"
+  description="Kaiming Yi (gameKnife) — graphics and game engine engineer. 15 years in real-time rendering, currently at Perfect World, previously Tencent TiMi."
+>
+  <div class="shell-narrow wrap">
+    <div class="marker">About</div>
+    <h1>Kaiming Yi</h1>
+
+    <div class="prose">
+      <p class="lede">
+        I am a graphics and game engine engineer based in Chengdu, China. Seventeen years writing code,
+        fifteen of them in real-time graphics — and I expect to keep going for a while.
+      </p>
+
+      <h2>Two threads</h2>
+      <p>
+        My mother wanted me to play piano; I wanted to be a painter. Neither happened, and I ended up
+        writing code instead — but <strong>the art thread never got cut</strong>. Charcoal and oil studies,
+        then CG stills (one of them took a CGTalk Editor&rsquo;s Choice in 2009), and now renderers.
+        It is the same question throughout: <strong>what does light do when it hits something</strong>.
+        Only the instrument changed, from brush to GPU.
+      </p>
+
+      <h2>Now</h2>
+      <p>
+        Technical Expert at Perfect World&rsquo;s TZY Studio — infrastructure, technology selection, and
+        the hard problems on a new project. Before that, eight years at Tencent TiMi Studios (T11),
+        shipping <em>Let&rsquo;s Hunt Monsters</em> and <em>Saint Seiya</em>, plus two titles that never
+        made it out.
+      </p>
+      <p>
+        Evenings and weekends go to <a href="/engine/">gkNextEngine</a> — a C++20 + Vulkan real-time path
+        tracing engine started in May 2024, with first-party code deliberately capped at 50k lines.
+      </p>
+
+      <h2>What I do well</h2>
+      <ul>
+        <li><strong>Real-time rendering</strong> — Vulkan, path tracing, GPU-driven pipelines, upscaling and denoising</li>
+        <li><strong>Engine architecture</strong> — ECS, reflection, scripting runtimes, cross-platform RHI</li>
+        <li><strong>Performance work</strong> — low-end device optimization, hard crash triage, CI and build throughput</li>
+        <li><strong>Technical art</strong> — formal art training, fluent with art pipelines and TA workflows</li>
+      </ul>
+
+      <h2>Get in touch</h2>
+      <p>
+        <a href={`mailto:${site.email}`}>{site.email}</a> ·
+        <a href="https://github.com/gameknife" rel="me noopener" target="_blank">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/kaimingyi" rel="me noopener" target="_blank">LinkedIn</a>
+      </p>
+
+      <p class="note">
+        Full CV at <a href="/en/cv/">/en/cv/</a>. Most of the writing on this site is in Chinese —
+        the <a href="/blog/">blog</a> goes back to 2013.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: .5rem 0 2rem; }
+  .lede { font-size: 1.08rem; color: var(--text) !important; }
+  .note { font-size: .88rem; color: var(--muted) !important; padding-top: 1.2rem; border-top: 1px solid var(--line-soft); }
+</style>

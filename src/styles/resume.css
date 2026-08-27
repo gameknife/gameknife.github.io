@@ -1,0 +1,220 @@
+@import './fonts/lora.css';
+
+/* @name Resume
+   @description /resume/ 的排版。由原 Jekyll 的 main.scss 移植而来，
+   保留 Lora 衬线、荧光笔链接与 <dl> 双栏 —— 这一页的气质就在这里。
+
+   与旧站的区别：现在它是站点的一页，套在 Base.astro 里，共用顶部导航与页脚。
+   所以全部规则都收在 .resume-page 之下：
+   原来的 meyerweb 全局 reset 会把站点的 header / footer 一起清掉，
+   `a { color: black !important; background: 荧光黄 }` 也会漏进导航栏。
+   版式与字体保持原样，颜色改走站点 token。 */
+
+/* ==========================================================================
+   局部 reset —— 原站靠全局 reset 归零，这里只在自己范围内做
+   ========================================================================== */
+
+.resume-page :is(h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li, figure, blockquote) {
+    margin: 0;
+    padding: 0;
+}
+
+.resume-page ol,
+.resume-page ul {
+    list-style: none;
+}
+
+/* 一级要点：加粗的编号条目 */
+.resume-page li {
+    list-style-type: decimal;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+/* 二级要点：不加粗的圆点条目。原站用自定义 <lis> 元素实现，
+   _data 里那些 <lis> 标签就是为它写的。 */
+.resume-page lis {
+    list-style-type: disc;
+    line-height: 1.5;
+    font-weight: normal;
+    display: list-item;
+    margin-left: 2em;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY —— Lora 衬线，行高沿用原站的 1.4
+   ========================================================================== */
+
+.resume-page {
+    /* 中文一律走黑体：旧站就是这么排的。
+       别在这里插 'Songti SC' —— Windows 上没这个字体所以看不出问题，
+       macOS 上却会生效，同一页在两个平台长得不一样。 */
+    font-family: 'Lora', Georgia, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.resume-page .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.resume-page .section-title {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+}
+
+.resume-page .section-title:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -25px;
+    width: 50px;
+    height: 1px;
+    background: var(--muted);
+}
+
+/* ==========================================================================
+   INTRO —— 原站的「Hello / My name is …」开场，作为本页题头
+   ========================================================================== */
+
+.resume-page .intro {
+    padding-block: clamp(3rem, 9vh, 5.5rem) clamp(2.5rem, 7vh, 4rem);
+    margin-bottom: clamp(2.5rem, 7vh, 4rem);
+    border-bottom: 1px solid var(--line);
+}
+
+.resume-page .intro__pre,
+.resume-page .intro__post {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: .82rem;
+    color: var(--muted);
+}
+
+.resume-page .intro__main {
+    font-size: 1.8rem;
+    line-height: 1.25;
+    font-weight: bold;
+    margin: 10px 0 20px;
+}
+
+@media (min-width: 640px) {
+    .resume-page .intro__main {
+        font-size: 2.2rem;
+        max-width: 62%;
+    }
+}
+
+.resume-page .social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   RESUME —— <dl> 双栏
+   ========================================================================== */
+
+.resume-page dl {
+    margin-bottom: 20px;
+}
+
+.resume-page dt,
+.resume-page dd {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 30em) {
+    .resume-page dt,
+    .resume-page dd { margin-bottom: 3em; }
+
+    .resume-page .experience dt {
+        width: 30%;
+        padding-right: 40px;
+    }
+
+    .resume-page .experience dd { width: 70%; }
+
+    .resume-page .education dt { width: 100%; }
+}
+
+.resume-page .title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.resume-page .company { color: var(--accent); font-size: .95rem; }
+.resume-page .period { color: var(--muted); font-size: .88rem; }
+
+/* 荧光笔式的链接 —— 这一页的签名。只在本页生效，不会漏到导航栏。 */
+.resume-page a {
+    color: #16130c !important;
+    background: rgba(245, 215, 110, .82);
+    text-decoration: none;
+    padding: 0 2px;
+    transition: background linear .2s;
+}
+
+.resume-page a:hover {
+    background: rgba(245, 215, 110, 1);
+    text-decoration: none;
+}
+
+/* 暗底下要压得住黑字，调到接近不透明 */
+@media screen {
+    :root[data-theme='dark'] .resume-page a { background: rgba(245, 215, 110, .9); }
+}
+@media screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .resume-page a { background: rgba(245, 215, 110, .9); }
+}
+
+/* ==========================================================================
+   PRINT —— 打印时收掉站点框架，只留简历本身
+   ========================================================================== */
+
+@media print {
+    .no-print,
+    .hdr,
+    .ftr,
+    .skip-link { display: none !important; }
+
+    .resume-page,
+    .resume-page * {
+        background: transparent !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        color: #111 !important;
+    }
+
+    .resume-page a,
+    .resume-page a:visited { text-decoration: underline !important; }
+
+    .resume-page a[href]:after { content: " (" attr(href) ")"; }
+    .resume-page a[href^="#"]:after,
+    .resume-page a[href^="javascript:"]:after { content: ""; }
+
+    .resume-page img { max-width: 100% !important; page-break-inside: avoid; }
+    .resume-page p,
+    .resume-page h2,
+    .resume-page h3 { orphans: 3; widows: 3; }
+    .resume-page h2,
+    .resume-page h3 { page-break-after: avoid; }
+}

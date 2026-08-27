@@ -1,0 +1,38 @@
+---
+import Base from './Base.astro';
+
+interface PageMeta {
+  title?: string;
+  description?: string;
+  eyebrow?: string;
+  lede?: string;
+}
+interface Props extends PageMeta {
+  frontmatter?: PageMeta;
+}
+// MDX 页面通过 frontmatter 传参，.astro 页面直接传 props
+const fm: PageMeta = Astro.props.frontmatter ?? {};
+const title = Astro.props.title ?? fm.title;
+const description = Astro.props.description ?? fm.description;
+const eyebrow = Astro.props.eyebrow ?? fm.eyebrow;
+const lede = Astro.props.lede ?? fm.lede;
+---
+<Base title={title} description={description}>
+  <div class="shell-narrow wrap">
+    <header class="head">
+      {eyebrow && <div class="marker">{eyebrow}</div>}
+      <h1>{title}</h1>
+      {lede && <p class="lede">{lede}</p>}
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </div>
+</Base>
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  .head { margin-bottom: 2.8rem; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: .5rem; }
+  .lede { margin: 1rem 0 0; color: var(--text-2); font-size: 1.05rem; line-height: 1.75; max-width: 52ch; }
+  .prose { max-width: none; }
+</style>

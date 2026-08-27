@@ -1,0 +1,53 @@
+---
+import { site } from '../../data/site';
+const year = new Date().getFullYear();
+const links = site.social.filter((s) => s.id !== 'email');
+---
+
+<footer class="ftr">
+  <hr class="rule" />
+  <div class="shell inner">
+    <p class="sig">易恺铭 <span>Kaiming Yi</span></p>
+
+    <nav class="links" aria-label="社交账号">
+      {links.map((s) => (
+        <a href={s.href} rel={s.href.startsWith('http') ? 'me noopener' : undefined}>{s.label}</a>
+      ))}
+      <a href={`mailto:${site.email}`}>Email</a>
+    </nav>
+
+    <p class="meta">{site.location} · © {year}</p>
+  </div>
+</footer>
+
+<style>
+  .ftr { margin-top: 8rem; }
+  .inner {
+    padding-block: 2.6rem 3.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem 2.5rem;
+    flex-wrap: wrap;
+  }
+  .sig {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  }
+  .sig span { font-family: var(--font-mono); font-size: .7rem; font-weight: 400; color: var(--faint); margin-left: .5rem; letter-spacing: .06em; }
+
+  .links { display: flex; flex-wrap: wrap; gap: .3rem 1.3rem; margin-left: auto; }
+  .links a {
+    font-family: var(--font-mono);
+    font-size: .74rem;
+    letter-spacing: .04em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .links a:hover { color: var(--accent); }
+
+  .meta { margin: 0; font-family: var(--font-mono); font-size: .68rem; color: var(--faint); letter-spacing: .04em; width: 100%; }
+</style>

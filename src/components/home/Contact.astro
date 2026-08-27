@@ -1,0 +1,41 @@
+---
+import { site } from '../../data/site';
+const links = site.social.filter((s) => s.href.startsWith('http'));
+---
+<section class="ct">
+  <hr class="rule" />
+  <div class="shell inner">
+    <p class="line">
+      技术长文会同步到<a href="https://www.zhihu.com/people/yi-kai-ming" rel="me noopener" target="_blank">知乎</a>，
+      引擎源码在 <a href="https://github.com/gameknife" rel="me noopener" target="_blank">GitHub</a>。
+      找我聊聊：<a href={`mailto:${site.email}`}>{site.email}</a>。
+    </p>
+    <nav class="row" aria-label="社交账号">
+      {links.map((s) => <a href={s.href} rel="me noopener" target="_blank">{s.label}</a>)}
+      <a href="/rss.xml">RSS</a>
+    </nav>
+  </div>
+</section>
+<style>
+  .ct { padding-block: clamp(4rem, 11vh, 7rem) 0; }
+  .inner { padding-top: clamp(2.5rem, 7vh, 4rem); }
+  .line {
+    margin: 0;
+    max-width: 44ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
+    font-weight: 400;
+    font-variation-settings: 'opsz' 72, 'SOFT' 45, 'WONK' 1;
+    line-height: 1.55;
+    letter-spacing: -.015em;
+    color: var(--ink);
+  }
+  .line a { text-decoration: none; box-shadow: inset 0 -1px 0 var(--accent-dim); transition: box-shadow .2s, color .2s; }
+  .line a:hover { color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+  .row { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin-top: 2.4rem; }
+  .row a {
+    font-family: var(--font-mono); font-size: .74rem; letter-spacing: .06em;
+    color: var(--muted); text-decoration: none; transition: color .2s;
+  }
+  .row a:hover { color: var(--accent); }
+</style>

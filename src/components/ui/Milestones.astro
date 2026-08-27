@@ -1,0 +1,24 @@
+---
+import { engine } from '../../data/engine';
+---
+<ol class="ms">
+  {engine.milestones.map((m) => (
+    <li><span class="w tabular">{m.when}</span><span class="t">{m.what}</span></li>
+  ))}
+</ol>
+<style>
+  .ms { list-style: none; padding: 0; margin: 2.2rem 0 !important; display: grid; }
+  li {
+    margin: 0 !important;
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 1.4rem;
+    align-items: baseline;
+    padding-block: .85rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  li:last-child { border-bottom: 1px solid var(--line-soft); }
+  .w { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); letter-spacing: .04em; }
+  .t { font-size: .88rem; color: var(--ink-2); line-height: 1.7; }
+  @media (max-width: 560px) { li { grid-template-columns: 1fr; gap: .2rem; } }
+</style>

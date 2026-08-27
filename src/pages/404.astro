@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="页面不存在" noindex>
+  <div class="shell wrap">
+    <div class="marker">404</div>
+    <h1>这里没有东西</h1>
+    <p>链接可能拼错了，或者那篇文章从来没有存在过。</p>
+    <p class="acts">
+      <a class="btn btn-primary" href="/">回到首页</a>
+      <a class="btn" href="/blog/">看看博客</a>
+    </p>
+  </div>
+</Base>
+<style>
+  .wrap { padding-block: 7rem 6rem; max-width: 620px; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: .5rem; }
+  p { color: var(--muted); margin-top: 1rem; }
+  .acts { display: flex; gap: .6rem; margin-top: 2rem; flex-wrap: wrap; }
+</style>

@@ -1,0 +1,63 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # 中文字体子集化要用的源字体（24 MB），不进仓库，缓存起来避免每次构建都下
+      - name: Cache font source
+        uses: actions/cache@v4
+        with:
+          path: .fonts-cache
+          key: fonts-notoserifsc-v1
+
+      # npm run build = 子集化 -> astro build -> pagefind
+      - name: Build
+        run: npm run build
+
+      - name: Render CV to PDF
+        run: |
+          npm i -D playwright
+          npx playwright install --with-deps chromium
+          node scripts/print-cv.mjs
+
+      # 十年的外链和搜索权重全押在这些路径上，缺一个就让构建失败。
+      - name: Verify legacy URLs
+        run: node scripts/verify-urls.mjs
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

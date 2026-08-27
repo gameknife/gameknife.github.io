@@ -1,0 +1,33 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostCard from '../../../components/blog/PostCard.astro';
+import { allTags, listedPosts } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await listedPosts();
+  const tags = await allTags();
+  return tags.map(({ tag }) => ({
+    params: { tag },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+<Base title={`#${tag}`} description={`标签 ${tag} 下的 ${posts.length} 篇文章。`}>
+  <div class="shell wrap">
+    <div class="marker">Tag</div>
+    <h1>#{tag}</h1>
+    <p class="lede">{posts.length} 篇 · <a href="/blog/">回到全部文章</a></p>
+    <div class="grid">
+      {posts.map((p) => <PostCard post={p} />)}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); margin-top: .5rem; }
+  .lede { margin: .8rem 0 2.5rem; color: var(--muted); font-size: .92rem; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+</style>

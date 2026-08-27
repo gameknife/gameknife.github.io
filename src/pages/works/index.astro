@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('works')).sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  { id: 'graphics', label: '图形程序', note: '自研引擎与渲染器的实时输出' },
+  { id: 'cg',       label: 'CG 静帧', note: '离线渲染作品' },
+  { id: 'painting', label: '绘画',     note: '油画、素描与数位板' },
+] as const;
+const has = (g: string) => all.filter((w) => w.data.group === g);
+---
+<Base title="作品" description="图形程序、CG 静帧、油画与素描 —— 易恺铭的作品集。">
+  <div class="shell wrap">
+    <header class="head">
+      <div class="marker">Works</div>
+      <h1>作品</h1>
+      <p class="lede">
+        写引擎之前先学的画画。这里是两条线交汇的地方 —— 实时渲染的输出，和更早以前的手绘。
+      </p>
+    </header>
+
+    {groups.map((g) => has(g.id).length > 0 && (
+      <section class="grp">
+        <div class="gh">
+          <h2>{g.label}</h2>
+          <p>{g.note}</p>
+        </div>
+        <ul class="grid">
+          {has(g.id).map((w) => (
+            <li>
+              <figure>
+                <Image src={w.data.image} alt={w.data.alt} widths={[400, 800, 1200]}
+                       sizes="(max-width: 640px) 100vw, (max-width: 1080px) 50vw, 340px" loading="lazy" />
+                <figcaption>
+                  <span class="t">{w.data.title}</span>
+                  <span class="y tabular">{w.data.year}</span>
+                  {w.data.note && <span class="n">{w.data.note}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  .head { margin-bottom: 3rem; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: .5rem; }
+  .lede { margin: .9rem 0 0; color: var(--muted); font-size: 1rem; max-width: 50ch; line-height: 1.75; }
+
+  .grp { padding-top: 2.5rem; margin-top: 2.5rem; border-top: 1px solid var(--line-soft); }
+  .gh { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  h2 { font-size: 1.3rem; }
+  .gh p { margin: 0; font-size: .84rem; color: var(--muted); }
+
+  .grid { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: 1.1rem;
+          grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+  figure { margin: 0; }
+  figure :global(img) {
+    width: 100%; border-radius: 10px; border: 1px solid var(--line);
+    transition: border-color .18s;
+  }
+  figure:hover :global(img) { border-color: var(--accent-dim); }
+  figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem; margin-top: .6rem; }
+  .t { font-size: .88rem; color: var(--text-2); font-weight: 500; }
+  .y { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+  .n { font-size: .74rem; color: var(--accent); width: 100%; }
+</style>

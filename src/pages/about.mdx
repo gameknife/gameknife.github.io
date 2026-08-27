@@ -1,0 +1,54 @@
+---
+layout: ../layouts/Page.astro
+title: 关于
+eyebrow: About
+description: 易恺铭 / gameKnife —— 图形与游戏引擎工程师，在成都。做游戏，写引擎、修性能，也画画。
+lede: 我是易恺铭，网上叫 gameKnife。写了十七年代码，做了十五年实时图形与游戏开发，大概还会继续写下去。
+---
+
+## 两条线
+
+我妈想让我学钢琴，我自己想当画家。最后两件都没成，去写了代码——但**美术那条线从来没断过**。
+
+从素描和油画写生开始，到后来的 CG 静帧（2009 年那张《文明》拿过 CGTalk 的 Editor's Choice），工作10来年做了不少商业游戏到现在，再到业余写渲染器和引擎：本质上都是在琢磨同一件事，**光打在东西上会是什么样**。区别只是从前用笔画，现在用 GPU 算。
+
+这大概也是我一直待在图形领域的原因。它是少数几个**审美判断和工程能力都算数**的方向。
+
+## 擅长什么
+
+- **实时渲染**：Vulkan / 路径追踪 / GPU-Driven 管线 / 超分与降噪
+- **引擎架构**：ECS、反射、脚本运行时、跨平台 RHI
+- **性能攻坚**：中低端机型专项优化、疑难 Crash 定位、CI 与工程效能
+- **技术美术**：有专业绘画训练，能和美术团队对上话
+
+## 关于这个站
+
+从 2015 年一个 Jekyll 博客改造而来。所有文章的旧链接都保留着，包括十年前那些写得很烂的。**不删旧文**——那些也是记录的一部分。
+
+技术文章会同步发到知乎。如果你是从那边过来的，欢迎在这里翻翻更早的东西。
+
+## 找我
+
+<div class="cards">
+  <a class="c" href="mailto:kaimingyi@gmail.com"><b>Email</b><span>合作、咨询、招聘</span></a>
+  <a class="c" href="https://github.com/gameknife" target="_blank" rel="me noopener"><b>GitHub</b><span>引擎源码与开源项目</span></a>
+  <a class="c" href="https://www.zhihu.com/people/gameknife" target="_blank" rel="me noopener"><b>知乎</b><span>技术长文同步</span></a>
+  <a class="c" href="https://www.linkedin.com/in/kaimingyi" target="_blank" rel="me noopener"><b>LinkedIn</b><span>职业履历</span></a>
+</div>
+
+微信同 `kaimingyi`，加的时候麻烦说明来意。
+
+<style>{`
+  .cards { display: grid; margin: 1.8rem 0 !important; }
+  .cards .c {
+    display: grid; grid-template-columns: 108px minmax(0, 1fr); gap: 1.2rem; align-items: baseline;
+    text-decoration: none; color: inherit;
+    padding-block: .85rem; border-top: 1px solid var(--line-soft);
+    transition: opacity .2s;
+  }
+  .cards .c:last-child { border-bottom: 1px solid var(--line-soft); }
+  .cards .c:hover { opacity: .62; }
+  .cards b { font-family: var(--font-mono); font-size: .78rem; font-weight: 500; letter-spacing: .06em; color: var(--accent); }
+  .cards span { font-size: .87rem; color: var(--ink-2); }
+  @media (max-width: 520px) { .cards .c { grid-template-columns: 1fr; gap: .15rem; } }
+`}</style>

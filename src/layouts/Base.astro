@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+import Header from '../components/ui/Header.astro';
+import Footer from '../components/ui/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** OG 图路径，缺省用站点默认图 */
+  image?: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  /** 额外的 JSON-LD 结构化数据 */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** 打印页等不需要页眉页脚的场景 */
+  bare?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/og/default.png',
+  type = 'website',
+  publishedAt,
+  jsonLd,
+  bare = false,
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${site.title}` : `${site.name_zh} / ${site.title} — ${site.headline}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image, site.url).href;
+
+// Person 是全站都带的：sameAs 让搜索引擎把 GitHub / 知乎 / LinkedIn 认成同一个人。
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name_zh,
+  alternateName: [site.name_en, site.title],
+  url: site.url,
+  email: site.email,
+  jobTitle: '图形与游戏引擎工程师',
+  description: site.description,
+  address: { '@type': 'PostalAddress', addressLocality: 'Chengdu', addressCountry: 'CN' },
+  sameAs: site.social.filter((s) => s.href.startsWith('http')).map((s) => s.href),
+};
+
+const graph = [person, ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [])];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script is:inline>
+      // 首绘前定主题，避免亮色闪一下。必须留在样式表之前。
+      (function () {
+        var KEY = 'theme';
+        var stored = null;
+        try { stored = localStorage.getItem(KEY); } catch (e) {}
+        if (stored === 'dark' || stored === 'light') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+        window.__toggleTheme = function () {
+          var cur = document.documentElement.getAttribute('data-theme');
+          if (!cur) {
+            cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          var next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+          document.dispatchEvent(new CustomEvent('themechange', { detail: next }));
+        };
+      })();
+    </script>
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title ?? `${site.name_zh} / ${site.title}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:locale" content="zh_CN" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? site.title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.title} — 全文订阅`} href="/rss.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} is:inline />
+
+    {site.analyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${site.analyticsToken}"}`}
+      />
+    )}
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    {!bare && <Header />}
+    <main id="main">
+      <slot />
+    </main>
+    {!bare && <Footer />}
+  </body>
+</html>

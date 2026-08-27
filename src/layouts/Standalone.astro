@@ -1,0 +1,51 @@
+---
+// 独立页外壳：给 /resume/ 与 /cv/ 用。
+// 刻意不引入 global.css 与站点页眉页脚 —— 这两页在旧站就是自成体系的，
+// 各有自己的字体、配色与打印规则，套上站点 chrome 只会两边都不像。
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyClass: string;
+  /** 浏览器「另存为 PDF」会拿 document.title 当默认文件名 */
+  rawTitle?: boolean;
+  noindex?: boolean;
+}
+
+const { title, description = site.description, bodyClass, rawTitle = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script is:inline>
+      // 首绘前定主题，避免亮色闪一下
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        if (stored === 'dark' || stored === 'light') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      })();
+    </script>
+
+    <title>{rawTitle ? title : `${title} · ${site.title}`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && <meta name="robots" content="index, follow" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <slot name="head" />
+  </head>
+
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

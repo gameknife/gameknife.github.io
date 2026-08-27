@@ -1,0 +1,64 @@
+---
+layout: ../layouts/Page.astro
+title: gkNextEngine
+eyebrow: 自 2024.5 · 仍在写
+description: gkNextEngine —— 一个 C++20 + Vulkan 的实时路径追踪引擎，为什么做、怎么取舍、做到了什么程度。
+lede: 一个人从零写起的现代渲染引擎。这一页讲它为什么存在、做了哪些取舍；想知道怎么用，去文档站。
+---
+
+import Metrics from '../components/ui/Metrics.astro';
+import Pillars from '../components/ui/Pillars.astro';
+import Milestones from '../components/ui/Milestones.astro';
+
+## 为什么还要再写一个引擎
+
+我做了十五年图形。前十年在 CryEngine、Unity、Unreal 里做效果、修 Crash、抠性能——**用别人的引擎，把别人的抽象吃透**。这件事的天花板很清楚：你能把管线调得很好，但管线本身长什么样，不由你决定。
+
+2024 年 5 月，Vulkan 的硬件光追已经普及到移动端，路径追踪从"离线渲染的事"变成了"实时可以试试的事"。我想知道，如果不背任何历史包袱，**从今天的硬件出发重新设计一遍渲染器，它会长成什么样**。
+
+所以有了 gkNextEngine。它不是要取代什么，它是我用来回答这个问题的实验场。
+
+<Metrics />
+
+这些数字是在一台消费级显卡上跑出来的。**1/2 spp** 的意思是每两个像素才投一根光线——剩下的靠时域复用和降噪补回来。这是现代实时路径追踪能成立的关键，也是整个渲染器最花心思的地方。
+
+## 一条硬约束：一方代码不超过 5 万行
+
+这是我给自己定的唯一硬指标，而且它比任何性能数字都重要。
+
+引擎腐烂的方式几乎都一样：功能越加越多，抽象越叠越厚，最后没人敢动核心。**限制代码量是限制抽象层数**——每加一个特性，都要回答"能不能不加一层"。5 万行逼着我在每个岔路口选更直接的那条路。
+
+代价是它做不了通用引擎。它不支持所有格式、不兼容所有平台的所有版本、没有编辑器插件生态。这是刻意的取舍。
+
+## 做了什么
+
+<Pillars />
+
+## 一条时间线
+
+<Milestones />
+
+## AI Native 不是加个聊天框
+
+引擎里确实集成了 llama.cpp 和本地推理服务，但那不是重点。真正改变我开发方式的是另一条链路：
+
+**开发 → 无头渲染截图 → 脚本断言 → CI 视觉回归 → 差异校验**
+
+渲染器最难的地方在于，"错了"经常不表现为崩溃或报错，而是**画面看起来不太对**。传统单元测试对这个完全无能为力。我用 `gnb shot` 让引擎在无窗口环境下渲染指定场景并出图，再让 CI 逐帧比对——改了一行降噪代码，五分钟后就知道有没有把别的场景弄坏。
+
+这条链路让 AI Agent 真正能参与渲染器开发：它改代码，CI 出图，图不对就回滚。**闭环里有了客观判据，生成才有意义。**
+
+## 想深入的话
+
+文档站有完整的快速开始、架构说明和 benchmark 数据。源码 MIT，随便拿去用。
+
+<div class="acts">
+  <a class="btn btn-primary" href="https://gameknife.github.io/gkNextEngine/" target="_blank" rel="noopener">文档站</a>
+  <a class="btn" href="https://github.com/gameknife/gkNextEngine" target="_blank" rel="noopener">GitHub 源码</a>
+  <a class="btn" href="https://github.com/gameknife/gkNextEngine/releases" target="_blank" rel="noopener">下载 Release</a>
+  <a class="btn" href="/blog/">相关文章</a>
+</div>
+
+<style>{`
+  .acts { display: flex; gap: 1.8rem; flex-wrap: wrap; margin-top: 1.8rem !important; }
+`}</style>

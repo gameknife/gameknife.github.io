@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets';
+import stills1 from '../../assets/works/stills1.jpg';
+import oilpaint1 from '../../assets/works/oilpaint1.jpg';
+import oilpaint2 from '../../assets/works/oilpaint2.jpg';
+import pencilpaint2 from '../../assets/works/pencilpaint2.jpg';
+
+const plates = [
+  { img: oilpaint1, title: '油画', year: '2007', medium: '布面油画' },
+  { img: pencilpaint2, title: '素描', year: '2006', medium: '铅笔写生' },
+  { img: oilpaint2, title: '油画', year: '2007', medium: '布面油画' },
+];
+---
+
+<section class="th">
+  <hr class="rule" />
+
+  <div class="shell head">
+    <p class="marker">二 · 绘画</p>
+    <h2>画画比写代码早</h2>
+    <p class="say">
+      我妈想让我学钢琴，我自己想当画家。两件都没成，最后去写了代码 ——
+      但美术那条线一直没断。
+    </p>
+  </div>
+
+  <figure class="plate hero shell">
+    <Image src={stills1} alt="CG 静帧作品《文明》" widths={[900, 1800]} sizes="(max-width: 900px) 100vw, 900px" loading="lazy" />
+    <figcaption class="wall-label">
+      <b>文明</b>
+      <i>2009</i>
+      <span>CG 静帧 · CGTalk Editor's Choice</span>
+    </figcaption>
+  </figure>
+
+  <div class="shell row">
+    {plates.map((p) => (
+      <figure class="plate">
+        <Image src={p.img} alt={`${p.title}，${p.year}`} widths={[380, 760]} sizes="(max-width: 780px) 45vw, 350px" loading="lazy" />
+        <figcaption class="wall-label">
+          <b>{p.title}</b><i>{p.year}</i><span>{p.medium}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <div class="shell tail">
+    <p>
+      同一个问题，换个工具问而已。写渲染器和调一块暗部的颜色，
+      要的都是<strong>对光的判断</strong> —— 这大概也是我一直待在图形领域的原因，
+      它是少数几个审美和工程都算数的方向。
+    </p>
+    <a class="quiet-link" href="/works/">全部作品</a>
+  </div>
+</section>
+
+<style>
+  .th { padding-block: clamp(4rem, 11vh, 7rem) 0; }
+
+  .head { padding-block: clamp(2.5rem, 7vh, 4rem) clamp(2rem, 5vh, 3rem); }
+  h2 {
+    margin-top: 1.1rem;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    font-weight: 500;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
+    letter-spacing: -.03em;
+  }
+  .say { margin: 1.4rem 0 0; max-width: 38ch; font-size: 1.02rem; line-height: 1.8; color: var(--ink-2); }
+
+  /* 同上：margin: 0 会连 .shell 的 margin-inline: auto 一起清掉 */
+  .plate { margin-block: 0; }
+  .plate :global(img) { width: 100%; border-radius: 2px; }
+
+  /* 作品与展签同宽，一起挂在与正文相同的左边线上 */
+  .hero > * { max-width: 900px; }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2.2rem);
+    margin-top: clamp(2.5rem, 7vh, 4rem);
+    align-items: start;
+  }
+  /* 画廊挂法：装进等高的框，整排挂在同一条基线上，展签高度也就齐了。
+     三幅原图都是 4:3 上下，contain 而不是 cover —— 画不能裁。 */
+  .row .plate :global(img) {
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .tail {
+    padding-top: clamp(2.5rem, 7vh, 4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+  }
+  .tail p { margin: 0; max-width: 48ch; font-size: .97rem; line-height: 1.85; color: var(--ink-2); }
+  .tail strong { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr 1fr; }
+    .row .plate:last-child { grid-column: 1 / -1; }
+    .row .plate:last-child :global(img) { aspect-ratio: 3 / 2; max-width: 100%; }
+  }
+</style>

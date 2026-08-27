@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Opening from '../components/home/Opening.astro';
+import Engine from '../components/home/Engine.astro';
+import Art from '../components/home/Art.astro';
+import Writing from '../components/home/Writing.astro';
+import Contact from '../components/home/Contact.astro';
+import { engine } from '../data/engine';
+
+const softwareLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: engine.name,
+  description: engine.summary,
+  codeRepository: engine.repo,
+  url: engine.docs,
+  programmingLanguage: ['C++', 'Slang'],
+  license: 'https://opensource.org/licenses/MIT',
+};
+---
+<Base jsonLd={softwareLd}>
+  <Opening />
+  <Engine />
+  <Art />
+  <Writing />
+  <Contact />
+</Base>

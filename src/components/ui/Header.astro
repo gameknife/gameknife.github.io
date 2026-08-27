@@ -1,0 +1,86 @@
+---
+import { site } from '../../data/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const nav = site.nav.filter((n) => n.href !== '/');
+---
+
+<header class="hdr">
+  <div class="shell inner">
+    <a href="/" class="brand">易恺铭</a>
+
+    <nav class="nav" aria-label="主导航">
+      {nav.map((n) => (
+        <a href={n.href} class:list={['item', { on: isActive(n.href) }]} aria-current={isActive(n.href) ? 'page' : undefined}>
+          {n.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="right">
+      <a class="en" href="/en/" hreflang="en">EN</a>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  /* 页眉是画廊的门牌，不是导航条 —— 尽量退到背景里 */
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--ground) 90%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 66px;
+  }
+
+  .brand {
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+    letter-spacing: .01em;
+    text-decoration: none;
+    flex: none;
+  }
+
+  .nav { display: flex; gap: 1.35rem; margin-left: auto; }
+  .item {
+    font-family: var(--font-mono);
+    font-size: .76rem;
+    letter-spacing: .06em;
+    color: var(--muted);
+    text-decoration: none;
+    padding-block: .3rem;
+    border-bottom: 1px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .item:hover { color: var(--ink); }
+  .item.on { color: var(--ink); border-bottom-color: var(--accent-dim); }
+
+  .right { display: flex; align-items: center; gap: .8rem; flex: none; }
+  .en {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .en:hover { color: var(--ink); }
+
+  @media (max-width: 780px) {
+    .inner { height: auto; flex-wrap: wrap; padding-block: .85rem; gap: .5rem 1.2rem; }
+    .nav { margin-left: 0; order: 3; width: 100%; gap: 1.1rem; overflow-x: auto; }
+    .item { white-space: nowrap; }
+    .right { margin-left: auto; }
+  }
+</style>

@@ -1,0 +1,168 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import { allTags, formatDate, isoDate, listedPosts, postUrl } from '../../lib/posts';
+import Search from '../../components/ui/Search.astro';
+
+const posts = await listedPosts();
+const tags = await allTags();
+
+const counts = { tech: 0, life: 0, art: 0 } as Record<string, number>;
+for (const p of posts) counts[p.data.category]++;
+
+// 按年份分组 —— 十年跨度用年份做骨架比无尽分页好读
+const byYear = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(p);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+
+<Base title="博客" description={`${posts.length} 篇关于实时渲染、游戏引擎与性能优化的记录，最早可追到 2013 年。`}>
+  <div class="shell wrap">
+    <header class="head">
+      <div class="marker">Blog</div>
+      <h1>博客</h1>
+      <p class="lede">
+        {posts.length} 篇关于实时渲染、引擎架构与性能优化的记录，最早一篇写于 2013 年。
+      </p>
+
+      <div class="bar">
+        <div class="filters" role="group" aria-label="按分类筛选">
+          <button type="button" class="f on" data-cat="all">全部 <em>{posts.length}</em></button>
+          {(['tech', 'life', 'art'] as const).map((c) =>
+            counts[c] > 0 ? (
+              <button type="button" class="f" data-cat={c}>
+                {site.categories[c].label} <em>{counts[c]}</em>
+              </button>
+            ) : null,
+          )}
+        </div>
+        <div class="search"><Search /></div>
+      </div>
+
+      {tags.length > 0 && (
+        <div class="tagrow">
+          {tags.slice(0, 14).map((t) => <a href={`/blog/tags/${t.tag}/`}>#{t.tag} <em>{t.count}</em></a>)}
+        </div>
+      )}
+    </header>
+
+    <div id="list">
+      {years.map(([year, items]) => (
+        <section class="year" data-year={year}>
+          <h2 class="ylabel tabular">{year}</h2>
+          <ul class="items">
+            {items.map((p) => (
+              <li data-cat={p.data.category}>
+                <a href={postUrl(p)}>
+                  <time class="d tabular" datetime={isoDate(p.data.date)}>
+                    {formatDate(p.data.date).replace(/^\d+年/, '')}
+                  </time>
+                  <span class="t">{p.data.title}</span>
+                  <span class="c">{site.categories[p.data.category].label}</span>
+                </a>
+                <p class="ex">{p.data.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<script>
+  // 分类筛选：纯前端，无需重新出页
+  const btns = document.querySelectorAll<HTMLButtonElement>('.f');
+  const items = document.querySelectorAll<HTMLLIElement>('#list li');
+  const years = document.querySelectorAll<HTMLElement>('.year');
+
+  function apply(cat: string) {
+    items.forEach((li) => {
+      li.hidden = cat !== 'all' && li.dataset.cat !== cat;
+    });
+    years.forEach((y) => {
+      y.hidden = ![...y.querySelectorAll('li')].some((li) => !(li as HTMLLIElement).hidden);
+    });
+    btns.forEach((b) => b.classList.toggle('on', b.dataset.cat === cat));
+    const url = new URL(location.href);
+    cat === 'all' ? url.searchParams.delete('cat') : url.searchParams.set('cat', cat);
+    history.replaceState(null, '', url);
+  }
+
+  btns.forEach((b) => b.addEventListener('click', () => apply(b.dataset.cat!)));
+
+  const initial = new URL(location.href).searchParams.get('cat');
+  if (initial) apply(initial);
+</script>
+
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  .head { margin-bottom: 3rem; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: .5rem; }
+  .lede { margin: .9rem 0 0; color: var(--muted); font-size: 1rem; max-width: 52ch; }
+
+  .bar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 2rem; }
+  .filters { display: flex; gap: .35rem; flex-wrap: wrap; }
+  .f {
+    font-family: var(--font-body); font-size: .84rem;
+    padding: .35rem .8rem; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    cursor: pointer; transition: color .16s, border-color .16s;
+  }
+  .f:hover { color: var(--text); }
+  .f.on { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+  .f em { font-style: normal; font-family: var(--font-mono); font-size: .72rem; opacity: .7; }
+
+  .search { margin-left: auto; min-width: 220px; }
+
+  .tagrow { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1rem; }
+  .tagrow a {
+    font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
+    text-decoration: none; padding: .18rem .5rem;
+    border: 1px solid var(--line-soft); border-radius: 4px;
+  }
+  .tagrow a:hover { color: var(--accent); border-color: var(--accent); }
+  .tagrow em { font-style: normal; opacity: .55; }
+
+  .year { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 1.5rem; padding-block: 1.6rem; border-top: 1px solid var(--line-soft); }
+  .year[hidden] { display: none; }
+  .ylabel {
+    font-family: var(--font-mono); font-size: .82rem; font-weight: 600;
+    color: var(--accent); letter-spacing: .06em; padding-top: .55rem;
+    position: sticky; top: 76px; align-self: start;
+  }
+
+  .items { list-style: none; margin: 0; padding: 0; display: grid; gap: .15rem; }
+  .items li { padding-block: .35rem; }
+  .items li[hidden] { display: none; }
+  .items a {
+    display: grid; grid-template-columns: 74px minmax(0, 1fr) auto;
+    gap: 1rem; align-items: baseline;
+    text-decoration: none; color: var(--text-2);
+    padding: .45rem .7rem; margin-inline: -.7rem; border-radius: 7px;
+    transition: background .16s, color .16s;
+  }
+  .items a:hover { background: var(--surface-2); color: var(--accent); }
+  .d { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+  .t { font-size: .98rem; font-weight: 500; }
+  .c { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
+  .ex {
+    margin: 0 0 0 calc(74px + 1rem);
+    font-size: .82rem; color: var(--muted); line-height: 1.6;
+    max-width: 62ch;
+    display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  @media (max-width: 760px) {
+    .year { grid-template-columns: 1fr; gap: .6rem; }
+    .ylabel { position: static; padding-top: 0; }
+    .items a { grid-template-columns: 1fr auto; gap: .3rem .8rem; }
+    .d { grid-column: 1 / -1; }
+    .ex { margin-left: 0; }
+    .search { margin-left: 0; width: 100%; }
+  }
+</style>

@@ -1,0 +1,12 @@
+/* 由 scripts/subset-fonts.mjs 生成 —— 不要手改。
+   子集范围 = src/ 里出现过的全部中文字符，每次构建重新计算。
+   字重钉在 600 —— 中文标题不随 font-weight 变化，这是刻意的取舍：
+   多带一个字重就多一份体积，而 600 在全站标题上都成立。 */
+
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/noto-serif-sc-subset.woff2') format('woff2');
+}

@@ -1,0 +1,43 @@
+---
+import { engine } from '../../data/engine';
+---
+<dl class="m">
+  {engine.metrics.map((x) => (
+    <div>
+      <dt class="tabular">{x.value}<em>{x.unit}</em></dt>
+      <dd>{x.label}</dd>
+      <dd class="n">{x.note}</dd>
+    </div>
+  ))}
+</dl>
+<style>
+  /* 不做仪表盘格子 —— 数字自己站住，靠留白分隔 */
+  .m {
+    margin: 2.4rem 0 !important;
+    display: grid;
+    gap: 2rem 2.5rem;
+    /* 阅读栏只有 ~700px，auto-fit 会排成 4+1，最后一个落单。固定两列。 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .m div { display: flex; flex-direction: column; gap: .1rem; margin: 0 !important; }
+  dt {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    font-weight: 500;
+    font-variation-settings: 'opsz' 144, 'SOFT' 40, 'WONK' 1;
+    letter-spacing: -.04em;
+    line-height: 1;
+    color: var(--ink);
+    display: flex; align-items: baseline; gap: .22rem;
+  }
+  dt em {
+    font-family: var(--font-mono); font-style: normal;
+    font-size: .3em; letter-spacing: .1em; color: var(--muted);
+  }
+  dd { margin: 0 !important; font-size: .85rem; color: var(--ink-2); margin-top: .45rem !important; }
+  dd.n {
+    font-family: var(--font-mono); font-size: .67rem;
+    letter-spacing: .04em; color: var(--faint); margin-top: .15rem !important;
+  }
+  @media (max-width: 520px) { .m { grid-template-columns: 1fr; gap: 1.6rem; } }
+</style>

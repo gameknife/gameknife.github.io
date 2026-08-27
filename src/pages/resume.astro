@@ -1,0 +1,134 @@
+---
+// 网页版长简历 —— 现在是站点的一页：共用顶部导航与页脚，
+// 但保留旧站的排版气质（Lora 衬线、荧光笔链接、<dl> 双栏）。
+// 样式全部收在 .resume-page 之下，见 src/styles/resume.css。
+//
+// 数据来自 src/data/resume.ts。原先这些 HTML 标签是混在 YAML 里的，
+// 现在数据是干净的结构，标签在这里生成 —— 渲染出的 DOM 与旧站一致。
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import '../styles/resume.css';
+import { site } from '../data/site';
+import { jobs, skills, education, projects } from '../data/resume';
+
+import substancedesigner from '../assets/works/substancedesigner.jpg';
+import stills1 from '../assets/works/stills1.jpg';
+import oilpaint1 from '../assets/works/oilpaint1.jpg';
+import oilpaint2 from '../assets/works/oilpaint2.jpg';
+import pencilpaint2 from '../assets/works/pencilpaint2.jpg';
+
+const intro = site.resumeIntro;
+
+/** 技能组 → 旧站的 <ul><lis>…</lis></ul><br> */
+const skillHtml = (items: string[]) =>
+  `<ul>${items.map((i) => `<lis>${i}</lis>`).join('')}</ul><br>`;
+
+/** 项目分组 → 旧站的 <li>标题</li><ul><hr/><lis>…</lis></ul><br> */
+const projectHtml = (groups: { heading: string; items: string[] }[]) =>
+  groups
+    .map(
+      (g) =>
+        `${g.heading ? `<li>${g.heading}</li>` : ''}` +
+        `<ul><hr/>${g.items.map((i) => `<lis>${i}</lis>`).join('')}</ul><br>`,
+    )
+    .join('');
+
+const gallery = [
+  { img: substancedesigner, caption: 'Substance Designer 过程材质，2018 年' },
+  { img: stills1, caption: 'CG 静帧，2008 年' },
+  { img: oilpaint1, caption: '油画，2007 年' },
+  { img: oilpaint2, caption: '油画，2007 年' },
+  { img: pencilpaint2, caption: '铅笔写生，2006 年' },
+];
+---
+
+<Base
+  title="简历"
+  description="易恺铭 / gameKnife 的完整履历：15 年实时图形与游戏引擎研发，技能、经历、项目与作品。"
+>
+  <div class="resume-page">
+    <div class="container">
+      <div class="intro">
+        <p class="intro__pre">Hello</p>
+        <p class="intro__main">
+          My name is <span>{intro.name}</span>, a {intro.job} who loves all things {intro.languages}
+        </p>
+        <p class="intro__post">{intro.location}</p>
+        <div class="social">
+          <a href="https://github.com/gameknife" target="_blank" rel="noopener">GitHub</a>
+          <a href={`mailto:${site.email}`}>Email</a>
+          <a href="/cv/">CV / Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h3 class="section-title">Skill</h3>
+      <dl class="education">
+        {skills.map((group) => (
+          <>
+            <dt><p class="title">{group.title}</p></dt><dd><p set:html={skillHtml(group.items)} /></dd>
+          </>
+        ))}
+      </dl>
+
+      <h3 class="section-title">Experience</h3>
+      <dl class="experience">
+        {jobs.map((job) => (
+          <>
+            <dt>
+              <p class="title">{job.title}</p>
+              <p class="company">{job.company}</p>
+              <p class="period">{job.period}</p>
+            </dt><dd><p>{job.description}</p></dd>
+          </>
+        ))}
+      </dl>
+
+      <h3 class="section-title">Education</h3>
+      <dl class="education">
+        {education.map((edu) => (
+          <>
+            <dt>
+              <p class="title">{edu.qualification}</p>
+              <p class="company">{edu.school}</p>
+            </dt><dd><p></p></dd>
+          </>
+        ))}
+      </dl>
+
+      <h3 class="section-title">Project</h3>
+      <dl class="experience">
+        {projects.map((project) => (
+          <>
+            <dt>
+              <p class="title">{project.title}</p>
+              <p class="company">{project.company}</p>
+              <p class="period">{project.period}</p>
+            </dt><dd>
+              {project.images.map((im) => (
+                <img src={im.src} alt={im.alt} style="width:100%;padding:0 0 1em 0;" loading="lazy" />
+              ))}
+              <br />
+              <Fragment set:html={projectHtml(project.groups)} />
+              {project.link && (
+                <p>Hosted on <a href={project.link.href} target="_blank" rel="noopener">{project.link.label}</a></p>
+              )}
+            </dd>
+          </>
+        ))}
+      </dl>
+
+      <h3 class="section-title">Gallery</h3>
+      <dl class="experience">
+        {gallery.map((g) => (
+          <>
+            <Image src={g.img} alt={g.caption} widths={[600, 1200]} sizes="(max-width: 900px) 100vw, 820px" style="width:100%;padding:1em;" loading="lazy" />
+            <p style="text-align: center">{g.caption}</p>
+            <br />
+          </>
+        ))}
+      </dl>
+    </div>
+  </div>
+</Base>

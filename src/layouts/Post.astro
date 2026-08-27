@@ -1,0 +1,145 @@
+---
+import Base from './Base.astro';
+import { site } from '../data/site';
+import { formatDate, isoDate, postUrl, readingTime, type Post } from '../lib/posts';
+import Giscus from '../components/blog/Giscus.astro';
+
+interface Props { post: Post; related: Post[] }
+const { post, related } = Astro.props;
+const { title, date, updated, category, tags, description, unlisted, zhihu } = post.data;
+
+const cat = site.categories[category];
+const mins = readingTime(post.body ?? '');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: date.toISOString(),
+  dateModified: (updated ?? date).toISOString(),
+  author: { '@type': 'Person', name: site.name_zh, url: site.url },
+  publisher: { '@type': 'Person', name: site.name_zh, url: site.url },
+  mainEntityOfPage: new URL(postUrl(post), site.url).href,
+  inLanguage: 'zh-CN',
+};
+---
+
+<Base
+  title={title}
+  description={description}
+  type="article"
+  publishedAt={date}
+  image={`/og/${post.id}.png`}
+  jsonLd={jsonLd}
+  noindex={unlisted}
+>
+  <article class="shell-narrow wrap">
+    <header class="head">
+      <div class="crumbs">
+        <a href="/blog/">博客</a>
+        <span aria-hidden="true">/</span>
+        <a href={`/blog/?cat=${category}`}>{cat.label}</a>
+      </div>
+
+      <h1>{title}</h1>
+
+      <div class="meta tabular">
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+        <span aria-hidden="true">·</span>
+        <span>约 {mins} 分钟</span>
+        {updated && (<><span aria-hidden="true">·</span><span>{formatDate(updated)} 更新</span></>)}
+      </div>
+
+      {unlisted && (
+        <p class="notice">
+          这是一篇未完成的旧草稿。为了不让十年前的链接失效，它仍保留原始地址，但不出现在文章列表里。
+        </p>
+      )}
+
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((t) => <a href={`/blog/tags/${t}/`}>#{t}</a>)}
+        </div>
+      )}
+    </header>
+
+    <div class="prose" data-pagefind-body={unlisted ? undefined : ''}>
+      <slot />
+    </div>
+
+    {zhihu && (
+      <aside class="cross">
+        <div class="marker">同步发布</div>
+        <a href={zhihu} rel="noopener" target="_blank">本文同步发布于知乎 →</a>
+      </aside>
+    )}
+
+    <Giscus />
+
+    {related.length > 0 && (
+      <nav class="related" aria-label="相关文章">
+        <div class="marker">继续读</div>
+        <ul>
+          {related.map((r) => (
+            <li>
+              <a href={postUrl(r)}>
+                <span class="rt">{r.data.title}</span>
+                <time class="rd tabular" datetime={isoDate(r.data.date)}>{isoDate(r.data.date)}</time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </article>
+</Base>
+
+<style>
+  .wrap { padding-block: 3.5rem 2rem; }
+  .head { margin-bottom: 2.6rem; }
+
+  .crumbs { display: flex; gap: .5rem; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--accent); }
+
+  h1 { font-size: clamp(1.7rem, 4.4vw, 2.4rem); margin-top: .9rem; }
+
+  .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    font-family: var(--font-mono); font-size: .78rem; color: var(--muted);
+    margin-top: .9rem;
+  }
+
+  .notice {
+    margin-top: 1.4rem; padding: .75rem 1rem;
+    background: var(--surface-2); border-left: 2px solid var(--accent-dim);
+    border-radius: 0 7px 7px 0;
+    font-size: .85rem; color: var(--muted); line-height: 1.6;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.1rem; }
+  .tags a {
+    font-family: var(--font-mono); font-size: .74rem;
+    padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--muted); text-decoration: none;
+  }
+  .tags a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .cross {
+    margin-top: 3.5rem; padding: 1.1rem 1.3rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .cross a { font-family: var(--font-display); font-weight: 600; font-size: .95rem; text-decoration: none; }
+
+  .related { margin-top: 4rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+  .related ul { list-style: none; padding: 0; margin: .9rem 0 0; display: grid; gap: .1rem; }
+  .related a {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1.2rem;
+    padding: .6rem .7rem; margin-inline: -.7rem; border-radius: 7px;
+    text-decoration: none; color: var(--text-2); transition: background .16s, color .16s;
+  }
+  .related a:hover { background: var(--surface-2); color: var(--accent); }
+  .rt { font-size: .95rem; }
+  .rd { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); flex: none; }
+</style>
