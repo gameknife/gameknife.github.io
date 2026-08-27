@@ -1,0 +1,79 @@
+/*! giscus 自定义主题 · 亮色
+ *
+ * 与 giscus-dark.css 同构，只换色值。改动请两边一起改。
+ * 说明见 giscus-dark.css 顶部。
+ */
+
+@import url("https://giscus.app/themes/light.css");
+
+main {
+  /* 画布 */
+  --color-canvas-default: transparent;
+  --color-canvas-overlay: #f9f9f5;
+  --color-canvas-inset: #e7e7e1;
+  --color-canvas-subtle: #f9f9f5;
+
+  /* 文字 */
+  --color-fg-default: #1a1a16;
+  --color-fg-muted: #6c6c64;
+  --color-fg-subtle: #828279;
+
+  /* 边框 */
+  --color-border-default: #d8d8d0;
+  --color-border-muted: #e5e5df;
+  --color-neutral-muted: #d8d8d066;
+
+  /* 强调 */
+  --color-accent-fg: #4a675c;
+  --color-accent-emphasis: #4a675c;
+  --color-accent-muted: #8ba29766;
+  --color-accent-subtle: #8ba2971a;
+
+  /* 次要按钮 */
+  --color-btn-text: #45453e;
+  --color-btn-bg: #f9f9f5;
+  --color-btn-border: #d8d8d0;
+  --color-btn-shadow: 0 0 #0000;
+  --color-btn-inset-shadow: 0 0 #0000;
+  --color-btn-hover-bg: #e7e7e1;
+  --color-btn-hover-border: #8ba297;
+  --color-btn-active-bg: #e5e5df;
+  --color-btn-active-border: #8ba297;
+  --color-btn-selected-bg: #e7e7e1;
+
+  /* 主按钮 */
+  --color-btn-primary-text: #f9f9f5;
+  --color-btn-primary-bg: #4a675c;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-shadow: 0 0 #0000;
+  --color-btn-primary-inset-shadow: 0 0 #0000;
+  --color-btn-primary-hover-bg: #355046;
+  --color-btn-primary-hover-border: transparent;
+  --color-btn-primary-selected-bg: #355046;
+  --color-btn-primary-selected-shadow: 0 0 #0000;
+  --color-btn-primary-disabled-text: #f9f9f5b3;
+  --color-btn-primary-disabled-bg: #4a675c66;
+  --color-btn-primary-disabled-border: transparent;
+
+  /* 表情反应 */
+  --color-social-reaction-bg-hover: #e7e7e1;
+  --color-social-reaction-bg-reacted-hover: #8ba29733;
+
+  --color-primer-shadow-inset: 0 0 #0000;
+}
+
+main,
+main input,
+main textarea,
+main button,
+main .gsc-comment-box-textarea {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+main .gsc-comment-box,
+main .gsc-comment > div,
+main .gsc-reactions-menu,
+main .btn {
+  border-radius: 2px;
+}

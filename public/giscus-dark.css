@@ -1,0 +1,87 @@
+/*! giscus 自定义主题 · 暗色
+ *
+ * 先 @import giscus 官方 dark 主题拿到代码高亮那一大套 prettylights 变量，
+ * 再只覆盖「界面色」—— 画布、文字、边框、按钮、强调色。
+ * 评论里的代码块因此和文章里的代码块保持一致的观感，不用自己维护一套语法配色。
+ *
+ * canvas-default 设成 transparent，让站点自己的底色透上来 ——
+ * 否则 iframe 会画一块 GitHub 的深蓝黑，和石墨底拼在一起很脏。
+ *
+ * 配色规则同 global.css：中性色 R = G，只留 G−B。改这里前先看那边的注释。
+ */
+
+@import url("https://giscus.app/themes/dark.css");
+
+main {
+  /* 画布 */
+  --color-canvas-default: transparent;
+  --color-canvas-overlay: #1a1a17;
+  --color-canvas-inset: #232320;
+  --color-canvas-subtle: #1a1a17;
+
+  /* 文字 */
+  --color-fg-default: #ebe9e2;
+  --color-fg-muted: #85857c;
+  --color-fg-subtle: #6a6a63;
+
+  /* 边框 */
+  --color-border-default: #2d2d29;
+  --color-border-muted: #1f1f1c;
+  --color-neutral-muted: #2d2d2966;
+
+  /* 强调 —— 全站唯一的松烟灰绿 */
+  --color-accent-fg: #8fa89d;
+  --color-accent-emphasis: #566a61;
+  --color-accent-muted: #566a6166;
+  --color-accent-subtle: #566a611a;
+
+  /* 次要按钮 */
+  --color-btn-text: #bab9b0;
+  --color-btn-bg: #1a1a17;
+  --color-btn-border: #2d2d29;
+  --color-btn-shadow: 0 0 #0000;
+  --color-btn-inset-shadow: 0 0 #0000;
+  --color-btn-hover-bg: #232320;
+  --color-btn-hover-border: #566a61;
+  --color-btn-active-bg: #1f1f1c;
+  --color-btn-active-border: #566a61;
+  --color-btn-selected-bg: #232320;
+
+  /* 主按钮（「使用 GitHub 登录」）—— 默认那块 GitHub 绿太跳，换成点缀色 */
+  --color-btn-primary-text: #121210;
+  --color-btn-primary-bg: #8fa89d;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-shadow: 0 0 #0000;
+  --color-btn-primary-inset-shadow: 0 0 #0000;
+  --color-btn-primary-hover-bg: #a9c2b7;
+  --color-btn-primary-hover-border: transparent;
+  --color-btn-primary-selected-bg: #8fa89d;
+  --color-btn-primary-selected-shadow: 0 0 #0000;
+  --color-btn-primary-disabled-text: #12121080;
+  --color-btn-primary-disabled-bg: #8fa89d66;
+  --color-btn-primary-disabled-border: transparent;
+
+  /* 表情反应 */
+  --color-social-reaction-bg-hover: #232320;
+  --color-social-reaction-bg-reacted-hover: #566a6133;
+
+  --color-primer-shadow-inset: 0 0 #0000;
+}
+
+/* 字体跟站点正文一致：中文走系统栈，不为评论区再拉一套 Web Font */
+main,
+main input,
+main textarea,
+main button,
+main .gsc-comment-box-textarea {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* 圆角收到 2px，和站点的图片、代码块一致 */
+main .gsc-comment-box,
+main .gsc-comment > div,
+main .gsc-reactions-menu,
+main .btn {
+  border-radius: 2px;
+}

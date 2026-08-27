@@ -1,30 +1,81 @@
 ---
 import { site } from '../../data/site';
-// 未配置仓库时整块不渲染 —— 填好 src/data/site.ts 的 giscus 字段即可启用
+
+// 未配置仓库时整块不渲染 —— 填好 src/data/site.ts 的 giscus 字段即可启用。
+// 三个字段缺一个都会整块跳过（曾经就漏过 repo，页面上连脚本标签都不会输出）。
 const on = site.giscus.repo && site.giscus.repoId && site.giscus.categoryId;
+
+// giscus 的自定义主题只认绝对 URL，且要能被 giscus.app 跨域取到。
+// GitHub Pages 对静态资源发 Access-Control-Allow-Origin: *，所以直接指过去即可。
+const cfg = {
+  repo: site.giscus.repo,
+  repoId: site.giscus.repoId,
+  category: site.giscus.category,
+  categoryId: site.giscus.categoryId,
+  light: new URL('/giscus-light.css', site.url).href,
+  dark: new URL('/giscus-dark.css', site.url).href,
+};
 ---
+
 {on && (
   <section class="cm">
     <div class="marker">评论</div>
-    <script
-      src="https://giscus.app/client.js"
-      data-repo={site.giscus.repo}
-      data-repo-id={site.giscus.repoId}
-      data-category={site.giscus.category}
-      data-category-id={site.giscus.categoryId}
-      data-mapping="pathname"
-      data-strict="1"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="preferred_color_scheme"
-      data-lang="zh-CN"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async
-    />
+    <div id="giscus-mount" />
   </section>
 )}
+
+{on && (
+  <script define:vars={{ cfg }}>
+    (function () {
+      var mount = document.getElementById('giscus-mount');
+      if (!mount) return;
+
+      // 站点的明暗是 data-theme + 系统偏好两级决定的，giscus 只认一个 URL，
+      // 所以在这里解析出当前值再建脚本 —— 用静态 data-theme 的话，
+      // 亮色访客会先闪一下暗色主题。
+      function resolved() {
+        var t = document.documentElement.getAttribute('data-theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return t === 'dark' ? cfg.dark : cfg.light;
+      }
+
+      var s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      s.setAttribute('data-repo', cfg.repo);
+      s.setAttribute('data-repo-id', cfg.repoId);
+      s.setAttribute('data-category', cfg.category);
+      s.setAttribute('data-category-id', cfg.categoryId);
+      // pathname 映射：评论按 URL 绑定。历史文章 URL 已经冻住了，
+      // 但以后改任何文章路径都会让它和已有评论对不上。
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '1');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'top');
+      s.setAttribute('data-lang', 'zh-CN');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('data-theme', resolved());
+      mount.appendChild(s);
+
+      // 站点切换主题时把新主题推给 iframe。
+      // 不做这一步的话，手动切成亮色而系统是暗色时，文章是亮的、评论区还是暗的。
+      document.addEventListener('themechange', function () {
+        var frame = document.querySelector('iframe.giscus-frame');
+        if (!frame || !frame.contentWindow) return;
+        frame.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: resolved() } } },
+          'https://giscus.app',
+        );
+      });
+    })();
+  </script>
+)}
+
 <style>
   .cm { margin-top: 4rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+  #giscus-mount { margin-top: 1.4rem; }
 </style>

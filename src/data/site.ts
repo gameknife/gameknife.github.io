@@ -52,7 +52,7 @@ export const site = {
 
   // Giscus（GitHub Discussions 评论）。留空则文章页不渲染评论区。
   giscus: {
-    repo: '' as `${string}/${string}` | '',
+    repo: 'gameknife/gameknife.github.io' as `${string}/${string}` | '',
     repoId: 'MDEwOlJlcG9zaXRvcnkzMTk2MzMxMA==',
     category: 'Announcements',
     categoryId: 'DIC_kwDOAee4rs4DEUgU',
