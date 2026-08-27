@@ -63,6 +63,17 @@ if (missing.length) {
 
 // 顺带检查几个关键新路由，防止改路由时无声打断
 const critical = ['/', '/blog/', '/engine/', '/works/', '/resume/', '/cv/', '/about/', '/404.html'];
+
+// 旧站的栏目页。文章 URL 是原样保留的，这四个是靠 astro.config 的 redirects 接住的，
+// 一样属于「不能 404」的范围 —— 尤其 /gallery/，那是旧作品集入口。
+const legacySections = ['/gallery/', '/art/', '/tech/', '/life/'];
+const brokenSections = legacySections.filter(
+  (u) => !fs.existsSync(path.join(DIST, u, 'index.html')),
+);
+if (brokenSections.length) {
+  console.error(`✗ 旧栏目页未接住：${brokenSections.join(', ')}`);
+  process.exit(1);
+}
 const brokenNew = critical.filter((u) => {
   const p = u.endsWith('.html') ? path.join(DIST, u) : path.join(DIST, u, 'index.html');
   return !fs.existsSync(p);

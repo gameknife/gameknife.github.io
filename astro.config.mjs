@@ -11,6 +11,17 @@ export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'always',       // 对齐 Jekyll pretty permalink，保住历史链接
   build: { format: 'directory' },
+
+  // 旧站的栏目页。文章 URL 原样保留了，但这四个栏目页在新架构里没有对应物，
+  // 不接住就是 404 —— /gallery/ 是作品集入口，最可能有外链。
+  // GitHub Pages 发不了真 301，Astro 会生成 meta-refresh + canonical 的静态页，
+  // 搜索引擎按重定向处理。
+  redirects: {
+    '/gallery/': '/works/',
+    '/art/': '/works/',
+    '/tech/': '/blog/',
+    '/life/': '/blog/',
+  },
   integrations: [
     mdx(),
     sitemap({ filter: (p) => !p.includes('/og/') }),

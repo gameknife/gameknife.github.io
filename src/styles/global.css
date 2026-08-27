@@ -10,18 +10,22 @@
    界面本身几乎单色 —— 颜色全部交给图：路径追踪截图和油画自己会发声。
    点缀色是一味灰绿，取油画里冷色的暗部，和暖底形成温度对比。用得极省。 */
 :root {
-  --ground:    #141210;
-  --surface:   #1c1917;
-  --surface-2: #241f1c;
-  --line:      #2e2825;
-  --line-soft: #221d1a;
-  --ink:       #eae6e0;
-  --ink-2:     #bdb5ac;
-  --muted:     #8b8279;
-  --faint:     #635c55;
-  --accent:    #8fa89e;
-  --accent-hi: #a9c0b6;
-  --accent-dim:#5d7169;
+  /* 石墨。R = G，只留一点 G−B —— 去掉红分量，暖意从赭石转为烟灰。
+     G−B 随明度递增（底 2 → 线 4 → 字 7~9）：暗处近乎中性，
+     只在亮处透出一点纸感，而不是整体染色。 */
+  --ground:    #121210;
+  --surface:   #1a1a17;
+  --surface-2: #232320;
+  --line:      #2d2d29;
+  --line-soft: #1f1f1c;
+  --ink:       #ebe9e2;
+  --ink-2:     #bab9b0;
+  --muted:     #85857c;
+  --faint:     #6a6a63;
+  /* 全站唯一的冷调焦点，用得极省。dim 比正色更沉，用于下划线与细边。 */
+  --accent:    #8fa89d;
+  --accent-hi: #a9c2b7;
+  --accent-dim:#566a61;
 
   /* 西文走 Fraunces，中文接 Noto Serif SC（思源宋体）—— 不再落到系统的 SimSun */
   --font-display: 'Fraunces', 'Noto Serif SC', Georgia, 'Songti SC', serif;
@@ -50,15 +54,16 @@
 /* 亮色是「白天的画廊」：暖纸，不是把暗色反过来 */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
-    --ground:    #f2eee7;
-    --surface:   #fbf9f5;
-    --surface-2: #ece7dd;
-    --line:      #ddd6c9;
-    --line-soft: #e7e1d6;
-    --ink:       #1a1714;
-    --ink-2:     #453e37;
-    --muted:     #6b6259;
-    --faint:     #948b80;
+    /* 白天的画廊：同一条规则反过来 —— 中性纸，不是奶油色。 */
+    --ground:    #f1f1ec;
+    --surface:   #f9f9f5;
+    --surface-2: #e7e7e1;
+    --line:      #d8d8d0;
+    --line-soft: #e5e5df;
+    --ink:       #1a1a16;
+    --ink-2:     #45453e;
+    --muted:     #6c6c64;
+    --faint:     #828279;
     --accent:    #4a675c;
     --accent-hi: #355046;
     --accent-dim:#8ba297;
@@ -66,15 +71,16 @@
   }
 }
 :root[data-theme='light'] {
-  --ground:    #f2eee7;
-  --surface:   #fbf9f5;
-  --surface-2: #ece7dd;
-  --line:      #ddd6c9;
-  --line-soft: #e7e1d6;
-  --ink:       #1a1714;
-  --ink-2:     #453e37;
-  --muted:     #6b6259;
-  --faint:     #948b80;
+    /* 白天的画廊：同一条规则反过来 —— 中性纸，不是奶油色。 */
+  --ground:    #f1f1ec;
+  --surface:   #f9f9f5;
+  --surface-2: #e7e7e1;
+  --line:      #d8d8d0;
+  --line-soft: #e5e5df;
+  --ink:       #1a1a16;
+  --ink-2:     #45453e;
+  --muted:     #6c6c64;
+  --faint:     #828279;
   --accent:    #4a675c;
   --accent-hi: #355046;
   --accent-dim:#8ba297;
