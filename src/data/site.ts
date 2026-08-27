@@ -53,13 +53,13 @@ export const site = {
   // Giscus（GitHub Discussions 评论）。留空则文章页不渲染评论区。
   giscus: {
     repo: '' as `${string}/${string}` | '',
-    repoId: '',
+    repoId: 'MDEwOlJlcG9zaXRvcnkzMTk2MzMxMA==',
     category: 'Announcements',
-    categoryId: '',
+    categoryId: 'DIC_kwDOAee4rs4DEUgU',
   },
 
   // Cloudflare Web Analytics token，留空则不注入脚本。
-  analyticsToken: '',
+  analyticsToken: '6dc8e06fb314426eb46a3e1b106a58bc',
 } as const;
 
 export type SocialLink = (typeof site.social)[number];
