@@ -3,7 +3,7 @@ title: "Hello World"
 date: 2015-03-10
 category: tech
 description: "开源 gkENGINE 之后才发现 GitHub 上有这么多好项目和好用法——本站的第一篇。"
-tags: []
+tags: ["gkEngine", "开源", "博客"]
 legacyUrl: "/2015/03/10/hello-world/"
 ---
 

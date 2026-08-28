@@ -26,6 +26,21 @@
   --accent:    #8fa89d;
   --accent-hi: #a9c2b7;
   --accent-dim:#566a61;
+  --accent-soft: rgba(143, 168, 157, 0.12);
+
+  /* ── 标签 50% 透明度边框配色系统（暗色） ── */
+  --tag-c0-border: rgba(144, 168, 157, 0.5); --tag-c0-color: #90a89d;
+  --tag-c1-border: rgba(142, 162, 180, 0.5); --tag-c1-color: #8ea2b4;
+  --tag-c2-border: rgba(180, 161, 120, 0.5); --tag-c2-color: #b4a178;
+  --tag-c3-border: rgba(179, 140, 149, 0.5); --tag-c3-color: #b38c95;
+  --tag-c4-border: rgba(157, 144, 179, 0.5); --tag-c4-color: #9d90b3;
+  --tag-c5-border: rgba(132, 166, 166, 0.5); --tag-c5-color: #84a6a6;
+  --tag-c6-border: rgba(159, 168, 127, 0.5); --tag-c6-color: #9fa87f;
+  --tag-c7-border: rgba(181, 147, 125, 0.5); --tag-c7-color: #b5937d;
+  --tag-c8-border: rgba(139, 151, 184, 0.5); --tag-c8-color: #8b97b8;
+  --tag-c9-border: rgba(173, 140, 167, 0.5); --tag-c9-color: #ad8ca7;
+  --tag-c10-border: rgba(134, 169, 150, 0.5); --tag-c10-color: #86a996;
+  --tag-c11-border: rgba(172, 146, 136, 0.5); --tag-c11-color: #ac9288;
 
   /* 西文走 Fraunces，中文接 Noto Serif SC（思源宋体）—— 不再落到系统的 SimSun */
   --font-display: 'Fraunces', 'Noto Serif SC', Georgia, 'Songti SC', serif;
@@ -67,11 +82,27 @@
     --accent:    #4a675c;
     --accent-hi: #355046;
     --accent-dim:#8ba297;
+    --accent-soft: rgba(74, 103, 92, 0.08);
+
+    /* ── 标签 50% 透明度边框配色系统（亮色） ── */
+    --tag-c0-border: rgba(74, 114, 98, 0.5);  --tag-c0-color: #3c5c50;
+    --tag-c1-border: rgba(70, 98, 126, 0.5);  --tag-c1-color: #3c5670;
+    --tag-c2-border: rgba(128, 106, 60, 0.5); --tag-c2-color: #6e5a32;
+    --tag-c3-border: rgba(135, 87, 98, 0.5);  --tag-c3-color: #734752;
+    --tag-c4-border: rgba(105, 87, 133, 0.5); --tag-c4-color: #584872;
+    --tag-c5-border: rgba(64, 112, 114, 0.5); --tag-c5-color: #345e5f;
+    --tag-c6-border: rgba(104, 117, 65, 0.5); --tag-c6-color: #576334;
+    --tag-c7-border: rgba(138, 95, 68, 0.5);  --tag-c7-color: #754e36;
+    --tag-c8-border: rgba(76, 92, 138, 0.5);  --tag-c8-color: #3e4c75;
+    --tag-c9-border: rgba(130, 83, 122, 0.5); --tag-c9-color: #6f4467;
+    --tag-c10-border: rgba(68, 115, 91, 0.5); --tag-c10-color: #37604b;
+    --tag-c11-border: rgba(133, 97, 84, 0.5); --tag-c11-color: #704f43;
+
     color-scheme: light;
   }
 }
 :root[data-theme='light'] {
-    /* 白天的画廊：同一条规则反过来 —— 中性纸，不是奶油色。 */
+  /* 白天的画廊：同一条规则反过来 —— 中性纸，不是奶油色。 */
   --ground:    #f1f1ec;
   --surface:   #f9f9f5;
   --surface-2: #e7e7e1;
@@ -84,6 +115,22 @@
   --accent:    #4a675c;
   --accent-hi: #355046;
   --accent-dim:#8ba297;
+  --accent-soft: rgba(74, 103, 92, 0.08);
+
+  /* ── 标签 50% 透明度边框配色系统（亮色） ── */
+  --tag-c0-border: rgba(74, 114, 98, 0.5);  --tag-c0-color: #3c5c50;
+  --tag-c1-border: rgba(70, 98, 126, 0.5);  --tag-c1-color: #3c5670;
+  --tag-c2-border: rgba(128, 106, 60, 0.5); --tag-c2-color: #6e5a32;
+  --tag-c3-border: rgba(135, 87, 98, 0.5);  --tag-c3-color: #734752;
+  --tag-c4-border: rgba(105, 87, 133, 0.5); --tag-c4-color: #584872;
+  --tag-c5-border: rgba(64, 112, 114, 0.5); --tag-c5-color: #345e5f;
+  --tag-c6-border: rgba(104, 117, 65, 0.5); --tag-c6-color: #576334;
+  --tag-c7-border: rgba(138, 95, 68, 0.5);  --tag-c7-color: #754e36;
+  --tag-c8-border: rgba(76, 92, 138, 0.5);  --tag-c8-color: #3e4c75;
+  --tag-c9-border: rgba(130, 83, 122, 0.5); --tag-c9-color: #6f4467;
+  --tag-c10-border: rgba(68, 115, 91, 0.5); --tag-c10-color: #37604b;
+  --tag-c11-border: rgba(133, 97, 84, 0.5); --tag-c11-color: #704f43;
+
   color-scheme: light;
 }
 
@@ -249,16 +296,51 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
 .prose th { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
 .prose br + br { display: none; }
 
-/* Shiki 双主题 */
-.astro-code, .astro-code span { color: var(--shiki-light); background: var(--shiki-light-bg); }
-:root:not([data-theme='light']) .astro-code,
-:root:not([data-theme='light']) .astro-code span { color: var(--shiki-dark); background: var(--shiki-dark-bg); }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) .astro-code,
-  :root:not([data-theme='dark']) .astro-code span { color: var(--shiki-light); background: var(--shiki-light-bg); }
+/* 早期博文失效配图占位标 */
+.img-lost {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .75rem 1.1rem;
+  margin-block: 1.6em;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .02em;
+  line-height: 1.6;
 }
-:root[data-theme='dark'] .astro-code,
-:root[data-theme='dark'] .astro-code span { color: var(--shiki-dark); background: var(--shiki-dark-bg); }
+.img-lost b {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* Shiki 双主题代码高亮 */
+@media not all and (prefers-color-scheme: light) {
+  :root:not([data-theme='light']) .astro-code {
+    color: var(--shiki-dark) !important;
+  }
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: transparent !important;
+    font-style: var(--shiki-dark-font-style, inherit) !important;
+    font-weight: var(--shiki-dark-font-weight, inherit) !important;
+    text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
+  }
+}
+
+:root[data-theme='dark'] .astro-code {
+  color: var(--shiki-dark) !important;
+}
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+  font-style: var(--shiki-dark-font-style, inherit) !important;
+  font-weight: var(--shiki-dark-font-weight, inherit) !important;
+  text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
+}
 
 .tabular { font-variant-numeric: tabular-nums; }
 .scroll-x { overflow-x: auto; }
@@ -269,3 +351,60 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
   padding: .6rem 1rem; z-index: 100; font-weight: 600;
 }
 .skip-link:focus { left: 0; }
+
+/* ── 标签胶囊组件（50% 透明度边框着色） ────────────────────────────────────────── */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  line-height: 1.4;
+  letter-spacing: .02em;
+  padding: .1rem .45rem;
+  border-radius: 4px;
+  border: 1px solid var(--tag-border, var(--line));
+  background: transparent;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .16s, border-color .16s, background-color .16s, transform .12s;
+  white-space: nowrap;
+}
+.tag-chip:hover {
+  border-color: var(--tag-color, var(--accent));
+  color: var(--tag-color, var(--accent));
+  background: var(--surface-2);
+}
+.tag-chip:active {
+  transform: scale(.98);
+}
+.tag-chip em {
+  font-style: normal;
+  opacity: .55;
+  font-size: .9em;
+}
+
+/* 尺寸变体 */
+.tag-chip.tag-sm {
+  font-size: .68rem;
+  padding: .05rem .36rem;
+}
+.tag-chip.tag-lg {
+  font-size: .88rem;
+  padding: .22rem .7rem;
+  border-radius: 6px;
+}
+
+/* 12 色槽类名（80% 边框着色映射） */
+.tag-c0  { --tag-border: var(--tag-c0-border);  --tag-color: var(--tag-c0-color); }
+.tag-c1  { --tag-border: var(--tag-c1-border);  --tag-color: var(--tag-c1-color); }
+.tag-c2  { --tag-border: var(--tag-c2-border);  --tag-color: var(--tag-c2-color); }
+.tag-c3  { --tag-border: var(--tag-c3-border);  --tag-color: var(--tag-c3-color); }
+.tag-c4  { --tag-border: var(--tag-c4-border);  --tag-color: var(--tag-c4-color); }
+.tag-c5  { --tag-border: var(--tag-c5-border);  --tag-color: var(--tag-c5-color); }
+.tag-c6  { --tag-border: var(--tag-c6-border);  --tag-color: var(--tag-c6-color); }
+.tag-c7  { --tag-border: var(--tag-c7-border);  --tag-color: var(--tag-c7-color); }
+.tag-c8  { --tag-border: var(--tag-c8-border);  --tag-color: var(--tag-c8-color); }
+.tag-c9  { --tag-border: var(--tag-c9-border);  --tag-color: var(--tag-c9-color); }
+.tag-c10 { --tag-border: var(--tag-c10-border); --tag-color: var(--tag-c10-color); }
+.tag-c11 { --tag-border: var(--tag-c11-border); --tag-color: var(--tag-c11-color); }

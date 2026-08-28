@@ -3,11 +3,11 @@ title: "gkENGINE技术特性"
 date: 2015-03-11
 category: tech
 description: "a cross-platform game engine gkENGINE的技术特性 gkENGINE截图 gkStudio  ↓"
-tags: []
+tags: ["gkEngine", "引擎", "架构"]
 legacyUrl: "/tech/2015/03/11/tech-feature/"
 ---
 
-![placeholder](../../assets/blog/gkengine_logo.png "logo")
+![placeholder](../../assets/blog/gkengine_logo.webp "logo")
 ========
 
 a cross-platform game engine
@@ -61,15 +61,15 @@ gkENGINE截图
 
 **gkStudio  ↓**
 
-![placeholder](../../assets/blog/gkstudio.jpg "gkStudio截图")
+![placeholder](../../assets/blog/gkstudio.webp "gkStudio截图")
 
 **gkEngine室外效果  ↓**
 
-![placeholder](../../assets/blog/out1.jpg "gkEngine室外截图1")
-![placeholder](../../assets/blog/out2.jpg "gkEngine室外截图2")
+![placeholder](../../assets/blog/out1.webp "gkEngine室外截图1")
+![placeholder](../../assets/blog/out2.webp "gkEngine室外截图2")
 
 **gkEngine室内效果  ↓**
 
-![placeholder](../../assets/blog/indoor1.jpg "gkEngine室内截图1")
-![placeholder](../../assets/blog/indoor2.jpg "gkEngine室内截图2")
-![placeholder](../../assets/blog/indoor3.jpg "gkEngine室内截图3")
+![placeholder](../../assets/blog/indoor1.webp "gkEngine室内截图1")
+![placeholder](../../assets/blog/indoor2.webp "gkEngine室内截图2")
+![placeholder](../../assets/blog/indoor3.webp "gkEngine室内截图3")

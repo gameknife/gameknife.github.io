@@ -3,7 +3,7 @@ title: "gkENGINE windows平台快速上手指南"
 date: 2015-03-12
 category: tech
 description: "windows平台快速部署分为，部署，编译，运行，打包四个步骤。 部署开发平台，安装和准备平台所需的第三方依赖库以及测试资源"
-tags: []
+tags: ["gkEngine", "工具链"]
 legacyUrl: "/tech/2015/03/12/windows-startup/"
 ---
 

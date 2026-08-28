@@ -3,7 +3,7 @@ title: "UE4 & Gradle & NDK-Build & Clang & std14 & LLVM"
 date: 2019-09-20
 category: tech
 description: "来新项目1个月整了 动态寻路和一些功能开发暂告一个段落了，最近一周开始搞ue4与上android真机的事情。 不再是之前玩具demo的玩法，涉及到很多第三方组件的整合与一个庞大的native库的迁移"
-tags: []
+tags: ["UE4", "Android", "工具链"]
 legacyUrl: "/tech/2019/09/20/ue4-with-gradle/"
 ---
 

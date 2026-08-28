@@ -3,7 +3,7 @@ title: "现代渲染能有多现代？"
 date: 2025-10-28
 category: tech
 description: "去年5月，我开始了现代渲染学习之路。目前，作为一个一年半的现代渲染练习生，准备来讲讲这个议题： 作为一名古董级渲染工程师，我曾长期深耕于OpenGL ES领域。此次对现代渲染技术的学习，彻底刷新了我的认知。同时，…"
-tags: []
+tags: ["gkNextEngine", "vulkan", "bindless", "gpu-driven", "渲染架构"]
 legacyUrl: "/tech/2025/10/28/how-modern-rendering-modern/"
 ---
 
@@ -244,7 +244,7 @@ public struct ALIGN_16 GPUScene
 
 ### "现代"gpu driven
 
-vulkan新增了mesh shader / task shader，这解决了空绘制的问题。indirectdraw不再只能由发起。而可以通过task shader发起，这样，可以让gpu只发起需要绘制的indirectdraw，而不用填充大量空绘制。
+vulkan新增了mesh shader / task shader，这解决了空绘制的问题。indirectdraw不再只能由cpu发起。而可以通过task shader发起，这样，可以让gpu只发起需要绘制的indirectdraw，而不用填充大量空绘制。
 
 
 
@@ -298,7 +298,7 @@ Vulkan通过扩展（extension）的方式，提供了硬件光线追踪的支�
 
 在不支持光追的硬件上，比如基于moltenvk的mac笔记本，不能就此放弃现代渲染。回归到之前，因此我们就需要一种近似的软件实现的追踪算法。
 
-当然，直接用computer shader实现一个bvh求交，也不是不可以，甚至tinybvh库已经给出了用于gpu使用的数据结构。也有很多人做了相关的实现。但感觉只是单纯炫技并没什么实际的用处，如果能快过硬件，那为什么显卡厂商不约而同的生产了那么多RT CORE？
+当然，直接用compute shader实现一个bvh求交，也不是不可以，甚至tinybvh库已经给出了用于gpu使用的数据结构。也有很多人做了相关的实现。但感觉只是单纯炫技并没什么实际的用处，如果能快过硬件，那为什么显卡厂商不约而同的生产了那么多RT CORE？
 
 因此，我基于实际工程出发，前面提到的用于提前退出的那个AmbientCube探针，是可以用来进行粗略的软件求交的。我的探针分布为0.25米一个，密度足以表达场景。
 
@@ -348,7 +348,7 @@ gkNextEngine为移动端及桌面高帧率环境，实现了一种高效的混�
 
 说实话，我苦于各种引擎的材质爆炸已久。各种情形使得变体数量指数级的增长。面对硬件光追，也一定是传统开销叠加上硬件光追的开销。很难说，他们在面对现代渲染，面对未来，已经做好了准备。
 
-因此，我决定把实验性质的gkNextRenderer变为gkNextEngine，整好也和我的gkEngine相呼应。
+因此，我决定把实验性质的gkNextRenderer变为gkNextEngine，正好也和我的gkEngine相呼应。
 
 这次的gkNextEngine，我没有任何保留，我决定完全轻装上阵。当然它的目标：
 
@@ -375,7 +375,7 @@ gkNextEngine为移动端及桌面高帧率环境，实现了一种高效的混�
 * lzav: 内存压缩
 * miniaudio: 音频库
 * tinygltf: 模型，场景数据交互库
-* meshoptimizer: 模型处理，pvoking, simpify等
+* meshoptimizer: 模型处理，provoking, simplify等
 * joltphysics: 物理引擎
 * ozzAnimation: 骨骼动画引擎
 * spdlog: 日志系统

@@ -9,6 +9,10 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# 写作台。仓库是公开的，发布计划、未发布档期和 go / no-go 不提前公开。
+# 代价是这个目录没有版本历史 —— 见 content-ops/README.md，需要独立备份。
+content-ops/
+
 # 编辑器
 .idea/
 .vscode/*

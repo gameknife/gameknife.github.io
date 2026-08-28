@@ -3,7 +3,7 @@ title: "界面纹理压缩（CbCr + YAlpha）"
 date: 2016-04-25
 category: tech
 description: "最近一个月都在做Unity3D的相关优化，在一个庞大的实际项目中做优化。 内存占用，帧消耗，加载速度等。。。 上周在做内存占用优化时，突发奇想了一个纹理压缩的思路：YCbCr，接下来做了实验和集成，发现效果很不错。"
-tags: []
+tags: ["Unity", "优化", "移动端"]
 legacyUrl: "/tech/2016/04/25/UITexCompress/"
 ---
 

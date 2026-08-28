@@ -3,7 +3,7 @@ title: "Blogging Like a Hacker"
 date: 2015-03-11
 category: tech
 description: "终于可以抛开wordpress那笨重的后台了！然后所有页面都可以由.md来自由掌控。post/page就像写readme一样方便。"
-tags: []
+tags: ["博客", "工具链"]
 legacyUrl: "/2015/03/11/blog-like-hack/"
 ---
 

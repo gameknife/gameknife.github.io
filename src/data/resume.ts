@@ -1,8 +1,21 @@
-// 由 scripts/convert-data.mjs 从 _data/{jobs,skills,projects,education}.yml 生成。
-// 已剥离原先混在 YAML 里的 <ul>/<li>/<lis> 标签 —— 这里只有数据，排版归组件管。
+import type { ImageMetadata } from "astro";
+
+import gknexteditor from "../assets/projects/gknexteditor.webp";
+import confroom from "../assets/projects/confroom.webp";
+import pubgScreenshot from "../assets/projects/pubg-p-screenshot.webp";
+import ssk from "../assets/projects/ssk.webp";
+import gwgo from "../assets/projects/gwgo.webp";
+import contra from "../assets/projects/contra.webp";
+import cube from "../assets/projects/cube.webp";
+import softrenderer from "../assets/projects/softrenderer.webp";
+import indoor3 from "../assets/projects/indoor3.webp";
+import shadermonki from "../assets/projects/shadermonki.webp";
+import openvrp from "../assets/projects/openvrp.webp";
+import x52 from "../assets/projects/x52.webp";
+import godslayer from "../assets/projects/godslayer.webp";
 
 export interface ProjectGroup { heading: string; items: string[] }
-export interface ProjectImage { src: string; alt: string }
+export interface ProjectImage { src: ImageMetadata; alt: string }
 export interface Project {
   title: string; company: string; period: string;
   images: ProjectImage[]; groups: ProjectGroup[];
@@ -104,11 +117,11 @@ export const projects: Project[] = [
     "period": "2024.5 - Current",
     "images": [
       {
-        "src": "https://github.com/gameknife/gkNextEngine/releases/download/readme-assets-v1/gknexteditor.webp",
+        "src": gknexteditor,
         "alt": "gkNextEditor"
       },
       {
-        "src": "https://github.com/gameknife/gkNextEngine/releases/download/readme-assets-v1/confroom.webp",
+        "src": confroom,
         "alt": "Real-Time Path Tracing"
       }
     ],
@@ -263,7 +276,7 @@ export const projects: Project[] = [
     "period": "2019.4 - 2019.7",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/pubg-p-screenshot.jpg",
+        "src": pubgScreenshot,
         "alt": "placeholder"
       }
     ],
@@ -346,7 +359,7 @@ export const projects: Project[] = [
     "period": "2017.5 - 2018.12",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/ssk.jpg",
+        "src": ssk,
         "alt": "placeholder"
       }
     ],
@@ -390,7 +403,7 @@ export const projects: Project[] = [
     "period": "2016.7 - 2017.5",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gwgo.jpg",
+        "src": gwgo,
         "alt": "placeholder"
       }
     ],
@@ -455,7 +468,7 @@ export const projects: Project[] = [
     "period": "2016.3 - 2016.7",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/contra.jpg",
+        "src": contra,
         "alt": "placeholder"
       }
     ],
@@ -491,7 +504,7 @@ export const projects: Project[] = [
     "period": "2015.7 - 2016.3",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/cube.jpg",
+        "src": cube,
         "alt": "placeholder"
       }
     ],
@@ -537,7 +550,7 @@ export const projects: Project[] = [
     "period": "2013.10 - Current",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/softrenderer.png",
+        "src": softrenderer,
         "alt": "placeholder"
       }
     ],
@@ -564,7 +577,7 @@ export const projects: Project[] = [
     "period": "2010.10 - 2017.1",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor3.jpg",
+        "src": indoor3,
         "alt": "placeholder"
       }
     ],
@@ -589,7 +602,7 @@ export const projects: Project[] = [
     "period": "2016.10 - Current",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/shadermonki.png",
+        "src": shadermonki,
         "alt": "placeholder"
       }
     ],
@@ -615,7 +628,7 @@ export const projects: Project[] = [
     "period": "2013.4 - 2015.7",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/openvrp.jpg",
+        "src": openvrp,
         "alt": "placeholder"
       }
     ],
@@ -649,7 +662,7 @@ export const projects: Project[] = [
     "period": "2012.9 - 2013.4",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/x52.jpg",
+        "src": x52,
         "alt": "placeholder"
       }
     ],
@@ -681,7 +694,7 @@ export const projects: Project[] = [
     "period": "2011.2 - 2012.9",
     "images": [
       {
-        "src": "https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/godslayer.jpg",
+        "src": godslayer,
         "alt": "placeholder"
       }
     ],

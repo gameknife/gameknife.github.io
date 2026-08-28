@@ -3,6 +3,7 @@ import Base from './Base.astro';
 import { site } from '../data/site';
 import { formatDate, isoDate, postUrl, readingTime, type Post } from '../lib/posts';
 import Giscus from '../components/blog/Giscus.astro';
+import Tag from '../components/blog/Tag.astro';
 
 interface Props { post: Post; related: Post[] }
 const { post, related } = Astro.props;
@@ -57,9 +58,15 @@ const jsonLd = {
         </p>
       )}
 
+      {post.data.draft && (
+        <p class="notice draft-notice">
+          <strong>草稿预览</strong> · 此文章标记为 <code>draft: true</code>，仅在本地开发环境可见，构建发布时会被过滤。
+        </p>
+      )}
+
       {tags.length > 0 && (
         <div class="tags">
-          {tags.map((t) => <a href={`/blog/tags/${t}/`}>#{t}</a>)}
+          {tags.map((t) => <Tag tag={t} size="md" />)}
         </div>
       )}
     </header>
@@ -119,12 +126,6 @@ const jsonLd = {
   }
 
   .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.1rem; }
-  .tags a {
-    font-family: var(--font-mono); font-size: .74rem;
-    padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 999px;
-    color: var(--muted); text-decoration: none;
-  }
-  .tags a:hover { color: var(--accent); border-color: var(--accent); }
 
   .cross {
     margin-top: 3.5rem; padding: 1.1rem 1.3rem;

@@ -3,7 +3,7 @@ title: "Unity Quick Tips"
 date: 2015-08-11
 category: tech
 description: "Unity 使用中的零散技巧、优化清单与踩过的坑。"
-tags: []
+tags: ["Unity", "优化", "移动端"]
 legacyUrl: "/hidden/2015/08/11/unity-quicktip/"
 unlisted: true
 ---
@@ -18,14 +18,14 @@ unlisted: true
 ### Unity Optimize Room | version 4.6.3
 
 - [ ] skybox使用了6个drawcall,并且有overdraw,可优化为一个全屏quad.
-- [x] canvas group控制的下层空间，alpha为0之后并不清除
+- [x] canvas group控制的下层控件，alpha为0之后并不清除
 - [x] depth texture需要单开rt和消耗drawcall来绘制，在支持depth_texture_oes扩展上的硬件皆是如此
 
 ### Trap in Unity
 
 * 一旦在运行时修改了material的属性，哪怕修改为一样的，unity也不会帮你自动做合并。每一个都变为了完全独立的material instance。
   * 因此在运行时的material修改要十分谨慎
-* unity3d在获取depth texture的时候，虽然manmal里提到如果能获取到system z buffer，则直接使用，但实际情况是几乎都需要重新绘制一遍场景来获得depth texture, 性能炸弹。
+* unity3d在获取depth texture的时候，虽然manual里提到如果能获取到system z buffer，则直接使用，但实际情况是几乎都需要重新绘制一遍场景来获得depth texture, 性能炸弹。
 * UniformSet基本只对GPU消耗增长，CPU端消耗开销不明显
 * MeshRenderer.sharedmaterial vs material
 * ImageEffectOpaque标识会让后处理提前到opaque绘制之后，transparent绘制之前。但这会造成一次额外的fbo转换

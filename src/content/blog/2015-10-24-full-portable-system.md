@@ -3,7 +3,7 @@ title: "完全便携系统-WinToGo U盘系统的制作"
 date: 2015-10-24
 category: tech
 description: "这周项目开始轻松一些了，周末收到同学的安利，购置了一个超高速u盘，读写200MB/s+，貌似芯片用的是ssd芯片。 同学还用这个u盘制作了一个win to go系统。据说特别牛逼，带上一个u盘，装满驱动，就可以走到哪里都用自己的电脑了"
-tags: []
+tags: ["折腾", "工具"]
 legacyUrl: "/tech/2015/10/24/full-portable-system/"
 ---
 

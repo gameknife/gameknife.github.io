@@ -17,7 +17,10 @@ const total = (await listedPosts()).length;
         <li>
           <a href={postUrl(p)}>
             <time class="d tabular" datetime={isoDate(p.data.date)}>{isoDate(p.data.date)}</time>
-            <span class="t">{p.data.title}</span>
+            <span class="t">
+              {p.data.draft && <span class="badge-draft">草稿</span>}
+              {p.data.title}
+            </span>
             <span class="x">{p.data.description}</span>
             <span class="c">{site.categories[p.data.category].label}</span>
           </a>
@@ -62,6 +65,20 @@ const total = (await listedPosts()).length;
     font-variation-settings: 'SOFT' 40, 'WONK' 1;
     letter-spacing: -.015em;
     line-height: 1.3;
+  }
+  .badge-draft {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: .1rem .4rem;
+    border-radius: 4px;
+    border: 1px dashed var(--accent-dim);
+    color: var(--accent);
+    background: var(--surface-2);
+    margin-right: .5rem;
+    vertical-align: 2px;
+    display: inline-block;
   }
   .x {
     grid-column: 2;

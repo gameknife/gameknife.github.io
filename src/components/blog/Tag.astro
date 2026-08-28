@@ -1,0 +1,37 @@
+---
+import { getTagColorClass } from '../../lib/tags';
+
+interface Props {
+  tag: string;
+  count?: number;
+  href?: string;
+  asLink?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  tag,
+  count,
+  href = `/blog/tags/${tag}/`,
+  asLink = true,
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+const colorClass = getTagColorClass(tag);
+const sizeClass = size === 'sm' ? 'tag-sm' : size === 'lg' ? 'tag-lg' : '';
+const classes = ['tag-chip', colorClass, sizeClass, className].filter(Boolean).join(' ');
+---
+
+{asLink ? (
+  <a href={href} class={classes}>
+    <span>#{tag}</span>
+    {count !== undefined && <em>{count}</em>}
+  </a>
+) : (
+  <span class={classes}>
+    <span>#{tag}</span>
+    {count !== undefined && <em>{count}</em>}
+  </span>
+)}

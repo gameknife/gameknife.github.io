@@ -3,7 +3,7 @@ title: "Unity3D粗犷优化"
 date: 2015-08-14
 category: tech
 description: "刚进组，准备从一些独立工作切入项目，于是选择进行项目效果和性能的提升与优化。于是先开始优化性能，压榨出可供提升质量的空间。"
-tags: []
+tags: ["Unity", "优化", "移动端"]
 legacyUrl: "/tech/2015/08/14/unity3d-draft-optimize/"
 ---
 

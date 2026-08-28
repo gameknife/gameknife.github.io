@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
 import { allTags, formatDate, isoDate, listedPosts, postUrl } from '../../lib/posts';
 import Search from '../../components/ui/Search.astro';
+import Tag from '../../components/blog/Tag.astro';
 
 const posts = await listedPosts();
 const tags = await allTags();
@@ -45,7 +46,7 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
 
       {tags.length > 0 && (
         <div class="tagrow">
-          {tags.slice(0, 14).map((t) => <a href={`/blog/tags/${t.tag}/`}>#{t.tag} <em>{t.count}</em></a>)}
+          {tags.slice(0, 16).map((t) => <Tag tag={t.tag} count={t.count} size="sm" />)}
         </div>
       )}
     </header>
@@ -61,10 +62,18 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
                   <time class="d tabular" datetime={isoDate(p.data.date)}>
                     {formatDate(p.data.date).replace(/^\d+年/, '')}
                   </time>
-                  <span class="t">{p.data.title}</span>
+                  <span class="t">
+                    {p.data.draft && <span class="badge-draft">草稿</span>}
+                    {p.data.title}
+                  </span>
                   <span class="c">{site.categories[p.data.category].label}</span>
                 </a>
                 <p class="ex">{p.data.description}</p>
+                {p.data.tags.length > 0 && (
+                  <div class="item-tags">
+                    {p.data.tags.map((t) => <Tag tag={t} size="sm" />)}
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -119,14 +128,7 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
 
   .search { margin-left: auto; min-width: 220px; }
 
-  .tagrow { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1rem; }
-  .tagrow a {
-    font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
-    text-decoration: none; padding: .18rem .5rem;
-    border: 1px solid var(--line-soft); border-radius: 4px;
-  }
-  .tagrow a:hover { color: var(--accent); border-color: var(--accent); }
-  .tagrow em { font-style: normal; opacity: .55; }
+  .tagrow { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.2rem; }
 
   .year { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 1.5rem; padding-block: 1.6rem; border-top: 1px solid var(--line-soft); }
   .year[hidden] { display: none; }
@@ -136,8 +138,8 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
     position: sticky; top: 76px; align-self: start;
   }
 
-  .items { list-style: none; margin: 0; padding: 0; display: grid; gap: .15rem; }
-  .items li { padding-block: .35rem; }
+  .items { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+  .items li { padding-block: .45rem; }
   .items li[hidden] { display: none; }
   .items a {
     display: grid; grid-template-columns: 74px minmax(0, 1fr) auto;
@@ -149,12 +151,32 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
   .items a:hover { background: var(--surface-2); color: var(--accent); }
   .d { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
   .t { font-size: .98rem; font-weight: 500; }
+  .badge-draft {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: .08rem .36rem;
+    border-radius: 4px;
+    border: 1px dashed var(--accent-dim);
+    color: var(--accent);
+    background: var(--surface-2);
+    margin-right: .45rem;
+    vertical-align: 1px;
+    display: inline-block;
+  }
   .c { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
   .ex {
     margin: 0 0 0 calc(74px + 1rem);
     font-size: .82rem; color: var(--muted); line-height: 1.6;
     max-width: 62ch;
     display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .item-tags {
+    margin: .4rem 0 0 calc(74px + 1rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
   }
 
   @media (max-width: 760px) {
@@ -163,6 +185,7 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
     .items a { grid-template-columns: 1fr auto; gap: .3rem .8rem; }
     .d { grid-column: 1 / -1; }
     .ex { margin-left: 0; }
+    .item-tags { margin-left: 0; }
     .search { margin-left: 0; width: 100%; }
   }
 </style>

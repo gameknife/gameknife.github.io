@@ -24,7 +24,7 @@ npm run fonts:fetch  # 重新抓取西文字体（升级版本时才需要）
 
 ```
 src/
-  content/blog/     文章（Markdown，44 篇）
+  content/blog/     文章（Markdown，44 篇已发布 + 12 篇 draft）
   content/works/    作品集条目
   data/
     site.ts         站点唯一配置源：域名 / 导航 / 社交 / 定位语 / Giscus / 统计
@@ -38,13 +38,18 @@ src/
 scripts/
   migrate-posts.mjs 一次性迁移（已跑完，留作记录）
   convert-data.mjs  一次性数据转换（已跑完）
+  migrate-content-ops.mjs 知乎稿 -> 博客草稿，一次性（已跑完）
   verify-urls.mjs   历史 URL 回归防线，CI 每次构建都跑
   print-cv.mjs      /cv/ -> dist/KaimingYi-CV.pdf
   legacy-urls.json  44 个历史路径的快照
 legacy/             Jekyll 时期的原始文件，不参与构建，确认后可删
+content-ops/        写作台：策略、发布计划、证据、分发流程。不进 git
 ```
 
 ## 写一篇新文章
+
+选题、事实口径和发布计划在 `content-ops/`（不进 git，见该目录的 `README.md`）。
+**文章本体一律在 `src/content/blog/`** —— 草稿和已发布同处一地，靠 `draft` 区分。
 
 在 `src/content/blog/` 新建 `YYYY-MM-DD-slug.md`：
 
@@ -55,12 +60,22 @@ date: 2026-01-01
 category: tech          # tech | life | art
 description: 一句话摘要。必填，会用在列表、搜索结果、OG 分享图和 RSS 上。
 tags: [vulkan, 渲染]
+draft: true             # 写作中。dev 里可见，生产构建里被过滤掉
 featured: false         # true 则进首页精选位
 zhihu: https://...      # 可选，同步到知乎后填上，文章页会显示互链
 ---
 ```
 
 新文章的 URL 是 `/blog/{slug}/`。存量文章带 `legacyUrl` 字段，按原路径出页 —— **不要改这个字段**，它是十年外链的落点。
+
+发布就是删掉 `draft: true` 那一行。文件名、图片相对路径和 URL 都不变 ——
+草稿在 `npm run dev` 里已经按最终 URL 渲染过一遍，所见即所发。
+
+正文引用的图放 `src/assets/blog/`，用相对路径写：`![说明](../../assets/blog/foo.webp)`。
+**引用一张不存在的图会让 `astro build` 直接失败**，配图还没产出就先写成 HTML 注释。
+
+上线之后继续改是正常的 —— 博客是唯一主档，同步到知乎/公众号/小红书的是某个时间点的
+副本，不回流。完整流程见 `content-ops/writing-strategy.md`。
 
 ## /resume/ 与 /cv/
 
@@ -113,7 +128,7 @@ G−B 随明度递增（底 2 → 分割线 4 → 文字 7~9）：暗处近乎�
 ## 两条硬规矩
 
 1. **历史 URL 不能动。** `scripts/verify-urls.mjs` 在 CI 里逐条核对 `scripts/legacy-urls.json`，少一个就构建失败。
-2. **中文不加载 Web Font。** 全量 CJK 字体一个字重就是几 MB，会直接毁掉首屏。中文走系统栈，见 `--font-cjk`。
+2. **中文不加载 Web Font。** 全量 CJK 字体一个字重就是几 MB，会直接毁掉首屏。正文中文走系统栈，见 `--font-body`。（中文标题是例外，走 Noto Serif SC 真子集。）
 
 ## 部署
 

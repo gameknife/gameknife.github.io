@@ -3,7 +3,7 @@ title: "重设r6300v2路由器"
 date: 2015-03-22
 category: tech
 description: "前几周玩路由器时，听信谣言，尝试超频，结果路由启动就进入无线断线-重连的循环中... 幸好机器是在京东买的，保修，取货，换新..."
-tags: []
+tags: ["折腾", "工具"]
 legacyUrl: "/tech/2015/03/22/play-ddwrt/"
 ---
 

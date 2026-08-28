@@ -3,7 +3,7 @@ title: "安装vc100独立工具链"
 date: 2015-03-23
 category: tech
 description: "这周末花时间尝试研究制作vc100独立工具链，功夫不负有心人，事实证明是完全可行的。下面我给出独立工具链的下载地址和安装注意事项。"
-tags: []
+tags: ["gkEngine", "工具链"]
 legacyUrl: "/tech/2015/03/23/install-vc100-toolchain/"
 ---
 

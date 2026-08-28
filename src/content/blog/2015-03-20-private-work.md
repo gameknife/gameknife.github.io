@@ -3,7 +3,7 @@ title: "一个不相关领域的私活"
 date: 2015-03-20
 category: life
 description: "前些天受朋友之托，让帮找人开发一个系统。需求是: 找了一圈朋友没有做这个事情的，自己分析了下。后台如果用php+mysql来做，操作很简单。主要工作在于前端，要进行不同平台，分辨率的适配。"
-tags: []
+tags: ["Web", "随笔"]
 legacyUrl: "/life/2015/03/20/private-work/"
 ---
 

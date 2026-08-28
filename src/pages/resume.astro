@@ -11,11 +11,11 @@ import '../styles/resume.css';
 import { site } from '../data/site';
 import { jobs, skills, education, projects } from '../data/resume';
 
-import substancedesigner from '../assets/works/substancedesigner.jpg';
-import stills1 from '../assets/works/stills1.jpg';
-import oilpaint1 from '../assets/works/oilpaint1.jpg';
-import oilpaint2 from '../assets/works/oilpaint2.jpg';
-import pencilpaint2 from '../assets/works/pencilpaint2.jpg';
+import substancedesigner from '../assets/works/substancedesigner.webp';
+import stills1 from '../assets/works/stills1.webp';
+import oilpaint1 from '../assets/works/oilpaint1.webp';
+import oilpaint2 from '../assets/works/oilpaint2.webp';
+import pencilpaint2 from '../assets/works/pencilpaint2.webp';
 
 const intro = site.resumeIntro;
 
@@ -107,7 +107,7 @@ const gallery = [
               <p class="period">{project.period}</p>
             </dt><dd>
               {project.images.map((im) => (
-                <img src={im.src} alt={im.alt} style="width:100%;padding:0 0 1em 0;" loading="lazy" />
+                <Image src={im.src} alt={im.alt} widths={[600, 1200]} sizes="(max-width: 900px) 100vw, 820px" style="width:100%;padding:0 0 1em 0;" loading="lazy" />
               ))}
               <br />
               <Fragment set:html={projectHtml(project.groups)} />

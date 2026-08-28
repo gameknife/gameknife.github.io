@@ -3,7 +3,7 @@ title: "UE4's iOS Cross Compile"
 date: 2019-09-29
 category: tech
 description: "安卓的真机版本搞定了，比预计快了很多，因此，准备把iOS的真机版本也提上日程。 由于已经身经百战，之前好歹也出过2-3个iOS真机包了，这次准备直接在构建机的虚拟macOS系统上开搞"
-tags: []
+tags: ["UE4", "iOS", "工具链"]
 legacyUrl: "/tech/2019/09/29/ue4-ios-cross-compile/"
 ---
 
@@ -33,7 +33,7 @@ git pull 源码，编译源码，编译编辑器，编译game，cook，package�
 找了篇文章，介绍iOS的Remote Build，原理其实挺简单的，就是通过同一个网络下的ssh，windows ssh到mac系统，
 将构建用的依赖文件发送过去，并在远程mac系统编译，再把编译结果发送回来。
 
-这样依赖，mac机完全作为一种“资源”，只需要安装有xcode，具备build能力即可，
+这样一来，mac机完全作为一种“资源”，只需要安装有xcode，具备build能力即可，
 而不需要ue的超大源码，也不需要编译出ue，也不需要编译出项目的editor，不需要cook，
 只具备构建app和打包app的能力即可。
 

@@ -3,7 +3,7 @@ title: "gkENGINE渲染优化"
 date: 2013-06-11
 category: tech
 description: "gkENGINE上次总结了一篇开发总结（上）。然后二进制DEMO发到了OPENGPU上，算是引起了挺多的关注。 效率这个问题被很多大牛提及，因此，正在撰写的开发总结（下）被我停了下来。认真的分析渲染流程，找到性能瓶颈，尝试修改，突破。…"
-tags: []
+tags: ["gkEngine", "渲染", "优化"]
 legacyUrl: "/tech/2013/06/11/gkengine-opt/"
 ---
 
@@ -29,7 +29,7 @@ gkENGINE 项目已经决定开源，代码正在整理中，准备工作完毕�
 
  
 
-MISSON START                                                                                    
+MISSION START                                                                                    
 ---
 当时是一个周末，先在程序中将DEMO中截图的那个镜头锁定了下来。然后开始用Intel GPA这个图形分析工具开始分析。
 
@@ -41,7 +41,7 @@ MISSON START
 
 接下来，便得到了精确的GPU时间数据和各阶段的详细资源：
 
-![placeholder](../../assets/blog/blog-add/10221141-ed14483323a544f89394b02b80427333.jpg)
+![placeholder](../../assets/blog/blog-add/10221141-ed14483323a544f89394b02b80427333.webp)
 
 > *渲染效率：GTX560  104frame/s   9.6ms/frame*
 
@@ -63,11 +63,11 @@ SSAO的shader，汇编指令169, 11个采样指令。1280x720分辨率，每帧�
 ##### 2.ShadowMask优化
 采用相同策略，使用半尺寸渲染，将计算量降为1/4。不过这时在后面的着色阶段，会产生渲染错误。
 
-![placeholder](../../assets/blog/blog-add/10230714-29e84348faa6456880d594dbec32723e.jpg)
+![placeholder](../../assets/blog/blog-add/10230714-29e84348faa6456880d594dbec32723e.webp)
 
 如图，由于MASK采用半尺寸，因此在全尺寸的着色阶段，会由于线性采样，在阴影和受光的交界像素处采样到非阴影值（树干的边缘，后面的茅屋阴影有非阴影白边）。
 
-解决的办法是，在着色阶段，在采样点都右下方像素多采样一个阴影值，两者取最小值作为当前像素的阴影值，过滤掉这个渲染错误。这个解决方案也有必然的弊端：可能会在本身没有阴影的地方产生一定程度的阴影黑边。但是相对白边，黑边造成的瑕疵完全可以接受。
+解决的办法是，在着色阶段，在采样点的右下方像素多采样一个阴影值，两者取最小值作为当前像素的阴影值，过滤掉这个渲染错误。这个解决方案也有必然的弊端：可能会在本身没有阴影的地方产生一定程度的阴影黑边。但是相对白边，黑边造成的瑕疵完全可以接受。
 ##### 3.POST PROCESS优化
 之前的POSTPROCESS有很多RT来回倒腾的操作（紫色的矩形块）。经过RT的合理分配和顺序调整，可以去掉一些RT STRETCH的操作，提高POST-PROCESS的效率。
 
@@ -81,7 +81,7 @@ SSAO的shader，汇编指令169, 11个采样指令。1280x720分辨率，每帧�
 
 ##### 1.为低分辨率渲染添加锐化pass
 
-![placeholder](../../assets/blog/blog-add/11123125-9b4e09866b8248b19a9369ceb3edd615.jpg)
+![placeholder](../../assets/blog/blog-add/11123125-9b4e09866b8248b19a9369ceb3edd615.webp)
 
 如上图所示，的确，使用3/4的渲染分辨率，少了近一半的像素，质量下降难免，如坛友所说，结果像是图片经过了质量压缩。但是这个下降是否可以再补偿回来一些呢？
 
@@ -91,15 +91,15 @@ color = lerp( blur, curr, sharpvalue ); // sharpvalue取值大于1
 
 ##### 2.使用手动MIPMAP解决地形颗粒感过重的问题
 
-对于有坛友提出的颗粒感过重的问题，因为terrian的多层混合是直接在shader中计算的，由于纹理的重复采样是直接在shader总通过frac得出，因此打开mipmap会有采样错误（由于frac计算出的texcoord不连续），之前图省事直接关闭了mipmaping。因此这里用了一个简单的方法，解决这个问题：利用像素的线性深度，手动计算应该采样的mipmap层数（避免使用自动的ddx计算，造成地块间的不连续值），然后使用texlod来取得对应Mipmap的值。
+对于有坛友提出的颗粒感过重的问题，因为terrain的多层混合是直接在shader中计算的，由于纹理的重复采样是直接在shader中通过frac得出，因此打开mipmap会有采样错误（由于frac计算出的texcoord不连续），之前图省事直接关闭了mipmaping。因此这里用了一个简单的方法，解决这个问题：利用像素的线性深度，手动计算应该采样的mipmap层数（避免使用自动的ddx计算，造成地块间的不连续值），然后使用texlod来取得对应Mipmap的值。
 
 这时再观察GPA的数据。
 
-![placeholder](../../assets/blog/blog-add/11123721-3e6bbe86c8dd47329b33faf7a0e078e1.jpg)
+![placeholder](../../assets/blog/blog-add/11123721-3e6bbe86c8dd47329b33faf7a0e078e1.webp)
 
 这时之前的几个瓶颈已经被压到合理的消耗范围。渲染时间大部分集中在了shadowmap生成，zpass, general pass上。这算是一个合理的渲染管线消耗分配了。
 
-但是也可以注意到，图标中标黄的两个消耗块，占据了相当大的时间，已经超过了SSAO和SHADOWMASK的消耗。
+但是也可以注意到，图中标黄的两个消耗块，占据了相当大的时间，已经超过了SSAO和SHADOWMASK的消耗。
 
 这两个消耗，就是地形系统中占屏幕像素最大的那个block。分析他们的shader assembly，发现每个像素采样的次数达到了惊人的26次！（zpass 7次, general pass 19次）
 
@@ -107,7 +107,7 @@ color = lerp( blur, curr, sharpvalue ); // sharpvalue取值大于1
 
 ##### 3.tex2dlod和tex2dgrad的选择
 
-而仔细看却发现tex_ld, tex_ldl的次数却没有那么多，通过搜素发现，原来tex2dlod这个函数可以显式的指定lod层数，消耗比tex2d, tex2dgrad都要大。在GPA中会显示两次采样指令。
+而仔细看却发现tex_ld, tex_ldl的次数却没有那么多，通过搜索发现，原来tex2dlod这个函数可以显式的指定lod层数，消耗比tex2d, tex2dgrad都要大。在GPA中会显示两次采样指令。
 
 因此，将tex2dlod的方式改为tex2dgrad, 手动计算ddx送入插值而非直接指定mip层数。像素采样次数直接砍半。
 
@@ -134,7 +134,7 @@ color = lerp( blur, curr, sharpvalue ); // sharpvalue取值大于1
 
 缺点：所有不透明物体需要渲染两次：Zpass一次，输出法线和线性深度，GeneralPass一次，利用生成好的光照数据，和主光源，进行传统的材质运算。
 
-而Crytek在GDC2013的演讲中提出了Hybird Deferred Shading的概念，将之前实现的延迟光照和传统的延迟渲染进行混合，对于普遍材质使用延迟渲染方式，只需要一次渲染调用。而对于复杂材质，和以前一样走延迟光照的渲染流程。
+而Crytek在GDC2013的演讲中提出了Hybrid Deferred Shading的概念，将之前实现的延迟光照和传统的延迟渲染进行混合，对于普遍材质使用延迟渲染方式，只需要一次渲染调用。而对于复杂材质，和以前一样走延迟光照的渲染流程。
 
 因此，我决定先引入传统的DeferredShading实现，先观察效率，并做成可以实时灵活切换渲染管线的架构，再考虑进一步的混合渲染方式。
 
@@ -152,7 +152,7 @@ shadowmapgen -> zpass -> ssao -> deferred lighting -> shadowmask -> general pass
 
 同时，延迟渲染还需要新的zpass和最后的合成pass的shader，同时，因为不能使用独立的generalpass了，因此之前的一些特殊材质效果一定需要损失。
 
-对于G-BUFFER，之前的配置是DEPTH|R32F + NORMAL+GLOSS|RGBA8。而延迟渲染需要记录物体的材质信息，所以至少需要多添加一层ALBETO颜色信息，所以GBUFFER在原有的基础上扩展了一个ALBETO DIF+SPEC|RGBA8的MRT。用于输出ALBETO颜色和单色的高光。
+对于G-BUFFER，之前的配置是DEPTH|R32F + NORMAL+GLOSS|RGBA8。而延迟渲染需要记录物体的材质信息，所以至少需要多添加一层ALBEDO颜色信息，所以GBUFFER在原有的基础上扩展了一个ALBEDO DIF+SPEC|RGBA8的MRT。用于输出ALBEDO颜色和单色的高光。
 
 对于物理属性，诸如：FRESNEL等，暂时没有写入。后期考虑压缩NORMAL，在NORMAL中多开辟一个通道来存储。
 
@@ -160,7 +160,7 @@ shadowmapgen -> zpass -> ssao -> deferred lighting -> shadowmask -> general pass
 
 渲染流程改为deferred shading后，DP少了一半，G-BUFFER的带宽压力增加了50%。但总体下来效率还是提高了5%左右。
 
-可惜的是，deferred shading要求更加统一的材质属性设置。所以，之前为延迟光照设置的材质属性，在延迟渲染下表现有了差异。考虑到提升并不明显，因此还是默认使用deferred lighing渲染管线。
+可惜的是，deferred shading要求更加统一的材质属性设置。所以，之前为延迟光照设置的材质属性，在延迟渲染下表现有了差异。考虑到提升并不明显，因此还是默认使用deferred lighting渲染管线。
 
  
 
@@ -195,6 +195,6 @@ Intel i5 2500K & Intel HD Graphics 3000	30FPS	33.33ms
 
 效果对比：
 
-![placeholder](../../assets/blog/blog-add/11193150-6b5ac60ba21d44dc90354890826f8bb3.jpg)
+![placeholder](../../assets/blog/blog-add/11193150-6b5ac60ba21d44dc90354890826f8bb3.webp)
 
 最下面的两张渲染结果分别是全渲染尺寸 和 shadow, ssao全尺寸的渲染结果。基本代表了优化开始时的渲染质量。

@@ -3,7 +3,7 @@ title: "Unity3D中的MaterialPropertyBlock"
 date: 2016-04-28
 category: tech
 description: "最近两天，在针对Unity3D做传统gpuskin的尝试。 所谓传统gpuskin，即使指利用vertexshader，通过传入的bone matrix进行蒙皮计算的方式。"
-tags: []
+tags: ["Unity", "优化", "渲染"]
 legacyUrl: "/tech/2016/04/28/MaterialPropertyBlock/"
 ---
 
@@ -39,9 +39,9 @@ legacyUrl: "/tech/2016/04/28/MaterialPropertyBlock/"
 在iPhone5S上，消耗为3ms/9chr，而cpu skin的消耗为2.5-3ms/9chr。看起来，和PC上比例差不太多。
 
 而当我在Instrument Time Profiler中仔细查看调用才发现，GSKINRenderer.Update的消耗，超过50%都消耗在了Material.SetVector这个函数之上！而我本身认为非常繁重值得优化的一个Matrix4x4 Decompose操作，仅仅消耗了大约25%的时间。
-![placeholder](../../assets/blog/blog-add/materialsetvector.jpeg)
+![placeholder](../../assets/blog/blog-add/materialsetvector.webp)
 而Material.SetVector，最终其实只会促成glUniform4fv的调用，而这个调用在GLEngine库中的查看，全局消耗非常小。
-![placeholder](../../assets/blog/blog-add/gluniform4fv.jpeg)
+![placeholder](../../assets/blog/blog-add/gluniform4fv.webp)
 看来，最大的问题在于对Material.SetVector的优化！
 
 <br>

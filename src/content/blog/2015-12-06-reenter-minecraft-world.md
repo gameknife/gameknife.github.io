@@ -3,7 +3,7 @@ title: "重新进入MineCraft的世界"
 date: 2015-12-06
 category: life
 description: "重新认识 Minecraft 的开篇——一篇写到一半就搁下的草稿。"
-tags: []
+tags: ["游戏开发", "随笔"]
 legacyUrl: "/life/2015/12/06/reenter-minecraft-world/"
 unlisted: true
 ---

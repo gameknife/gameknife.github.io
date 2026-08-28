@@ -3,7 +3,7 @@ title: "gkNextRenderer - YearOne"
 date: 2025-05-16
 category: tech
 description: "去年五一节结束后，在RayTracingInOneWeekend项目的基础上，开始了gkNextRenderer的学习。一开始的目的很简单"
-tags: []
+tags: ["gkNextEngine", "vulkan", "渲染架构", "光线追踪"]
 legacyUrl: "/tech/2025/05/16/gknextrenderer-yearone/"
 ---
 
@@ -25,11 +25,11 @@ legacyUrl: "/tech/2025/05/16/gknextrenderer-yearone/"
 
 内心的动力有了，就差一个契机，这个契机就是我买了一台支持硬件光追的M3Max笔记本，这台电脑算是我的现代渲染启蒙，我从苹果的官方例子开始，了解硬件光追的一些事情。后面，我回到了桌面平台，我了解到了这个基于vulkan的硬件光追项目，RayTracingInOneWeekend。并同时也又仔细的读了一遍原文。
 
-作者的实现比较鲁邦，我又顺着NextWeekend, RestOfYourLife把后面的重要性采样，NEE等科目作了一遍。然后便开始思索，如何做实时的路径追踪。硬件来做，目标就是实时嘛。
+作者的实现比较鲁棒，我又顺着NextWeekend, RestOfYourLife把后面的重要性采样，NEE等科目作了一遍。然后便开始思索，如何做实时的路径追踪。硬件来做，目标就是实时嘛。
 
 当然，这方面其实也有很多人做得非常深入了，最新的UE5，也有一个完全基于硬件PathTracing的渲染器，并且有不俗的渲染质量，Nvidia的工程师很强。（不过这是后话了，当时刚涉足这个领域的我，并没有看到如此多的论文和信息，当然不知道那时如果看到了这些，会不会干脆就放弃了）
 
-从实时路径追踪这个目标开始，慢慢的做了很多课题，就做到现在了。中间的过程，都是些比较繁琐的流水账，这里就按下不表了，写几个剖有感悟的点。作一个总结
+从实时路径追踪这个目标开始，慢慢的做了很多课题，就做到现在了。中间的过程，都是些比较繁琐的流水账，这里就按下不表了，写几个颇有感悟的点。作一个总结
 
 ## hardware-raytracing
 
@@ -38,7 +38,7 @@ legacyUrl: "/tech/2025/05/16/gknextrenderer-yearone/"
 直到开始自己实现硬件光追，我基本认定，未来应该是硬件光追的。甚至可以颠覆现在的渲染架构。
 
 * 显卡厂商现在的着力点在这里，rtx20到50系，光追渲染性能的提升是光栅化性能的很多倍。
-* 真正的照片集真实感，只能基于pathtracing。pixar和disney电影的这种渲染风格，也只能依靠pathtracing
+* 真正的照片级真实感，只能基于pathtracing。pixar和disney电影的这种渲染风格，也只能依靠pathtracing
 * 真正的pathtracing已经被很多demo实现了（当然不是所有工况下）
 
 因此，全面拥抱硬件光追，是一件必要的事情。RayTracing Gem上也有很多文章，并且有很多颠覆传统光栅化管线的做法。
@@ -71,7 +71,7 @@ visibilitybuffer最早是由这篇论文提出的，解决的主要就是传统g
 
 visibility buffer有一些工程上的细节问题，一个问题就是现有api无法解决取得triangleId的问题（从硬件实现细节上看可能本就没有这个数据）。最暴力的做法把顶点全部裂开，每一个三角形都用独立的顶点，顶点上直接写上triangleId，这样在vs阶段，直接取顶点上的值输出即可。当然，公认的优化办法是使用provoking-vertex（激发顶点），在处理mesh的时候，对triangle进行精心排布，可以用较少的顶点开销达到同样的目的，zeux大神的mesh-optimizer库可以处理这个问题。
 
-visibilitybuffer的传统用法，是用来解耦场景，把顶点信息和instance信息写在一个thin-gbuffer里，写入成本和读取成本都很低。然后后续使用一个个都compute shader，按照严格的顺序一次处理thin-gbuffer上的像素任务，最终完成shading。
+visibilitybuffer的传统用法，是用来解耦场景，把顶点信息和instance信息写在一个thin-gbuffer里，写入成本和读取成本都很低。然后后续使用一个个的compute shader，按照严格的顺序一次处理thin-gbuffer上的像素任务，最终完成shading。
 
 ## hybridtracing
 
@@ -79,13 +79,13 @@ visibilitybuffer的传统用法，是用来解耦场景，把顶点信息和inst
 
 gkNextRenderer的hybridrenderer，在city场景可以做到2k@120fps
 
-在slang统一了shader codebase之后，考虑对于不同的material type，可以选额在primary ray打到玻璃之后，走真正的pathtracing。
+在slang统一了shader codebase之后，考虑对于不同的material type，可以选择在primary ray打到玻璃之后，走真正的pathtracing。
 
 ## tracing-gbuffer
 
 这是一个反向的混合渲染，依赖一个primary-ray来替代传统的光栅化渲染，输出的结果是visibilitybuffer，后续的操作，即可走传统光栅化的后续流程了。
 
-gkNextRenderer的reverse-hybird-renderer即是使用这个技术，整体渲染只有几个computeshader，传统光栅化的各种裁剪，drawcall优化的技术都不复存在了。
+gkNextRenderer的reverse-hybrid-renderer即是使用这个技术，整体渲染只有几个computeshader，传统光栅化的各种裁剪，drawcall优化的技术都不复存在了。
 
 ## vcpkg
 
@@ -112,15 +112,15 @@ bindless是现代渲染的一个重要组成部分，依赖现代gpu的address�
 
 ## tinybvh
 
-tinybvh是jacob的一个开源库，纯头文件实现的cpu/gpu加速的快速bvh查询。在cpu上可以做到惊人的射线检查速度，并且可以快速更新bvh结构。引入这个库的开端，是在做MagicaLego的时候，需要一个射线检测。因为有gpu的加速结构，所以之前的做法，都是从gpu用computershader做射线检测，再读回cpu完成的。而对于没有硬件光追的设备，就没办法了。恰好，以为好友正好聊到了这个库，碰巧他还实现了这个库的neon加速。我就拉下来用了，header only，非常轻量级。结构设计和gpu的加速结构也完全是吻合的，甚至后续版本可以直接构建gpu用的加速结构了。
+tinybvh是jacob的一个开源库，纯头文件实现的cpu/gpu加速的快速bvh查询。在cpu上可以做到惊人的射线检查速度，并且可以快速更新bvh结构。引入这个库的开端，是在做MagicaLego的时候，需要一个射线检测。因为有gpu的加速结构，所以之前的做法，都是从gpu用computershader做射线检测，再读回cpu完成的。而对于没有硬件光追的设备，就没办法了。恰好，一位好友正好聊到了这个库，碰巧他还实现了这个库的neon加速。我就拉下来用了，header only，非常轻量级。结构设计和gpu的加速结构也完全是吻合的，甚至后续版本可以直接构建gpu用的加速结构了。
 
-再构建gpu加速结构的时候，同时也构建一份cpu的，这样两边都可以做射线检查这些工作了。射线检查也不需要等待硬件回读了。tinybvh的性能非常强，单帧10k级别检查次数是完全可以跑上120fps的。
+在构建gpu加速结构的时候，同时也构建一份cpu的，这样两边都可以做射线检查这些工作了。射线检查也不需要等待硬件回读了。tinybvh的性能非常强，单帧10k级别检查次数是完全可以跑上120fps的。
 
 因此，后续基于tinybvh，还完成了和gpu共享代码的probe generation算法。在场景内发射射线来生成ambient cube数据，用在后续渲染。完成了一版基于射线检查的shadowmap，可以异步的在cpu更新shadowmap，用于后续渲染。
 
 ## imgui
 
-imgui之前一直被我不齿，可能是因为unity时代留下的后遗症。这次从RTIO库继承下来的imgui库，发现还是挺好用的，后来又深入研究了一些开源项目使用imgui开发编辑器的做法，用极少量的代码，实现了gkNextRenderer的编辑器架构，眨眼一看还十分像UE5。包含了outliner，content browser，propety editor等基础结构面板，还实现了一个node based的材质编辑面板。当然，editor的代码还很原始，投入的时间很不足，第二年的计划，可以在工具上对编辑器提一些要求，促进编辑器的发展。
+imgui之前一直被我不齿，可能是因为unity时代留下的后遗症。这次从RTIO库继承下来的imgui库，发现还是挺好用的，后来又深入研究了一些开源项目使用imgui开发编辑器的做法，用极少量的代码，实现了gkNextRenderer的编辑器架构，眨眼一看还十分像UE5。包含了outliner，content browser，property editor等基础结构面板，还实现了一个node based的材质编辑面板。当然，editor的代码还很原始，投入的时间很不足，第二年的计划，可以在工具上对编辑器提一些要求，促进编辑器的发展。
 
 ## slang
 
@@ -155,11 +155,11 @@ gkNextRenderer最初引入脚本，是希望做一些灵活的交互动态的控
 
 今年AI的进步速度让我非常惊讶，目前，gkNextRenderer里已经有大量代码是和AI协作一起写的了，今年sonnet claude 3.7模型，写c++, glsl, hlsl这些，水平都有很大提升。并且一些我似是而非，没有细究过的知识点，提给他，他甚至能直接写出可用代码，就好似我囫囵吞枣学过一遍的程度。这个时候再辅以调试和进一步的资料阅读，能够极大的提升在未知领域上的进步水平。Ambient Cube Probe这个系统，就有很多这种未知领域的知识细节，是在有基础shader代码的基础上，和copilot协作书写，调试，翻阅资料这个过程中，熟悉起来的。
 
-我越来越相信，通用人工智能，是可能在目前的技术基础上出现的了。今年deepseek的梁文峰的一句话，让我醍醐灌顶：
+我越来越相信，通用人工智能，是可能在目前的技术基础上出现的了。今年deepseek的梁文锋的一句话，让我醍醐灌顶：
 
 > 我们理解人类智能的本质就是语言，人的思维就是一个语言的过程。你以为你在思考，其实可能是你在脑子里编织语言。这意味着，在语言大模型上可能诞生出类人的人工智能（AGI）。
 
-因此，接下来的开发工作，我会毫无保留的加入AI辅助，越来越多的借助AI的力量，已经学会更好的使用AI。
+因此，接下来的开发工作，我会毫无保留的加入AI辅助，越来越多的借助AI的力量，以及学会更好的使用AI。
 
 ## gkNextEngine
 

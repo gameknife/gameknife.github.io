@@ -2,10 +2,11 @@
 import { Image } from 'astro:assets';
 import { site } from '../../data/site';
 import { formatDate, isoDate, postUrl, type Post } from '../../lib/posts';
+import Tag from './Tag.astro';
 
 interface Props { post: Post; feature?: boolean }
 const { post, feature = false } = Astro.props;
-const { title, date, category, description, cover, coverAlt } = post.data;
+const { title, date, category, tags = [], description, cover, coverAlt } = post.data;
 const cat = site.categories[category];
 ---
 
@@ -22,9 +23,16 @@ const cat = site.categories[category];
     <div class="top tabular">
       <time datetime={isoDate(date)}>{formatDate(date)}</time>
       <span class="cat">{cat.label}</span>
+      {post.data.draft && <span class="badge-draft">草稿</span>}
     </div>
     <h3>{title}</h3>
     <p>{description}</p>
+    {tags.length > 0 && (
+      <div class="card-tags">
+        {tags.slice(0, 3).map((t) => <Tag tag={t} asLink={false} size="sm" />)}
+        {tags.length > 3 && <span class="tag-more">+{tags.length - 3}</span>}
+      </div>
+    )}
   </div>
 </article>
 
@@ -58,6 +66,15 @@ const cat = site.categories[category];
     background: var(--accent-soft);
     padding: .1rem .4rem; border-radius: 4px;
   }
+  .badge-draft {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    color: var(--accent);
+    border: 1px dashed var(--accent-dim);
+    background: var(--surface-2);
+    padding: .1rem .4rem;
+    border-radius: 4px;
+  }
   h3 {
     font-size: 1.02rem; font-weight: 600; letter-spacing: -.012em; line-height: 1.4;
   }
@@ -66,5 +83,18 @@ const cat = site.categories[category];
   p {
     margin: 0; font-size: .87rem; color: var(--muted); line-height: 1.65;
     display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .3rem;
+    margin-top: .2rem;
+  }
+  .tag-more {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    color: var(--faint);
+    padding: .06rem .25rem;
   }
 </style>

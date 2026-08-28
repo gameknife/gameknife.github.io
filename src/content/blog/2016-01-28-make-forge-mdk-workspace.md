@@ -3,7 +3,7 @@ title: "生成Minecraft Forge MDK开发环境"
 date: 2016-01-28
 category: tech
 description: "生成 Minecraft Forge MDK 开发环境的提纲，正文未完成。"
-tags: []
+tags: ["工具链", "游戏开发"]
 legacyUrl: "/tech/2016/01/28/make-forge-mdk-workspace/"
 unlisted: true
 ---
