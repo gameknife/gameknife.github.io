@@ -210,8 +210,8 @@ npm run check && npm run build && npm run verify:urls
 
 以下为 2026-08-29 快照，改动后请顺手刷新本节：
 
-- `src/content/blog/` 共 110 篇：80 篇已发布，30 篇 `draft: true`。草稿构成：
-  12 篇 2026 年项目稿（含博客重建篇）、3 篇 2025 devlog 补写稿、
+- `src/content/blog/` 共 110 篇：81 篇已发布，29 篇 `draft: true`。草稿构成：
+  11 篇 2026 年项目稿、3 篇 2025 devlog 补写稿、
   15 篇 2022–2024 SecondBrain 补写稿。清单在 `content-ops/README.md`。
   补写稿的数字全部来自私人笔记原文，**发布前需要本人核事实**。
 - ⚠️ **两篇已发布文章正文里还带 `<!-- TODO 配图未产出 -->`**：

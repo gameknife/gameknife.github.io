@@ -4,7 +4,6 @@ date: 2026-08-29
 category: tech
 description: "把跑了十年的 Jekyll 站翻新成 Astro 5，44 个历史 URL 一个字节不改，顺带从博客园和私人笔记捞回 25 篇旧文、27 篇草稿。实际坐在电脑前的时间，加起来两三个小时。"
 tags: ["astro", "ai-agent", "工程方法", "独立站", "写作"]
-draft: true
 ---
 
 这个博客 2013 年搭在 GitHub Pages 上，Jekyll。十几年里它大部分时间在长草。不是不想翻新，是每次一想到这三件事就放下了：
@@ -22,7 +21,7 @@ draft: true
 - 从数年私人笔记里整理出 27 篇技术草稿；
 - 构建产物纯静态，零客户端 JS 运行时。
 
-<!-- TODO 配图未产出：site-before-after.webp（旧站 2013 Jekyll 主题与 2026 Astro 5 新站对比截图）。补图放进 src/assets/blog/ 后改回 ![说明](../../assets/blog/site-before-after.webp) -->
+![旧站 2013 Jekyll 主题与 2026 Astro 5 新站对比](../../assets/blog/site-before-after.webp)
 
 新站就是你现在看到的这个站，全部代码开源在 [github.com/gameknife/gameknife.github.io](https://github.com/gameknife/gameknife.github.io)。下面按实际发生的顺序记这四步，和中间几个值得留下来的判断。
 
