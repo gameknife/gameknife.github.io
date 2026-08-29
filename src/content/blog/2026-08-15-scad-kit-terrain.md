@@ -4,7 +4,6 @@ date: 2026-08-15
 category: tech
 description: "生成得像不像，看一眼就知道；生成完能不能改，得等三个月后策划说「这个门再宽半米」的时候才知道。上篇：为什么是 OpenSCAD，以及零件库和地面怎么做。"
 tags: ["gkNextEngine", "ai-agent", "openscad", "程序化生成"]
-draft: true
 ---
 AI 生成 3D 内容这两年路线很多：直接吐 mesh 或体素的，NeRF 的，Gaussian Splatting 的。这些路线都很好，但是，它们解决的问题和我关心的不是一件事。
 

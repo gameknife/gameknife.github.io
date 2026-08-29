@@ -4,6 +4,7 @@ date: 2026-08-29
 category: tech
 description: "mesh、体素、NeRF、Gaussian Splatting 解决的问题各不相同。我关心的是怎么生成一个能进工程、还能继续改的资产 —— 绕一圈之后，答案是让它写 OpenSCAD。"
 tags: ["gkNextEngine", "ai-agent", "openscad", "程序化生成"]
+draft: true
 ---
 AI 生成 3D 内容，现在有很多路线：直接生成 mesh 或体素，也有 NeRF、Gaussian Splatting 这类更接近场景或视图表示的方案。它们解决的问题并不完全相同。
 
