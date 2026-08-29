@@ -44,7 +44,7 @@ npm install && npm run dev
 （`system-ui` → `PingFang SC` / `Hiragino Sans GB` / `Microsoft YaHei`）。
 
 **中文标题**是例外：Noto Serif SC，但走真子集 —— `scripts/subset-fonts.mjs` 在每次
-`dev` / `build` 前扫描 `src/` 里出现过的全部中文字符，24 MB 裁到约 290 kB。
+`dev` / `build` 前扫描 `src/` 里出现过的全部中文字符，24 MB 裁到约 360 kB（随新文章带入的字符缓慢增长）。
 新文章带进来的新字会自动收进去，不会有豆腐块，**不需要手动跑**。
 
 源字体不进仓库（`.fonts-cache/` 已 gitignore），缺失时脚本自动下载。
@@ -65,7 +65,7 @@ content-ops/ 选题卡与证据（不进 git）
   → 删掉 draft: true 那一行 → 上线
 ```
 
-`draft: true` 在 dev 里可见，生产构建被 `src/lib/posts.ts:14` 过滤掉，不进列表 / RSS / 搜索 / sitemap。
+`draft: true` 在 dev 里可见，生产构建被 `src/lib/posts.ts` 的 `allPosts()` 过滤掉，不进列表 / RSS / 搜索 / sitemap。
 **发布就是删掉一行** —— 文件名、图片相对路径、URL 都不变。
 
 ### frontmatter
@@ -106,9 +106,35 @@ legacyUrl: /tech/2025/.../ # 存量文章专用，绝对不要改也不要给新
 
 远程图（GitHub raw 等）不走图片管线，可以直接用，但要固定到 commit，别用会漂移的分支路径。
 
+### 声调：主档不是平台稿
+
+`src/content/blog/` 里的存量文章是声音的压舱石 —— agent 就是靠通读它们学会「像作者本人」的。
+平台腔一旦写进主档，后面每一篇生成都会跟着漂。2026-08 的博客重建篇发生过一次：
+初稿带着知乎腔进了主档，返工收敛过。给知乎 / 公众号 / 小红书的钩子和排版属于
+`content-ops/syndication/` 的副本层，**不进这个目录**。
+
+写完新文章，先和两篇基准对读：`2026-08-28-fifteen-years.md`、`2026-08-15-ai-agent-engineering.md`。
+新文章的粗体、emoji、感叹号密度应该和它们同量级 —— **约等于零**。
+
+硬规矩（都是那次返工里真实踩过的）：
+
+- **第一人称开场。** 从自己的处境和具体问题写起，不用「你手头大概也有…」式的泛化第二人称钩子；「你」只在结尾给建议时偶尔出现。
+- **正文粗体约等于零。** 存量文章几乎不加粗强调句子；想强调，就把句子写短、单独成段。
+- **没有 emoji、没有导流排版。** 「👉 在线访问」这类东西只存在于平台副本。
+- **小标题不做卖点。** 「4 条硬核协作心得」→「几条经验」；不为凑数硬写对称的「第一、第二、第三」，真有几条就写几条。
+- **形容词降级成事实。** 「惊艳」「极其精准」「高质量」「智能提炼」删掉或换成具体动作；无支撑的量词（「有价值十倍」）不写。
+- **数字必须能核。** 没留档的测量（如 Lighthouse 分数）不写，换成能从产物直接验证的表述（「纯静态、零客户端 JS」）。
+- **复盘腔，不是教程腔。** 写「我做了什么、为什么」，不写「你应该怎么做」；给读者的操作建议最多留在结尾一两句。
+- **回顾自己的旧文用时间与内容指代**（「2011 年 10 月那篇半年总结」），不用《书名号》点名标题。
+
+完整的声调与事实规则在 `content-ops/writing-strategy.md` §4–§5（该目录不进 git，新克隆没有）。
+本节是它的最小可执行子集，两边冲突时以 content-ops 为准。
+
 ## content-ops/ 与分发
 
 `content-ops/` 是写作台：策略、项目事实口径、发布计划、证据快照、分发流程。
+**内容运营的指挥入口是 `content-ops/runbook.md`** —— 每个环节对 agent 说什么、作者核什么。
+写作规则在 `writing-strategy.md`，平台营销在 `marketing-strategy.md`，四个平台的改写手册在 `syndication/`。
 
 **它在 `.gitignore` 里** —— 仓库是公开的，未发布档期和 go / no-go 不提前公开。
 所以**新克隆的仓库不会有这个目录，这是正常的，不要重建它**。存在时先读
@@ -145,7 +171,7 @@ legacyUrl: /tech/2025/.../ # 存量文章专用，绝对不要改也不要给新
 
 ```
 src/
-  content/blog/      文章（44 篇已发布 + 若干 draft）
+  content/blog/      文章（已发布与 draft 同目录；44 篇带 legacyUrl 的存量受 URL 防线保护）
   content/works/     作品集条目
   content.config.ts  两个 collection 的 schema
   data/site.ts       站点唯一配置源：域名 / 导航 / 社交 / 定位语 / Giscus / 统计
@@ -182,14 +208,17 @@ npm run check && npm run build && npm run verify:urls
 
 ## 当前状态与待办
 
-- `src/content/blog/` 里有 39 篇草稿（`draft: true`），一篇都还没上线：12 篇 2026 年的项目稿，
-  12 篇 2021–2025 的旧 devlog 补写稿（填 2019-09 到 2025-05 的空档），
-  加 15 篇 2022–2024 的私人 vault 补写稿（填 2022-12 到 2025-04 的空档）。
-  清单都在 `content-ops/README.md`。补写稿的数字全部来自私人笔记原文，
-  **发布前需要本人核事实**。
-- ⚠️ **两篇同名稿**：`2026-08-15-scad-kit-terrain` 和 `2026-08-29-scad-generation`
-  标题都是《别让 AI 直接吐 3D 模型，让它写代码》。前者是拆成上下篇后的上篇
-  （下篇是 `2026-08-22-scad-procedural-rig`），后者是早先的单篇版本。
-  **两篇同名不能同时上线，需要作者决定留哪个。**
-- 若干配图未产出，正文里是 `<!-- TODO 配图未产出 -->` 注释，清单在 `content-ops/README.md`。
-- `src/data/site.ts` 里 `social` 的知乎 / B 站链接是推测的，尚未核对。
+以下为 2026-08-29 快照，改动后请顺手刷新本节：
+
+- `src/content/blog/` 共 110 篇：80 篇已发布，30 篇 `draft: true`。草稿构成：
+  12 篇 2026 年项目稿（含博客重建篇）、3 篇 2025 devlog 补写稿、
+  15 篇 2022–2024 SecondBrain 补写稿。清单在 `content-ops/README.md`。
+  补写稿的数字全部来自私人笔记原文，**发布前需要本人核事实**。
+- ⚠️ **两篇已发布文章正文里还带 `<!-- TODO 配图未产出 -->`**：
+  `2021-08-22-openlighting-ue5-lumen` 和 `2026-08-15-scad-kit-terrain`。
+  HTML 注释读者看不见，但违反发布前检查 —— 要么补图，要么删注释认下不配图。
+- ⚠️ **同名稿收尾**：`2026-08-15-scad-kit-terrain`（上下篇的上篇）已上线，
+  等于事实上选了上下篇方案；`2026-08-29-scad-generation`（早先单篇版）仍是 draft
+  且**同标题**，上线前必须改题，或移进 content-ops 归档。
+- `src/data/site.ts` 里 `social` 的知乎 / B 站链接尚未逐一核对
+  （营销策略要求建品牌前先核落地页，见 `content-ops/marketing-strategy.md` §7）。
