@@ -4,7 +4,6 @@ date: 2026-07-18
 category: tech
 description: "2010 年代我写过一款个人 3D 引擎 gkEngine。2024 年重新开始，面对的是 Slang、Bindless、Ray Query 和 code agent —— 这是推倒重写之后的 gkNextEngine，以及它留下的六个问题。"
 tags: ["gkNextEngine", "vulkan", "引擎"]
-draft: true
 featured: true
 zhihu: "https://zhuanlan.zhihu.com/p/2042766137314784589"
 ---

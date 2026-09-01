@@ -13,6 +13,8 @@ tags: ["gkNextEngine", "ai-agent", "openscad", "程序化生成"]
 
 最近做的 NextWorldTravel 就是这么跑的。说一句话，比如"生成一个苹果总部的小景观"、"生成一个香港旺角的小景观"，二十秒左右回来一个能上手转的 diorama，还可以接着让 agent 调细节。整条流程做的事情，是生成、理解和修改同一个纯代码的场景文件——最后那个景观里没有存任何 mesh 和纹理，只有一千来行代码。
 
+![NextWorldTravel：说一句话生成一个纯代码描述的 3D diorama，支持交互并让 agent 接着调细节。](../../assets/blog/nextworldtravel.webp)
+
 上一篇讲 gkEngine 推倒重写的时候，我塞了一段话，说 gkNextEngine 的场景、建筑、道具和角色现在都是 `.scad` 文本，配了两张图就翻过去了。这次把那一段展开，讲清楚这条路到底怎么走的、代价是什么、哪里走不通。
 
 分两篇。上篇讲零件和地面，下篇讲程序化布局和角色动画，最后回到 NextDayz 看它们怎么合体。
@@ -132,6 +134,8 @@ OpenSCAD 的语言面不是玩具级：`module` / `function` 定义、`for` / `i
 `footprint`、`zMin`、`triangles` 全部是真跑出来的，不是手填的。于是契约变成了可检查的东西：0 三角 = 空几何，footprint 异常大 = 有零件飞了，zMin 异常负 = 穿地（桥除外）。576 个模块里当前 573 个 ok，3 个的默认参数不产几何，catalog 自己标出来。
 
 这份 JSON 后来还长出了两个我一开始没想到的用途：ScadLibrary 左侧的零件浏览器直接读它；下篇会讲的那个 spec 生成管线，喂给模型的"零件菜单"也是从它生成的——模型不需要读 1,875 行 kit 源码，只需要一份"模块名（参数）宽 × 深 高"的清单。
+
+![ScadLibrary 的零件浏览器：直接读 catalog 求值出的 JSON，左侧展示零件 3D 预览与参数，右侧按类别浏览全部模块。](../../assets/blog/kitbrowser.webp)
 
 ### 一个通病：倾斜杆件的符号
 
