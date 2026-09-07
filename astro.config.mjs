@@ -1,5 +1,4 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, sharpImageService } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@tailwindcss/vite';
@@ -39,5 +38,8 @@ export default defineConfig({
   image: {
     // 老文章里的图尺寸参差，统一交给 sharp 生成 webp/avif
     responsiveStyles: true,
+    service: sharpImageService({
+      limitInputPixels: false,
+    }),
   },
 });
