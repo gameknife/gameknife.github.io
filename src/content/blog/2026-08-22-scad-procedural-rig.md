@@ -1,10 +1,9 @@
 ---
-title: "让 SCAD 里的世界动起来：程序化布局与刚体骨骼角色"
+title: "别让 AI 直接吐 3D 模型，让它写代码（下）"
 date: 2026-08-22
 category: tech
 description: "零件和地面都已经是纯文本，但东西还是死的。这篇讲怎么把零件按规则铺满一平方公里，以及怎么让文本描述的角色动起来，最后在 NextDayz 的 416 行文件里合体。"
 tags: ["gkNextEngine", "openscad", "程序化生成", "动画"]
-draft: true
 ---
 上篇讲了零件和地形：kit 提供一套有契约、能被求值检查的模块库，terrain 提供能走、能寻路、能碰撞的低模地形，两者都是纯文本。
 
@@ -45,7 +44,7 @@ NextDayz是模拟Dayz的一个1km x 1km的游戏地图，接下来就是挑战�
 
 后来扩展到了分布算子，对于每一个分布算子，都在编辑器内显示了他的尺寸和分布参数。某些参数直接有一个调节手柄，比如分布数量，向上向下拖动就可以立刻改变。
 
-<!-- TODO 配图未产出：img-scad-terrain-process.webp（ScadLibrary 的地形过程页：feature 画在地形表面上，右侧是它的参数。地形本身是一份能进 git diff 的文本。）。补图放进 src/assets/blog/ 后改回 ![ScadLibrary 的地形过程页：feature 画在地形表面上，右侧是它的参数。地形本身是一份能进 git diff 的文本。](../../assets/blog/img-scad-terrain-process.webp) -->
+![ScadLibrary 的地形过程页：feature 画在地形表面上，右侧是它的参数。地形本身是一份能进 git diff 的文本。](../../assets/blog/terrain_build.webp)
 
 ---
 
@@ -119,13 +118,13 @@ survivor 的骨架不是先设计好的。七骨骼标准（root / torso / head 
 
 一半是角色组装。`kit_char` 的部件按槽位列出来——头、发型、帽子、躯干、手臂、腿、配件，各选一个，颜色单独给，出来就是一份符合 ScadRig 约定的 `.scad`：pivot 走 `ch_pivot_*()`，动作走 `ch_clip_*()`，生成完直接能加载。装备是另一条线：catalog 里的任何模块都能作为附件挂到指定骨骼上，变换在 SCAD 局部空间里给，survivor 的军帽、背包、枪就是这么挂的，一份 `.equipment.json` 存下来。
 
-<!-- TODO 配图未产出：img-scad-char-designer.gif（角色工作室的拼装页：按槽位换头、发型、躯干、腿和配件，右边的预览角色实时重建。）。补图放进 src/assets/blog/ 后改回 ![角色工作室的拼装页：按槽位换头、发型、躯干、腿和配件，右边的预览角色实时重建。](../../assets/blog/img-scad-char-designer.gif) -->
+![角色工作室的拼装页：按槽位换头、发型、躯干、腿和配件，右边的预览角色实时重建。](../../assets/blog/char_compose.webp)
 
 另一半是动作编辑。预览里跑的是一个单实例 rig，和游戏里用的是同一个分层动画器：选 clip 播放、暂停、拖时间轴到任意时刻、逐骨骼逐通道加删关键帧，改完在同一个视口里立刻看到。界面上的角度就是 SCAD 空间的度数，和文件里写的数字一一对应，省掉一次坐标系换算。
 
 保存换了个实现，诉求还是同一个：所有 clip 写回文件末尾一段带标记的区域，标记之外的手写内容一个字不动。
 
-<!-- TODO 配图未产出：img-scad-rig-clip-editor.gif（角色工作室的动作页：拖时间轴、改某根骨骼某个通道上的一个关键帧，预览里的动作跟着变。）。补图放进 src/assets/blog/ 后改回 ![角色工作室的动作页：拖时间轴、改某根骨骼某个通道上的一个关键帧，预览里的动作跟着变。](../../assets/blog/img-scad-rig-clip-editor.gif) -->
+![角色工作室的动作页：拖时间轴、改某根骨骼某个通道上的一个关键帧，预览里的动作跟着变。](../../assets/blog/char_anim.webp)
 
 ---
 

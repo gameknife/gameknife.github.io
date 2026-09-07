@@ -218,9 +218,7 @@ npm run check && npm run build && npm run verify:urls
   补写稿的数字全部来自私人笔记原文，**发布前需要本人核事实**。
 - ⚠️ **`2021-08-22-openlighting-ue5-lumen` 正文里还带 3 处 `<!-- TODO 配图未产出 -->`**，
   而且它已经发布。HTML 注释读者看不见，但违反发布前检查 —— 要么补图，要么删注释认下不配图。
-  （`2026-08-15-scad-kit-terrain` 的那处已清掉；`2026-08-22-scad-procedural-rig` 有 4 处
-  —— 1 张地形过程页截图 + 3 张角色动图（3C / 拼装 / clip 编辑），作者待补录，
-  但它仍是 draft，发布前必须解决。）
+  （`2026-08-15-scad-kit-terrain` 的那处已清掉；`2026-08-22-scad-procedural-rig` 的地形过程页与拼装/clip编辑动图已补齐，还剩 1 处角色 3C 动图待补录，它仍是 draft，发布前必须解决。）
 - ⚠️ **SCAD 三篇的顺序还没理顺**：上篇 `2026-08-15-scad-kit-terrain` 已发布；
   下篇 `2026-08-22-scad-procedural-rig` 与番外 `2026-09-03-scad-astrobot-interlude`
   都还是 draft。番外正文按「上下篇之间」写，但日期排在下篇之后，
