@@ -212,17 +212,19 @@ npm run check && npm run build && npm run verify:urls
 
 ## 当前状态与待办
 
-以下为 2026-08-29 快照，改动后请顺手刷新本节：
+以下为 2026-09-03 快照，改动后请顺手刷新本节：
 
-- `src/content/blog/` 共 110 篇：81 篇已发布，29 篇 `draft: true`。草稿构成：
-  11 篇 2026 年项目稿、3 篇 2025 devlog 补写稿、
-  15 篇 2022–2024 SecondBrain 补写稿。清单在 `content-ops/README.md`。
+- `src/content/blog/` 共 110 篇：82 篇已发布，28 篇 `draft: true`。清单在 `content-ops/README.md`。
   补写稿的数字全部来自私人笔记原文，**发布前需要本人核事实**。
-- ⚠️ **两篇已发布文章正文里还带 `<!-- TODO 配图未产出 -->`**：
-  `2021-08-22-openlighting-ue5-lumen` 和 `2026-08-15-scad-kit-terrain`。
-  HTML 注释读者看不见，但违反发布前检查 —— 要么补图，要么删注释认下不配图。
-- ⚠️ **同名稿收尾**：`2026-08-15-scad-kit-terrain`（上下篇的上篇）已上线，
-  等于事实上选了上下篇方案；`2026-08-29-scad-generation`（早先单篇版）仍是 draft
-  且**同标题**，上线前必须改题，或移进 content-ops 归档。
+- ⚠️ **`2021-08-22-openlighting-ue5-lumen` 正文里还带 3 处 `<!-- TODO 配图未产出 -->`**，
+  而且它已经发布。HTML 注释读者看不见，但违反发布前检查 —— 要么补图，要么删注释认下不配图。
+  （`2026-08-15-scad-kit-terrain` 的那处已清掉；`2026-08-22-scad-procedural-rig` 有 4 处
+  —— 1 张地形过程页截图 + 3 张角色动图（3C / 拼装 / clip 编辑），作者待补录，
+  但它仍是 draft，发布前必须解决。）
+- ⚠️ **SCAD 三篇的顺序还没理顺**：上篇 `2026-08-15-scad-kit-terrain` 已发布；
+  下篇 `2026-08-22-scad-procedural-rig` 与番外 `2026-09-03-scad-astrobot-interlude`
+  都还是 draft。番外正文按「上下篇之间」写，但日期排在下篇之后，
+  且它的「下篇」链接指向一篇未发布的文章 —— 发布前要么先发下篇，要么调日期。
+  （早先的单篇版 `2026-08-29-scad-generation` 已不在目录里，同名稿问题已消解。）
 - `src/data/site.ts` 里 `social` 的知乎 / B 站链接尚未逐一核对
   （营销策略要求建品牌前先核落地页，见 `content-ops/marketing-strategy.md` §7）。
